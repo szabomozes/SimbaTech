@@ -1,8 +1,9 @@
+import core.Resources;
 import panels.Window;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello, World!");
+        Resources.Instance.load();
         new Window();
     }
 }

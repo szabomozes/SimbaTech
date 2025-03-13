@@ -1,6 +1,9 @@
 package panels.menu;
 
-
+import core.Resources;
+import panels.menu.buttons.ButtonsPanel;
+import panels.menu.text.*;
+import panels.menu.icon.LogoLabel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,6 +18,7 @@ public class Menu extends JPanel {
     private int direction = -1;
 
     public Menu() {
+
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
