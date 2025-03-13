@@ -47,7 +47,7 @@ public class ToolBarPanel {
     }
 
     private void setupLayout() {
-        shopPanel.setLayout(new GridLayout(4, 3)); 
+        shopPanel.setLayout(new GridLayout(4, 3));
         rightPanel.setLayout(new GridLayout(4, 1));
 
         // Gombok hozzáadása a panelekhez
@@ -81,15 +81,15 @@ public class ToolBarPanel {
     }
 
     public void addEventListeners() {
-        
+
     }
 
     public void updateSpeed() {
-      
+
     }
 
     public void updateToolBar() {
-        
+
     }
 
 }
