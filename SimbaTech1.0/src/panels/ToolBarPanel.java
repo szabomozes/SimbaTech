@@ -12,6 +12,7 @@ public class ToolBarPanel {
     private JButton sellButton, buildRoadButton, speedButton, speedOptions;
     private JFrame frame;
 
+
     public ToolBarPanel() {
         frame = new JFrame("Toolbar Panel");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

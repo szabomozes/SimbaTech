@@ -1,5 +1,3 @@
-import java.awt.*;
-
 import panels.Window;
 
 public class Main {
