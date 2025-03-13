@@ -12,9 +12,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Menu extends JPanel {
-    private BufferedImage backgroundImage = Resources.Instance.menu_background;
+    private final BufferedImage backgroundImage = Resources.Instance.menu_background;
     private int xOffset = 0;
-    private int scrollSpeed = 1;
     private int direction = -1;
 
     public Menu() {
@@ -64,6 +63,7 @@ public class Menu extends JPanel {
             direction = -1;
         }
 
+        int scrollSpeed = 1;
         xOffset += direction * scrollSpeed;
         repaint();
     }
