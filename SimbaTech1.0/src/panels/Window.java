@@ -14,13 +14,7 @@ public class Window extends JFrame {
             this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             this.setLocationRelativeTo(null);
 
-            JPanel cardPanel = new JPanel(new CardLayout());
-            cardPanel.add(new Menu(), "menu");
-
-
-
-
-            this.add(cardPanel);
+            this.add(CardPanel.Instance);
             this.setVisible(true);
         });
     }

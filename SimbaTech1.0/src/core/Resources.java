@@ -12,11 +12,15 @@ public class Resources {
     public Font menu_font;
     public BufferedImage menu_background;
     public BufferedImage menu_logo;
+    public BufferedImage map;
+    public BufferedImage logoutButton;
 
     private Resources() {}
 
     public void load() {
         menu();
+        map();
+        game();
     }
 
     private void menu() {
@@ -39,6 +43,23 @@ public class Resources {
         }
     }
 
+    public void map() {
+        try {
+            map = ImageIO.read(new File("res/icons/game-panel/map.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void game() {
+        try {
+            logoutButton = ImageIO.read(new File("res/icons/game-panel/logout.png"));
+            logoutButton = resizeImage(logoutButton, 50);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static BufferedImage resizeImage(BufferedImage original, int height) {
         int newWidth = (int) ((double) original.getWidth() / original.getHeight() * height); // Arányos szélesség
         Image scaled = original.getScaledInstance(newWidth, height, Image.SCALE_SMOOTH);
@@ -48,4 +69,5 @@ public class Resources {
         g2d.dispose();
         return resized;
     }
+
 }
