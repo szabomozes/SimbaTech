@@ -14,6 +14,7 @@ public class Resources {
     public BufferedImage menu_logo;
     public BufferedImage map;
     public BufferedImage logoutButton;
+    public BufferedImage calender;
 
     private Resources() {}
 
@@ -55,6 +56,12 @@ public class Resources {
         try {
             logoutButton = ImageIO.read(new File("res/icons/game-panel/logout.png"));
             logoutButton = resizeImage(logoutButton, 50);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            calender = ImageIO.read(new File("res/icons/game-panel/calendar.png"));
+            calender = resizeImage(calender, 50);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -1,6 +1,7 @@
 package panels.game;
 
 import core.Resources;
+import panels.CardPanel;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -19,6 +20,10 @@ public class LogoutButton {
 
     public boolean contains(int clickX, int clickY) {
         return clickX >= x && clickX <= x + width && clickY >= y && clickY <= y + height;
+    }
+
+    public void click() {
+        CardPanel.Instance.showCard("menu");
     }
 
     public void draw(Graphics g) {

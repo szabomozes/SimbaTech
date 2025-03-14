@@ -21,7 +21,37 @@ public class CardPanel extends JPanel {
         ((CardLayout) getLayout()).show(this, name);
     }
 
-    public void addNewGameLayout() {
+    public void setLoadingPanel() {
+        Component loadingPanel = getComponent("loading");
+        if (loadingPanel != null) {
+            remove(loadingPanel);
+        }
+
+        add(new LoadingPanel(), "loading");
+    }
+
+    public void deleteLoadingPanel(){
+        Component loadingPanel = getComponent("loading");
+        if (loadingPanel != null) {
+            remove(loadingPanel);
+        }
+    }
+
+    public void updateGamePanel() {
+        Component gamePanel = getComponent("game");
+        if (gamePanel != null) {
+            remove(gamePanel);
+        }
+
         add(new GameContainer(), "game");
+    }
+
+    private Component getComponent(String name) {
+        for (Component comp : getComponents()) {
+            if (name.equals(comp.getName())) {
+                return comp;
+            }
+        }
+        return null;
     }
 }

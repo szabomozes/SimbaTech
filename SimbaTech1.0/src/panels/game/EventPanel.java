@@ -5,7 +5,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import core.Resources;
-import panels.CardPanel;
 
 public class EventPanel extends JPanel {
     private final BufferedImage background = Resources.Instance.map;
@@ -13,6 +12,7 @@ public class EventPanel extends JPanel {
     private int lastX, lastY;
     private boolean dragging = false;
     private final LogoutButton logoutButton = new LogoutButton();
+    private final Calendar calendar = new Calendar();
 
     /*
     private List<MovingImage> movingImages;
@@ -45,7 +45,9 @@ public class EventPanel extends JPanel {
                 }
                 */
                 if (logoutButton.contains(e.getX(), e.getY())) {
-                    CardPanel.Instance.showCard("menu");
+                    logoutButton.click();
+                } else if (calendar.contains(e.getX(), e.getY(), getWidth())) {
+                    calendar.click();
                 }
                 dragging = true;
 
@@ -99,5 +101,6 @@ public class EventPanel extends JPanel {
         }
         */
         logoutButton.draw(g);
+        calendar.draw(g, getWidth());
     }
 }
