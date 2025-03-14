@@ -18,14 +18,14 @@ public class LoadingPanel extends JPanel {
         private final BufferedImage image = Resources.Instance.menu_logo;
         private double angle = 0;
         private String currentMessage;
-        private String[] messages = {
+        private final String[] messages = {
                 "Tipp: Szöveg1!",
                 "Tipp: Szöveg2!",
                 "Tipp: Szöveg3!",
                 "Tipp: Szöveg4!",
                 "Tipp: Szöveg5!"
         };
-        private Random random = new Random();
+        private final Random random = new Random();
 
         public LoadingPanel() {
 
@@ -37,13 +37,13 @@ public class LoadingPanel extends JPanel {
                 }
             }, 1, 20);
 
-            javax.swing.Timer rotationTimer = new javax.swing.Timer(10, e -> {
+            javax.swing.Timer rotationTimer = new javax.swing.Timer(10, _ -> {
                 angle -= Math.toRadians(1);
                 if (angle <= -2 * Math.PI) angle = 0;
                 repaint();
             });
 
-            javax.swing.Timer textChangeTimer = new javax.swing.Timer(3000, e -> {
+            javax.swing.Timer textChangeTimer = new javax.swing.Timer(3000, _ -> {
                 int newMessageIndex = random.nextInt(messages.length);
                 while (newMessageIndex == messageIndex) {
                     newMessageIndex = random.nextInt(messages.length);
