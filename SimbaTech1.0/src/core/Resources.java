@@ -15,6 +15,10 @@ public class Resources {
     public BufferedImage map;
     public BufferedImage logoutButton;
     public BufferedImage calender;
+    public BufferedImage badFeddBack;
+    public BufferedImage goodFeddBack;
+    public BufferedImage loseFeddBack;
+    public BufferedImage winFeddBack;
 
     private Resources() {}
 
@@ -22,6 +26,7 @@ public class Resources {
         menu();
         map();
         game();
+        feedBack();
     }
 
     private void menu() {
@@ -62,6 +67,34 @@ public class Resources {
         try {
             calender = ImageIO.read(new File("res/icons/game-panel/calendar.png"));
             calender = resizeImage(calender, 50);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void feedBack()
+    {
+        try {
+            badFeddBack = ImageIO.read(new File("res/icons/message/bad.png"));
+            badFeddBack = resizeImage(badFeddBack, 100);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            goodFeddBack = ImageIO.read(new File("res/icons/message/good.png"));
+            goodFeddBack = resizeImage(goodFeddBack, 100);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            loseFeddBack = ImageIO.read(new File("res/icons/message/lose.png"));
+            loseFeddBack = resizeImage(loseFeddBack, 100);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            winFeddBack = ImageIO.read(new File("res/icons/message/win.png"));
+            winFeddBack = resizeImage(winFeddBack, 100);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
