@@ -15,7 +15,7 @@ public class FeedBackPanel extends JPanel {
 
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(300, 200));
-        setBorder(BorderFactory.createEmptyBorder(40,20, 10, 20)); // top, left, bottom, right
+        setBorder(BorderFactory.createEmptyBorder(40,20, 10, 20));
 
         imageLabel = new JLabel();
         imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
