@@ -28,23 +28,23 @@ public class ToolBarPanel {
         rightPanel = new JPanel();
 
         // Gombok létrehozása
-        lionButton = createButton("Lion", "pictures/icons/toolkit/shop/animal/face/lion-face.png");
-        leopardButton = createButton("Leopard", "pictures/icons/toolkit/shop/animal/face/leopard-face.png");
-        zebraButton = createButton("Zebra", "pictures/icons/toolkit/shop/animal/face/zebra-face.png");
-        giraffeButton = createButton("Giraffe", "pictures/icons/toolkit/shop/animal/face/giraffe-face.png");
+        lionButton = createButton("res/icons/toolkit/shop/animal/face/lion-face.png", 50, 50);
+        leopardButton = createButton("res/icons/toolkit/shop/animal/face/leopard-face.png", 50, 50);
+        zebraButton = createButton("res/icons/toolkit/shop/animal/face/zebra-face.png", 50, 50);
+        giraffeButton = createButton("res/icons/toolkit/shop/animal/face/giraffe-face.png", 50, 50);
 
-        palmTreeButton = createButton("PalmTree", "pictures/icons/toolkit/shop/plant/palm-tree.png");
-        panicumButton = createButton("Panicum", "pictures/icons/toolkit/shop/plant/panicum.png");
-        baobabButton = createButton("Baobab", "pictures/icons/toolkit/shop/plant/baobab.png");
+        palmTreeButton = createButton("res/icons/toolkit/shop/plant/palm-tree.png", 50, 50);
+        panicumButton = createButton("res/icons/toolkit/shop/plant/pancium.png", 50, 50);
+        baobabButton = createButton("res/icons/toolkit/shop/plant/baobab.png", 50, 50);
 
-        waterAreaButton = createButton("Water", "pictures/icons/toolkit/shop/object/water.png");
-        jeepButton = createButton("Jeep", "pictures/icons/toolkit/shop/object/jeep.png");
-        rangerButton = createButton("Ranger", "pictures/icons/toolkit/shop/person/ranger.png");
+        waterAreaButton = createButton("res/icons/toolkit/shop/object/water.png", 50, 50);
+        jeepButton = createButton("res/icons/toolkit/shop/object/jeep.png", 50, 5);
+        rangerButton = createButton("res/icons/toolkit/shop/person/ranger.png", 50, 50);
 
-        sellButton = createButton("Sell", "pictures/icons/toolkit/shop/other/sell.png");
-        buildRoadButton = createButton("BuildRoad", "pictures/icons/toolkit/road/road-table.png");
-        speedButton = createButton("Speed", "pictures/icons/toolkit/speed/snail.png");
-        speedOptions = createButton("SpeedOptions", "pictures/icons/toolkit/speed/hippopotamus.png");
+        sellButton = createButton("res/icons/toolkit/shop/other/sell.png", 50, 50);
+        buildRoadButton = createButton("res/icons/toolkit/road/road-table.png", 50, 50);
+        speedButton = createButton("res/icons/toolkit/speed/snail.png", 50, 50);
+        speedOptions = createButton("res/icons/toolkit/speed/hippopotamus.png", 50, 50);
     }
 
     private void setupLayout() {
@@ -66,7 +66,7 @@ public class ToolBarPanel {
         rightPanel.add(sellButton);
         rightPanel.add(buildRoadButton);
         rightPanel.add(speedButton);
-        rightPanel.add(speedOptions);
+        //rightPanel.add(speedOptions);
 
         // Panelek hozzáadása a frame-hez
         frame.add(shopPanel, BorderLayout.WEST);
@@ -75,9 +75,11 @@ public class ToolBarPanel {
         frame.setVisible(true);
     }
 
-    private JButton createButton(String text, String iconPath) {
-        JButton button = new JButton(text);
-        button.setIcon(new ImageIcon(iconPath));
+    private JButton createButton(String iconPath, int width, int height) {
+        JButton button = new JButton();
+        ImageIcon icon = new ImageIcon(iconPath);
+        Image image = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        button.setIcon(new ImageIcon(image));
         return button;
     }
 

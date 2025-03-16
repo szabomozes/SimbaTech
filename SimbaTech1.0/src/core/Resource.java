@@ -6,14 +6,14 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class Resources {
-    public static Resources Instance = new Resources();
+public class Resource {
+    public static Resource Instance = new Resource();
 
     public Font menu_font;
     public BufferedImage menu_background;
     public BufferedImage menu_logo;
 
-    private Resources() {}
+    private Resource() {}
 
     public void load() {
         menu();

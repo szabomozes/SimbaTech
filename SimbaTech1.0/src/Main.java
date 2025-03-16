@@ -1,9 +1,11 @@
-import core.Resources;
+import core.Resource;
+import panels.ToolBarPanel;
 import panels.Window;
 
 public class Main {
     public static void main(String[] args) {
-        Resources.Instance.load();
-        new Window();
+        Resource.Instance.load();
+        //new Window();
+        new ToolBarPanel();
     }
 }

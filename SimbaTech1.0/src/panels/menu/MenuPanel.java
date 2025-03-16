@@ -1,6 +1,6 @@
 package panels.menu;
 
-import core.Resources;
+import core.Resource;
 import panels.menu.buttons.ButtonsPanel;
 import panels.menu.text.*;
 import panels.menu.icon.LogoLabel;
@@ -11,12 +11,12 @@ import java.awt.image.BufferedImage;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Menu extends JPanel {
-    private final BufferedImage backgroundImage = Resources.Instance.menu_background;
+public class MenuPanel extends JPanel {
+    private final BufferedImage backgroundImage = Resource.Instance.menu_background;
     private int xOffset = 0;
     private int direction = -1;
 
-    public Menu() {
+    public MenuPanel() {
 
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();

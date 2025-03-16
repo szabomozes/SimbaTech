@@ -1,6 +1,6 @@
 package panels;
 
-import panels.menu.Menu;
+import panels.menu.MenuPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +15,7 @@ public class Window extends JFrame {
             this.setLocationRelativeTo(null);
 
             JPanel cardPanel = new JPanel(new CardLayout());
-            cardPanel.add(new Menu(), "menu");
+            cardPanel.add(new MenuPanel(), "menu");
 
 
 
