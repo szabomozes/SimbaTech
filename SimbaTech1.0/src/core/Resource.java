@@ -12,11 +12,21 @@ public class Resource {
     public Font menu_font;
     public BufferedImage menu_background;
     public BufferedImage menu_logo;
+    public BufferedImage map;
+    public BufferedImage logoutButton;
+    public BufferedImage calender;
+    public BufferedImage badFeddBack;
+    public BufferedImage goodFeddBack;
+    public BufferedImage loseFeddBack;
+    public BufferedImage winFeddBack;
 
     private Resource() {}
 
     public void load() {
         menu();
+        map();
+        game();
+        feedBack();
     }
 
     private void menu() {
@@ -39,6 +49,57 @@ public class Resource {
         }
     }
 
+    public void map() {
+        try {
+            map = ImageIO.read(new File("res/icons/game-panel/map.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void game() {
+        try {
+            logoutButton = ImageIO.read(new File("res/icons/game-panel/logout.png"));
+            logoutButton = resizeImage(logoutButton, 50);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            calender = ImageIO.read(new File("res/icons/game-panel/calendar.png"));
+            calender = resizeImage(calender, 50);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void feedBack()
+    {
+        try {
+            badFeddBack = ImageIO.read(new File("res/icons/message/bad.png"));
+            badFeddBack = resizeImage(badFeddBack, 100);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            goodFeddBack = ImageIO.read(new File("res/icons/message/good.png"));
+            goodFeddBack = resizeImage(goodFeddBack, 100);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            loseFeddBack = ImageIO.read(new File("res/icons/message/lose.png"));
+            loseFeddBack = resizeImage(loseFeddBack, 100);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            winFeddBack = ImageIO.read(new File("res/icons/message/win.png"));
+            winFeddBack = resizeImage(winFeddBack, 100);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static BufferedImage resizeImage(BufferedImage original, int height) {
         int newWidth = (int) ((double) original.getWidth() / original.getHeight() * height); // Arányos szélesség
         Image scaled = original.getScaledInstance(newWidth, height, Image.SCALE_SMOOTH);
@@ -48,4 +109,5 @@ public class Resource {
         g2d.dispose();
         return resized;
     }
+
 }
