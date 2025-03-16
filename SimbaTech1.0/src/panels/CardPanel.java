@@ -2,7 +2,7 @@ package panels;
 
 
 import panels.game.GameContainer;
-import panels.menu.Menu;
+import panels.menu.MenuPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +13,7 @@ public class CardPanel extends JPanel {
 
     private CardPanel() {
         super(new CardLayout());
-        add(new Menu(), "menu");
+        add(new MenuPanel(), "menu");
 
     }
 
