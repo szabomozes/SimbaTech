@@ -25,6 +25,7 @@ public class EventPanel extends JPanel {
         calendar = new Calendar(getWidth());
 
         add(logoutButton);
+
         add(calendar);
 
         addMouseListener(new MouseAdapter() {
