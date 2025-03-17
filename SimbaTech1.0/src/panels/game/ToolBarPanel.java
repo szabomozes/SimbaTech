@@ -10,8 +10,8 @@ public class ToolBarPanel extends JPanel {
     private JButton palmTreeButton, panicumButton, baobabButton;
     private JButton waterAreaButton, jeepButton, rangerButton;
     private JButton sellButton, buildRoadButton, speedButton, speedOptions;
-    private final int IMG_WIDTH = 50;
-    private final int IMG_HEIGHT = 50;
+    private final int IMG_WIDTH = 30;
+    private final int IMG_HEIGHT = 30;
 
     public ToolBarPanel() {
         setLayout(new BorderLayout());
@@ -45,17 +45,18 @@ public class ToolBarPanel extends JPanel {
     }
 
     private void setupLayout() {
-        shopPanel.setLayout(new GridLayout(4, 3));
-        rightPanel.setLayout(new GridLayout(4, 1));
+        shopPanel.setLayout(new GridLayout(2, 5));
+        rightPanel.setLayout(new GridLayout(1, 3));
 
         // Gombok hozzáadása a panelekhez
         shopPanel.add(lionButton);
         shopPanel.add(leopardButton);
-        shopPanel.add(zebraButton);
-        shopPanel.add(giraffeButton);
         shopPanel.add(palmTreeButton);
         shopPanel.add(panicumButton);
         shopPanel.add(baobabButton);
+
+        shopPanel.add(zebraButton);
+        shopPanel.add(giraffeButton);
         shopPanel.add(waterAreaButton);
         shopPanel.add(jeepButton);
         shopPanel.add(rangerButton);
@@ -77,8 +78,8 @@ public class ToolBarPanel extends JPanel {
         ImageIcon icon = new ImageIcon(iconPath);
         Image image = icon.getImage().getScaledInstance(IMG_WIDTH, IMG_HEIGHT, Image.SCALE_SMOOTH);
         button.setIcon(new ImageIcon(image));
-        button.setMinimumSize(new Dimension(10, 10));
-        button.setMaximumSize(new Dimension(10, 10));
+        button.setMinimumSize(new Dimension(32, 32));
+        button.setMaximumSize(new Dimension(32, 32));
         return button;
     }
 
