@@ -3,21 +3,18 @@ package panels.game;
 import javax.swing.*;
 import java.awt.*;
 
-public class ToolBarPanel {
+public class ToolBarPanel extends JPanel {
 
     private JPanel shopPanel, rightPanel;
     private JButton lionButton, leopardButton, zebraButton, giraffeButton;
     private JButton palmTreeButton, panicumButton, baobabButton;
     private JButton waterAreaButton, jeepButton, rangerButton;
     private JButton sellButton, buildRoadButton, speedButton, speedOptions;
-    private JFrame frame;
-
+    private final int IMG_WIDTH = 50;
+    private final int IMG_HEIGHT = 50;
 
     public ToolBarPanel() {
-        frame = new JFrame("Toolbar Panel");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(600, 400);
-        frame.setLayout(new BorderLayout()); // Fontos beállítani a Layout-ot!
+        setLayout(new BorderLayout());
 
         initComponents();
         setupLayout();
@@ -28,23 +25,23 @@ public class ToolBarPanel {
         rightPanel = new JPanel();
 
         // Gombok létrehozása
-        lionButton = createButton("res/icons/toolkit/shop/animal/face/lion-face.png", 50, 50);
-        leopardButton = createButton("res/icons/toolkit/shop/animal/face/leopard-face.png", 50, 50);
-        zebraButton = createButton("res/icons/toolkit/shop/animal/face/zebra-face.png", 50, 50);
-        giraffeButton = createButton("res/icons/toolkit/shop/animal/face/giraffe-face.png", 50, 50);
+        lionButton = createButton("res/icons/toolkit/shop/animal/face/lion-face.png");
+        leopardButton = createButton("res/icons/toolkit/shop/animal/face/leopard-face.png");
+        zebraButton = createButton("res/icons/toolkit/shop/animal/face/zebra-face.png");
+        giraffeButton = createButton("res/icons/toolkit/shop/animal/face/giraffe-face.png");
 
-        palmTreeButton = createButton("res/icons/toolkit/shop/plant/palm-tree.png", 50, 50);
-        panicumButton = createButton("res/icons/toolkit/shop/plant/pancium.png", 50, 50);
-        baobabButton = createButton("res/icons/toolkit/shop/plant/baobab.png", 50, 50);
+        palmTreeButton = createButton("res/icons/toolkit/shop/plant/palm-tree.png");
+        panicumButton = createButton("res/icons/toolkit/shop/plant/pancium.png");
+        baobabButton = createButton("res/icons/toolkit/shop/plant/baobab.png");
 
-        waterAreaButton = createButton("res/icons/toolkit/shop/object/water.png", 50, 50);
-        jeepButton = createButton("res/icons/toolkit/shop/object/jeep.png", 50, 5);
-        rangerButton = createButton("res/icons/toolkit/shop/person/ranger.png", 50, 50);
+        waterAreaButton = createButton("res/icons/toolkit/shop/object/water.png");
+        jeepButton = createButton("res/icons/toolkit/shop/object/jeep.png");
+        rangerButton = createButton("res/icons/toolkit/shop/person/ranger.png");
 
-        sellButton = createButton("res/icons/toolkit/shop/other/sell.png", 50, 50);
-        buildRoadButton = createButton("res/icons/toolkit/road/road-table.png", 50, 50);
-        speedButton = createButton("res/icons/toolkit/speed/snail.png", 50, 50);
-        speedOptions = createButton("res/icons/toolkit/speed/hippopotamus.png", 50, 50);
+        sellButton = createButton("res/icons/toolkit/shop/other/sell.png");
+        buildRoadButton = createButton("res/icons/toolkit/road/road-table.png");
+        speedButton = createButton("res/icons/toolkit/speed/snail.png");
+        speedOptions = createButton("res/icons/toolkit/speed/hippopotamus.png");
     }
 
     private void setupLayout() {
@@ -69,17 +66,19 @@ public class ToolBarPanel {
         //rightPanel.add(speedOptions);
 
         // Panelek hozzáadása a frame-hez
-        frame.add(shopPanel, BorderLayout.WEST);
-        frame.add(rightPanel, BorderLayout.EAST);
+        add(shopPanel, BorderLayout.WEST);
+        add(rightPanel, BorderLayout.EAST);
 
-        frame.setVisible(true);
+        setVisible(true);
     }
 
-    private JButton createButton(String iconPath, int width, int height) {
+    private JButton createButton(String iconPath) {
         JButton button = new JButton();
         ImageIcon icon = new ImageIcon(iconPath);
-        Image image = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        Image image = icon.getImage().getScaledInstance(IMG_WIDTH, IMG_HEIGHT, Image.SCALE_SMOOTH);
         button.setIcon(new ImageIcon(image));
+        button.setMinimumSize(new Dimension(10, 10));
+        button.setMaximumSize(new Dimension(10, 10));
         return button;
     }
 
