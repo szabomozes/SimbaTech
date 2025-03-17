@@ -1,6 +1,6 @@
 package panels.menu;
 
-import core.Resource;
+import core.Resources;
 import panels.menu.buttons.ButtonsPanel;
 import panels.menu.text.*;
 import panels.menu.icon.LogoLabel;
@@ -12,7 +12,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class MenuPanel extends JPanel {
-    private final BufferedImage backgroundImage = Resource.Instance.menu_background;
+    private final BufferedImage backgroundImage = Resources.Instance.menu_background;
     private int xOffset = 0;
     private int direction = -1;
 

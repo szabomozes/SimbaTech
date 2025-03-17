@@ -1,7 +1,7 @@
 package panels.menu.text;
 
 
-import core.Resource;
+import core.Resources;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,7 +9,7 @@ import java.awt.*;
 public class TitleLabel extends JLabel{
     public TitleLabel() {
         super("SimbaTech");
-        setFont(Resource.Instance.menu_font.deriveFont(Font.BOLD, 50f));
+        setFont(Resources.Instance.menu_font.deriveFont(Font.BOLD, 50f));
         setForeground(Color.BLACK);
     }
 

@@ -6,8 +6,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class Resource {
-    public static Resource Instance = new Resource();
+public class Resources {
+    public static Resources Instance = new Resources();
 
     public Font menu_font;
     public BufferedImage menu_background;
@@ -20,7 +20,7 @@ public class Resource {
     public BufferedImage loseFeddBack;
     public BufferedImage winFeddBack;
 
-    private Resource() {}
+    private Resources() {}
 
     public void load() {
         menu();

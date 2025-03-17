@@ -4,10 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import core.Resource;
+import core.Resources;
 
 public class EventPanel extends JPanel {
-    private final BufferedImage background = Resource.Instance.map;
+    private final BufferedImage background = Resources.Instance.map;
     private int offsetX = 0, offsetY = 0;
     private int lastX, lastY;
     private boolean dragging = false;
