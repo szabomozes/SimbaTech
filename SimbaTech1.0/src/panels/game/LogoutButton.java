@@ -3,30 +3,27 @@ package panels.game;
 import core.Resources;
 import panels.CardPanel;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class LogoutButton {
-    private final int x = 10;
-    private final int y = 10;
-    private final int width;
-    private final int height;
-    private final BufferedImage image = Resources.Instance.logoutButton;
+public class LogoutButton extends JButton {
 
     public LogoutButton() {
-        width = image.getWidth();
-        height = image.getHeight();
-    }
+        ImageIcon icon = new ImageIcon(Resources.Instance.logoutButton);
+        setIcon(icon);
 
-    public boolean contains(int clickX, int clickY) {
-        return clickX >= x && clickX <= x + width && clickY >= y && clickY <= y + height;
-    }
+        setBounds(10, 10, icon.getIconWidth(), icon.getIconHeight());
 
-    public void click() {
-        CardPanel.Instance.showCard("menu");
-    }
+        addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CardPanel.Instance.showCard("menu");
+            }
+        });
 
-    public void draw(Graphics g) {
-        g.drawImage(image, x, y, null);
+        setBorderPainted(false);
+        setContentAreaFilled(false);
+        setFocusPainted(false);
     }
 }

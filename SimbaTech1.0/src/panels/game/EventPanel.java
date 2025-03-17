@@ -12,7 +12,7 @@ public class EventPanel extends JPanel {
     private int lastX, lastY;
     private boolean dragging = false;
     private final LogoutButton logoutButton = new LogoutButton();
-    private final Calendar calendar = new Calendar();
+    private Calendar calendar;
 
     /*
     private List<MovingImage> movingImages;
@@ -20,7 +20,12 @@ public class EventPanel extends JPanel {
     */
 
     public EventPanel() {
+        setLayout(null);
 
+        calendar = new Calendar(getWidth());
+
+        add(logoutButton);
+        add(calendar);
 
         addMouseListener(new MouseAdapter() {
             @Override
@@ -44,11 +49,6 @@ public class EventPanel extends JPanel {
                     dragging = true;
                 }
                 */
-                if (logoutButton.contains(e.getX(), e.getY())) {
-                    logoutButton.click();
-                } else if (calendar.contains(e.getX(), e.getY(), getWidth())) {
-                    calendar.click();
-                }
                 dragging = true;
 
             }
@@ -92,15 +92,18 @@ public class EventPanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if (background != null) {
-            g.drawImage(background, offsetX, offsetY, this);
-        }
+        g.drawImage(background, offsetX, offsetY, this);
         /*
         for (MovingImage img : movingImages) {
             img.draw(g, offsetX, offsetY);
         }
         */
-        logoutButton.draw(g);
-        calendar.draw(g, getWidth());
+    }
+
+    @Override
+    public void doLayout() {
+        super.doLayout();
+        // Frissítjük a naptár gomb pozícióját az aktuális szélességhez
+        calendar.updatePosition(getWidth());
     }
 }

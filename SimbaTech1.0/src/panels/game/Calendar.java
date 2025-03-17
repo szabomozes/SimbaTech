@@ -1,50 +1,47 @@
 package panels.game;
 
 import core.Resources;
-
+import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Calendar {
+public class Calendar extends JButton {
     private int date = 1;
-    private final int width;
-    private final int height;
-    private final BufferedImage image = Resources.Instance.calender;
 
-    public Calendar() {
-        width = image.getWidth();
-        height = image.getHeight();
+    public Calendar(int panelWidth) {
+        ImageIcon icon = new ImageIcon(Resources.Instance.calender);
+        setIcon(icon);
+
+        int width = icon.getIconWidth();
+        int height = icon.getIconHeight();
+        setBounds(panelWidth - width - 10, 10, width, height);
+
+        setBorderPainted(false);
+        setContentAreaFilled(false);
+        setFocusPainted(false);
+
+        updateText();
+
+        addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                date++;
+                updateText();
+                System.out.println("A dátum: " + date);
+            }
+        });
     }
 
-    public boolean contains(int clickX, int clickY, int width) {
-        int calendarX = width - this.width - 10;
-        int calendarY = 10;
-        return clickX >= calendarX && clickX <= calendarX + this.width &&
-                clickY >= calendarY && clickY <= calendarY + this.height;
+    private void updateText() {
+        setText(String.valueOf(date));
+        setHorizontalTextPosition(JButton.CENTER);
+        setVerticalTextPosition(JButton.CENTER);
+        setFont(Resources.Instance.menu_font.deriveFont(35f));
+        setForeground(Color.BLACK);
     }
 
-    public void click() {
-        date++;
-        System.out.println("A dátum: " + date);
-    }
-
-    public void draw(Graphics g, int width) {
-        int calendarX = width - this.width - 10;
-        int calendarY = 10;
-
-        g.drawImage(image, calendarX, calendarY, null);
-
-        g.setFont(Resources.Instance.menu_font.deriveFont(35f));
-        g.setColor(Color.BLACK);
-        String dateText = String.format("%d", date);
-        int side = 0;
-
-        if (dateText.length() == 1) {
-            side = 20;
-        } else if (dateText.length() == 2) {
-            side = 26;
-        }
-
-        g.drawString(dateText, calendarX + this.width - 10 - side, calendarY + 40);
+    public void updatePosition(int panelWidth) {
+        setBounds(panelWidth - getWidth() - 10, 10, getWidth(), getHeight());
     }
 }
