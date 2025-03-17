@@ -13,6 +13,7 @@ public class EventPanel extends JPanel {
     private boolean dragging = false;
     private final LogoutButton logoutButton = new LogoutButton();
     private final Calendar calendar = new Calendar();
+    private boolean showFull = false;
 
     /*
     private List<MovingImage> movingImages;
@@ -93,7 +94,15 @@ public class EventPanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (background != null) {
-            g.drawImage(background, offsetX, offsetY, this);
+            //full screen
+            if(showFull)
+            {
+                g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
+            }
+            else
+            {
+                g.drawImage(background, offsetX, offsetY, this);
+            }
         }
         /*
         for (MovingImage img : movingImages) {
@@ -102,5 +111,27 @@ public class EventPanel extends JPanel {
         */
         logoutButton.draw(g);
         calendar.draw(g, getWidth());
+    }
+
+    //full screen
+    public void toggleFullImage(boolean full) {
+        this.showFull = full;
+        if (full) {
+            removeMouseListener(getMouseListeners()[0]);
+            removeMouseMotionListener(getMouseMotionListeners()[0]);
+            addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    if (logoutButton.contains(e.getX(), e.getY())) {
+                        logoutButton.click();
+                    } else if (calendar.contains(e.getX(), e.getY(), getWidth())) {
+                        calendar.click();
+                    }
+                }
+            });
+        } else {
+
+        }
+        repaint();
     }
 }
