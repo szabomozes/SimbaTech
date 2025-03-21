@@ -5,13 +5,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
-public class BasicLeftToolBarButton extends JButton {
+public abstract class BasicLeftToolBarButton extends JButton {
 
     protected String message;
 
     public BasicLeftToolBarButton(BufferedImage image, int x, int y) {
         ImageIcon icon = new ImageIcon(image);
         setIcon(icon);
+
         int width = icon.getIconWidth();
         int height = icon.getIconHeight();
         setBounds(x, y, width, height);

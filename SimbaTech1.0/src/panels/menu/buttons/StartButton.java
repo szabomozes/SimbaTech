@@ -6,7 +6,7 @@ import panels.game.toolbar.buttons.speed.SpeedButton;
 
 import javax.swing.*;
 
-public class StartButton extends JButton {
+public abstract class StartButton extends JButton {
     public StartButton(String text) {
         super(text);
     }
