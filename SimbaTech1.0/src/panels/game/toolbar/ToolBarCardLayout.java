@@ -11,5 +11,6 @@ public class ToolBarCardLayout extends JPanel {
         super(new CardLayout());
         add(new ToolBarPanelTest(), "toolbar");
         setPreferredSize(new Dimension(0, 150));
+
     }
 }

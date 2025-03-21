@@ -48,7 +48,6 @@ public class CardPanel extends JPanel {
 
         GameContainer gameContainer = new GameContainer();
         add(gameContainer, "game");
-        gameContainer.toggleFullImage(true); //true - teljes kép, false - kis kép
     }
 
     private Component getComponent(String name) {

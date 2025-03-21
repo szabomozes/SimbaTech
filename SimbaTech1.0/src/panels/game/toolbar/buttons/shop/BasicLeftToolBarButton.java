@@ -5,9 +5,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
-public class BasicToolBarButton extends JButton {
+public class BasicLeftToolBarButton extends JButton {
+
     protected String message;
-    public BasicToolBarButton(BufferedImage image, int x, int y) {
+
+    public BasicLeftToolBarButton(BufferedImage image, int x, int y) {
         ImageIcon icon = new ImageIcon(image);
         setIcon(icon);
         int width = icon.getIconWidth();

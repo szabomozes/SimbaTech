@@ -28,6 +28,12 @@ public class Resources {
     public BufferedImage speedEadle;
     public BufferedImage speedHippopotamus;
     public BufferedImage speedSnail;
+    public BufferedImage badFeddBack;
+    public BufferedImage loseFeddBack;
+    public BufferedImage winFeddBack;
+    public BufferedImage sellButton;
+    public BufferedImage binButton;
+    public BufferedImage roadTableButton;
 
     private Resources() {}
 
@@ -160,6 +166,25 @@ public class Resources {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        try {
+            sellButton = ImageIO.read(new File("res/icons/toolkit/shop/other/sell.png"));
+            sellButton = resizeImage(sellButton, 60);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            roadTableButton = ImageIO.read(new File("res/icons/toolkit/road/road-table.png"));
+            roadTableButton = resizeImage(roadTableButton, 60);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            binButton = ImageIO.read(new File("res/icons/toolkit/road/bin.png"));
+            binButton = resizeImage(binButton, 60);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
 
     }
 

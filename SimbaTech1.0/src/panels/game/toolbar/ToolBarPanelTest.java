@@ -6,6 +6,7 @@ import panels.game.toolbar.buttons.speed.SpeedButton;
 import javax.swing.*;
 
 public class ToolBarPanelTest extends JPanel {
+    private RoadTableButton roadTableButton = new RoadTableButton();
 
     public ToolBarPanelTest() {
         setLayout(null);
@@ -22,6 +23,9 @@ public class ToolBarPanelTest extends JPanel {
         add(new JeepButton());
         add(new RangerButton());
 
+        add(new SellButton());
+
+        add(roadTableButton);
         add(SpeedButton.Instance);
 
 
@@ -31,5 +35,6 @@ public class ToolBarPanelTest extends JPanel {
     public void doLayout() {
         super.doLayout();
         SpeedButton.Instance.updatePosition();
+        roadTableButton.updatePosition();
     }
 }

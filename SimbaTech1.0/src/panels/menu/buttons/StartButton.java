@@ -1,6 +1,7 @@
 package panels.menu.buttons;
 
 import panels.CardPanel;
+import panels.game.toolbar.buttons.speed.SpeedButton;
 
 import javax.swing.*;
 
@@ -10,6 +11,7 @@ public class StartButton extends JButton {
     }
 
     protected void start(String text) {
+        SpeedButton.Instance.resetSpeed();
         System.out.println("A " + text + " gomb meg lett nyomva!");
         System.out.println("Pálya generálás alatt");
         CardPanel.Instance.setLoadingPanel();
@@ -30,7 +32,7 @@ public class StartButton extends JButton {
 
     private void generateGameBackground() {
         try {
-            Thread.sleep(1);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

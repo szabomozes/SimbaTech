@@ -11,7 +11,9 @@ import java.awt.event.ActionListener;
 public class Calendar extends JButton {
     private int date = 1;
 
-    public Calendar() {
+    public static Calendar Instance = new Calendar();
+
+    private Calendar() {
         ImageIcon icon = new ImageIcon(Resources.Instance.calender);
         setIcon(icon);
 
@@ -46,4 +48,5 @@ public class Calendar extends JButton {
     public void updatePosition() {
         setBounds(CardPanel.Instance.getWidth() - getWidth() - 10, 10, getWidth(), getHeight());
     }
+
 }

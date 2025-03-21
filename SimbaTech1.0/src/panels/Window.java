@@ -8,12 +8,12 @@ public class Window extends JFrame {
         super("Simbatech");
         SwingUtilities.invokeLater(() -> {
             setSize(1200, 800);
-            setMinimumSize(new java.awt.Dimension(700, 600));
+            setMinimumSize(new java.awt.Dimension(0, 0));
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             setLocationRelativeTo(null);
 
             add(CardPanel.Instance);
-            pack();
+            //pack();
             setVisible(true);
         });
     }

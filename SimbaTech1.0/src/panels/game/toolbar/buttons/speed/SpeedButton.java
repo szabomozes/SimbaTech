@@ -9,9 +9,13 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
 public class SpeedButton extends JButton {
+
     private SpeedEnum speedEnum = SpeedEnum.SNAIL;
 
     public static SpeedButton Instance = new SpeedButton();
+
+    private final int x = 30;
+    private final int y = 45;
 
     private SpeedButton() {
 
@@ -21,9 +25,10 @@ public class SpeedButton extends JButton {
 
         ImageIcon icon = new ImageIcon(getBufferedImageBySpeedEnum());
         setIcon(icon);
+
         int width = icon.getIconWidth();
         int height = icon.getIconHeight();
-        setBounds(CardPanel.Instance.getWidth() - width - 20, 45, width, height);
+        setBounds(CardPanel.Instance.getWidth() - width - x, y, width, height);
 
         addActionListener(new ActionListener() {
             @Override
@@ -51,7 +56,19 @@ public class SpeedButton extends JButton {
     }
 
     public void updatePosition() {
-        setBounds(CardPanel.Instance.getWidth() - getWidth() - 20, 45, getWidth(), getHeight());
+        setBounds(CardPanel.Instance.getWidth() - getWidth() - x, y, getWidth(), getHeight());
+    }
+
+    public SpeedEnum getSpeedEnum() {
+        return speedEnum;
+    }
+
+    public void resetSpeed() {
+        while (speedEnum != SpeedEnum.SNAIL) {
+            speedEnum = speedEnum.next();
+        }
+        ImageIcon icon = new ImageIcon(getBufferedImageBySpeedEnum());
+        setIcon(icon);
     }
 
 }
