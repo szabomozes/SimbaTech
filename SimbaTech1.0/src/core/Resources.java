@@ -28,12 +28,12 @@ public class Resources {
     public BufferedImage speedEadle;
     public BufferedImage speedHippopotamus;
     public BufferedImage speedSnail;
-    public BufferedImage badFeddBack;
-    public BufferedImage loseFeddBack;
-    public BufferedImage winFeddBack;
     public BufferedImage sellButton;
     public BufferedImage binButton;
     public BufferedImage roadTableButton;
+    public BufferedImage badFeddBack;
+    public BufferedImage loseFeddBack;
+    public BufferedImage winFeddBack;
 
     private Resources() {}
 
