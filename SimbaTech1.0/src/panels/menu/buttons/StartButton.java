@@ -1,5 +1,6 @@
 package panels.menu.buttons;
 
+import logic.Logic;
 import panels.CardPanel;
 import panels.game.toolbar.buttons.speed.SpeedButton;
 
@@ -11,6 +12,7 @@ public class StartButton extends JButton {
     }
 
     protected void start(String text) {
+        Logic.Instance.reset();
         SpeedButton.Instance.resetSpeed();
         System.out.println("A " + text + " gomb meg lett nyomva!");
         System.out.println("Pálya generálás alatt");
