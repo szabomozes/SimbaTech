@@ -15,6 +15,10 @@ public class Resources {
     public BufferedImage map;
     public BufferedImage logoutButton;
     public BufferedImage calender;
+    public BufferedImage lionButton;
+    public BufferedImage leopardButton;
+    public BufferedImage zebraButton;
+    public BufferedImage giraffeButon;
 
     private Resources() {}
 
@@ -22,6 +26,7 @@ public class Resources {
         menu();
         map();
         game();
+        toolBar();
     }
 
     private void menu() {
@@ -67,6 +72,33 @@ public class Resources {
         }
     }
 
+    private void toolBar() {
+        try {
+            lionButton = ImageIO.read(new File("res/icons/toolkit/shop/animal/face/lion-face.png"));
+            lionButton = resizeImage(lionButton, 80);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            leopardButton = ImageIO.read(new File("res/icons/toolkit/shop/animal/face/leopard-face.png"));
+            leopardButton = resizeImage(leopardButton, 80);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            zebraButton = ImageIO.read(new File("res/icons/toolkit/shop/animal/face/zebra-face.png"));
+            zebraButton = resizeImage(zebraButton, 80);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            giraffeButon = ImageIO.read(new File("res/icons/toolkit/shop/animal/face/giraffe-face.png"));
+            giraffeButon = resizeImage(giraffeButon, 80);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static BufferedImage resizeImage(BufferedImage original, int height) {
         int newWidth = (int) ((double) original.getWidth() / original.getHeight() * height); // Arányos szélesség
         Image scaled = original.getScaledInstance(newWidth, height, Image.SCALE_SMOOTH);
@@ -76,5 +108,6 @@ public class Resources {
         g2d.dispose();
         return resized;
     }
+
 
 }

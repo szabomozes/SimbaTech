@@ -12,6 +12,9 @@ public class ToolBarPanel {
     private JButton sellButton, buildRoadButton, speedButton, speedOptions;
     private JFrame frame;
 
+    public static void main(String[] argv) {
+        new ToolBarPanel();
+    }
 
     public ToolBarPanel() {
         frame = new JFrame("Toolbar Panel");
