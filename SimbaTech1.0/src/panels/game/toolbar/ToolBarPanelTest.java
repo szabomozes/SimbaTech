@@ -6,7 +6,7 @@ import panels.game.toolbar.buttons.speed.SpeedButton;
 import javax.swing.*;
 
 public class ToolBarPanelTest extends JPanel {
-    private RoadTableButton roadTableButton = new RoadTableButton();
+    private final RoadTableButton roadTableButton = new RoadTableButton();
 
     public ToolBarPanelTest() {
         setLayout(null);

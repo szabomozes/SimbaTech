@@ -11,7 +11,6 @@ public class EventPanel extends JPanel {
     private int offsetX = 0, offsetY = 0;
     private int lastX, lastY;
     private boolean dragging = false;
-    private final LogoutButton logoutButton = new LogoutButton();
 
     /*
     private List<MovingImage> movingImages;
@@ -21,7 +20,7 @@ public class EventPanel extends JPanel {
     public EventPanel() {
         setLayout(null);
 
-        add(logoutButton);
+        add(new LogoutButton());
 
         add(Calendar.Instance);
 
