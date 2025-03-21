@@ -11,12 +11,12 @@ import java.awt.image.BufferedImage;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Menu extends JPanel {
+public class MenuPanel extends JPanel {
     private final BufferedImage backgroundImage = Resources.Instance.menu_background;
     private int xOffset = 0;
     private int direction = -1;
 
-    public Menu() {
+    public MenuPanel() {
 
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();

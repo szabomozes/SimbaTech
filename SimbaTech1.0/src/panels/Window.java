@@ -13,6 +13,7 @@ public class Window extends JFrame {
             setLocationRelativeTo(null);
 
             add(CardPanel.Instance);
+            pack();
             setVisible(true);
         });
     }
