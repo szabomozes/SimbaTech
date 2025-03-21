@@ -12,7 +12,7 @@ public class EventPanel extends JPanel {
     private int lastX, lastY;
     private boolean dragging = false;
     private final LogoutButton logoutButton = new LogoutButton();
-    private Calendar calendar;
+    private final Calendar calendar = new Calendar();;
 
     /*
     private List<MovingImage> movingImages;
@@ -21,8 +21,6 @@ public class EventPanel extends JPanel {
 
     public EventPanel() {
         setLayout(null);
-
-        calendar = new Calendar(getWidth());
 
         add(logoutButton);
 
@@ -105,6 +103,6 @@ public class EventPanel extends JPanel {
     public void doLayout() {
         super.doLayout();
         // Frissítjük a naptár gomb pozícióját az aktuális szélességhez
-        calendar.updatePosition(getWidth());
+        calendar.updatePosition();
     }
 }

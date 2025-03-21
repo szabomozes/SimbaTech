@@ -1,7 +1,9 @@
 package panels.game.toolbar;
 
+import panels.game.toolbar.buttons.shop.*;
+import panels.game.toolbar.buttons.speed.SpeedButton;
+
 import javax.swing.*;
-import java.awt.*;
 
 public class ToolBarPanelTest extends JPanel {
 
@@ -13,8 +15,21 @@ public class ToolBarPanelTest extends JPanel {
         add(new ZebraButton());
         add(new GiraffeButton());
 
-        setPreferredSize(new Dimension(700, 200));
+        add(new Baobab());
+        add(new PalmTreeButton());
+        add(new PanciumButton());
+        add(new WaterButton());
+        add(new JeepButton());
+        add(new RangerButton());
+
+        add(SpeedButton.Instance);
 
 
+    }
+
+    @Override
+    public void doLayout() {
+        super.doLayout();
+        SpeedButton.Instance.updatePosition();
     }
 }

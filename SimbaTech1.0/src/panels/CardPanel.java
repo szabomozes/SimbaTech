@@ -9,7 +9,7 @@ import java.awt.*;
 
 public class CardPanel extends JPanel {
 
-    public static CardPanel Instance = new CardPanel();
+    public static final CardPanel Instance = new CardPanel();
 
     private CardPanel() {
         super(new CardLayout());

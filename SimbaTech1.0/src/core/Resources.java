@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class Resources {
-    public static Resources Instance = new Resources();
+    public static final Resources Instance = new Resources();
 
     public Font menu_font;
     public BufferedImage menu_background;
@@ -19,6 +19,15 @@ public class Resources {
     public BufferedImage leopardButton;
     public BufferedImage zebraButton;
     public BufferedImage giraffeButon;
+    public BufferedImage baobabButton;
+    public BufferedImage palmTreeButton;
+    public BufferedImage panciumButton;
+    public BufferedImage waterButton;
+    public BufferedImage jeepButton;
+    public BufferedImage rangerButton;
+    public BufferedImage speedEadle;
+    public BufferedImage speedHippopotamus;
+    public BufferedImage speedSnail;
 
     private Resources() {}
 
@@ -75,28 +84,83 @@ public class Resources {
     private void toolBar() {
         try {
             lionButton = ImageIO.read(new File("res/icons/toolkit/shop/animal/face/lion-face.png"));
-            lionButton = resizeImage(lionButton, 80);
+            lionButton = resizeImage(lionButton, 60);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         try {
             leopardButton = ImageIO.read(new File("res/icons/toolkit/shop/animal/face/leopard-face.png"));
-            leopardButton = resizeImage(leopardButton, 80);
+            leopardButton = resizeImage(leopardButton, 60);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         try {
             zebraButton = ImageIO.read(new File("res/icons/toolkit/shop/animal/face/zebra-face.png"));
-            zebraButton = resizeImage(zebraButton, 80);
+            zebraButton = resizeImage(zebraButton, 60);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         try {
             giraffeButon = ImageIO.read(new File("res/icons/toolkit/shop/animal/face/giraffe-face.png"));
-            giraffeButon = resizeImage(giraffeButon, 80);
+            giraffeButon = resizeImage(giraffeButon, 60);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        try {
+            baobabButton = ImageIO.read(new File("res/icons/toolkit/shop/plant/baobab.png"));
+            baobabButton = resizeImage(baobabButton, 60);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            palmTreeButton = ImageIO.read(new File("res/icons/toolkit/shop/plant/palm-tree.png"));
+            palmTreeButton = resizeImage(palmTreeButton, 60);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            panciumButton = ImageIO.read(new File("res/icons/toolkit/shop/plant/pancium.png"));
+            panciumButton = resizeImage(panciumButton, 60);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            waterButton = ImageIO.read(new File("res/icons/toolkit/shop/object/water.png"));
+            waterButton = resizeImage(waterButton, 60);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            jeepButton = ImageIO.read(new File("res/icons/toolkit/shop/object/jeep.png"));
+            jeepButton = resizeImage(jeepButton, 60);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            rangerButton = ImageIO.read(new File("res/icons/toolkit/shop/person/ranger.png"));
+            rangerButton = resizeImage(rangerButton, 60);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            speedEadle = ImageIO.read(new File("res/icons/toolkit/speed/eagle.png"));
+            speedEadle = resizeImage(speedEadle, 60);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            speedHippopotamus = ImageIO.read(new File("res/icons/toolkit/speed/hippopotamus.png"));
+            speedHippopotamus = resizeImage(speedHippopotamus, 60);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            speedSnail = ImageIO.read(new File("res/icons/toolkit/speed/snail.png"));
+            speedSnail = resizeImage(speedSnail, 60);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     public static BufferedImage resizeImage(BufferedImage original, int height) {

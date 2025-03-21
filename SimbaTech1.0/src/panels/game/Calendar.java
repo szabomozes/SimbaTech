@@ -1,6 +1,8 @@
 package panels.game;
 
 import core.Resources;
+import panels.CardPanel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -9,13 +11,13 @@ import java.awt.event.ActionListener;
 public class Calendar extends JButton {
     private int date = 1;
 
-    public Calendar(int panelWidth) {
+    public Calendar() {
         ImageIcon icon = new ImageIcon(Resources.Instance.calender);
         setIcon(icon);
 
         int width = icon.getIconWidth();
         int height = icon.getIconHeight();
-        setBounds(panelWidth - width - 10, 10, width, height);
+        setBounds(CardPanel.Instance.getWidth() - width - 10, 10, width, height);
 
         setBorderPainted(false);
         setContentAreaFilled(false);
@@ -41,7 +43,7 @@ public class Calendar extends JButton {
         setForeground(Color.BLACK);
     }
 
-    public void updatePosition(int panelWidth) {
-        setBounds(panelWidth - getWidth() - 10, 10, getWidth(), getHeight());
+    public void updatePosition() {
+        setBounds(CardPanel.Instance.getWidth() - getWidth() - 10, 10, getWidth(), getHeight());
     }
 }
