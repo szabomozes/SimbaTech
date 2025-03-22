@@ -47,5 +47,6 @@ public class CoinPanel extends JPanel {
 
         g2d.setColor(new Color(255, 255, 255));
         g2d.fillRoundRect(0, 0, getWidth(), getHeight(), cornerRadius, cornerRadius);
+        number.updateText();
     }
 }

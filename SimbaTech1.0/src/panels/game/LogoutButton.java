@@ -1,6 +1,7 @@
 package panels.game;
 
 import core.Resources;
+import logic.Logic;
 import panels.CardPanel;
 
 import javax.swing.*;
@@ -18,6 +19,7 @@ public class LogoutButton extends JButton {
         addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Logic.Instance.shutDown();
                 CardPanel.Instance.showCard("menu");
             }
         });

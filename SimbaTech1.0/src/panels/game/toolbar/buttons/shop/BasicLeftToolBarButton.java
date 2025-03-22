@@ -1,5 +1,6 @@
 package panels.game.toolbar.buttons.shop;
 
+import logic.Logic;
 import panels.game.toolbar.ToolBarCardLayout;
 
 import javax.swing.*;
@@ -25,13 +26,8 @@ public class BasicLeftToolBarButton extends JButton {
         addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // image
                 System.out.println(message);
-                switch (message) {
-                    case "road-":
-                        break;
-
-                }
+                Logic.Instance.buySoemthing(message);
             }
         });
     }

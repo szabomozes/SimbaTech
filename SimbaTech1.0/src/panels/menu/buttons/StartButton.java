@@ -1,9 +1,8 @@
 package panels.menu.buttons;
 
 import core.Resources;
-import logic.Difficulty;
+import logic.DifficultyEnum;
 import logic.Logic;
-import map.Create1;
 import map.ImageMerger;
 import panels.CardPanel;
 import panels.game.toolbar.buttons.speed.SpeedButton;
@@ -12,7 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class StartButton extends JButton {
-    protected Difficulty message;
+    protected DifficultyEnum message;
 
     public StartButton(String text) {
         super(text);
@@ -22,8 +21,6 @@ public class StartButton extends JButton {
     }
 
     protected void start() {
-        Logic.Instance.reset(message);
-        SpeedButton.Instance.resetSpeed();
         System.out.println("A " + message.toString() + " gomb meg lett nyomva!");
         System.out.println("Pálya generálás alatt");
         CardPanel.Instance.setLoadingPanel();
@@ -31,10 +28,12 @@ public class StartButton extends JButton {
 
         new Thread(() -> {
             System.out.println("Pálya generálása");
-            generateGameBackground();
+            generateGameBackgroundTest();
             Resources.Instance.map();
 
             SwingUtilities.invokeLater(() -> {
+                Logic.Instance.reset(message);
+                SpeedButton.Instance.resetSpeed();
                 System.out.println("Pálya betöltve");
                 CardPanel.Instance.updateGamePanel();
                 CardPanel.Instance.showCard("game");

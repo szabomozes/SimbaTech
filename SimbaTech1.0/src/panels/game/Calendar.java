@@ -5,10 +5,8 @@ import panels.CardPanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class Calendar extends JButton {
+public class Calendar extends JLabel {
     private int date = 1;
 
     public static Calendar Instance = new Calendar();
@@ -21,32 +19,28 @@ public class Calendar extends JButton {
         int height = icon.getIconHeight();
         setBounds(CardPanel.Instance.getWidth() - width - 10, 10, width, height);
 
-        setBorderPainted(false);
-        setContentAreaFilled(false);
-        setFocusPainted(false);
+        setOpaque(false);
 
-        updateText();
-
-        addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                date++;
-                updateText();
-                System.out.println("A dátum: " + date);
-            }
-        });
-    }
-
-    private void updateText() {
-        setText(String.valueOf(date));
         setHorizontalTextPosition(JButton.CENTER);
         setVerticalTextPosition(JButton.CENTER);
         setFont(Resources.Instance.menu_font.deriveFont(35f));
         setForeground(Color.BLACK);
+
+        updateText();
+    }
+
+    private void updateText() {
+        setText(String.valueOf(date));
+        repaint();
     }
 
     public void updatePosition() {
         setBounds(CardPanel.Instance.getWidth() - getWidth() - 10, 10, getWidth(), getHeight());
+    }
+
+    public void setDate(int date) {
+        this.date = date;
+        updateText();
     }
 
 }

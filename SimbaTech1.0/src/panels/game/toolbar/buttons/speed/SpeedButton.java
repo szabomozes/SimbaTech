@@ -1,6 +1,8 @@
 package panels.game.toolbar.buttons.speed;
 
 import core.Resources;
+import logic.Speed;
+import logic.SpeedEnum;
 import panels.CardPanel;
 
 import javax.swing.*;
@@ -33,15 +35,17 @@ public class SpeedButton extends JButton {
         addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                speedEnum = speedEnum.next();
+                Speed.Instance.speedEnum = Speed.Instance.speedEnum.next();
                 ImageIcon icon = new ImageIcon(getBufferedImageBySpeedEnum());
                 setIcon(icon);
+                System.out.println(Speed.Instance.speedEnum.toString());
+                System.out.println(Speed.Instance.speedEnum.getDateTick());
             }
         });
     }
 
     private BufferedImage getBufferedImageBySpeedEnum() {
-        switch (speedEnum) {
+        switch (Speed.Instance.speedEnum) {
             case SNAIL -> {
                 return Resources.Instance.speedSnail;
             }
@@ -59,13 +63,9 @@ public class SpeedButton extends JButton {
         setBounds(CardPanel.Instance.getWidth() - getWidth() - x, y, getWidth(), getHeight());
     }
 
-    public SpeedEnum getSpeedEnum() {
-        return speedEnum;
-    }
-
     public void resetSpeed() {
-        while (speedEnum != SpeedEnum.SNAIL) {
-            speedEnum = speedEnum.next();
+        while (Speed.Instance.speedEnum != SpeedEnum.SNAIL) {
+            Speed.Instance.speedEnum = Speed.Instance.speedEnum.next();
         }
         ImageIcon icon = new ImageIcon(getBufferedImageBySpeedEnum());
         setIcon(icon);

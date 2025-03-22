@@ -4,9 +4,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+
 import core.Resources;
+import entity.mobile.*;
+import logic.Logic;
 import panels.game.coin.CoinPanel;
 import panels.game.minimap.Minimap;
+import panels.game.toolbar.ToolBarCardLayout;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 public class EventPanel extends JPanel {
     private final BufferedImage background = Resources.Instance.map;
@@ -14,12 +22,13 @@ public class EventPanel extends JPanel {
     private int lastX, lastY;
     private boolean dragging = false;
     private final Minimap minimap = new Minimap();
+    private CoinPanel coinPanel = new CoinPanel();
 
     public EventPanel() {
         setLayout(null);
 
         add(new LogoutButton());
-        add(new CoinPanel());
+        add(coinPanel);
         add(Calendar.Instance);
         add(minimap);
 
@@ -28,12 +37,42 @@ public class EventPanel extends JPanel {
             public void mousePressed(MouseEvent e) {
                 lastX = e.getX();
                 lastY = e.getY();
-                dragging = true;
+
+                if (SwingUtilities.isRightMouseButton(e)) {
+                    if (Logic.Instance.shopping != null) {
+                        switch (Logic.Instance.shopping) {
+                            case "lion":
+                                Logic.Instance.lions.add(new Lion(lastX - offsetX, lastY - offsetY));
+                                Logic.Instance.coin -= Logic.Instance.lionPrice;
+                                break;
+                            case "leopard":
+                                Logic.Instance.leopards.add(new Leopard(lastX - offsetX, lastY - offsetY));
+                                Logic.Instance.coin -= Logic.Instance.leopardPrice;
+                                break;
+                            case "zebra":
+                                Logic.Instance.zebras.add(new Zebra(lastX - offsetX, lastY - offsetY));
+                                Logic.Instance.coin -= Logic.Instance.zebraPrice;
+                                break;
+                            case "giraffe":
+                                Logic.Instance.giraffes.add(new Giraffe(lastX - offsetX, lastY - offsetY));
+                                Logic.Instance.coin -= Logic.Instance.giraffePrice;
+                                break;
+                        }
+                        Logic.Instance.shopping = null;
+                        ToolBarCardLayout.Instance.showCard("toolbar");
+                        System.out.println("Hozzáadva a következő pozícióval: (" + lastX + ", " + lastY + ")");
+                        repaint();
+                    }
+                } else {
+                    dragging = true;
+                }
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                dragging = false;
+                if (!SwingUtilities.isRightMouseButton(e)) {
+                    dragging = false;
+                }
             }
         });
 
@@ -80,6 +119,18 @@ public class EventPanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(background, offsetX, offsetY, this);
+
+        List<MobileEntity> allEntities = new ArrayList<>();
+        allEntities.addAll(Logic.Instance.giraffes);
+        allEntities.addAll(Logic.Instance.zebras);
+        allEntities.addAll(Logic.Instance.leopards);
+        allEntities.addAll(Logic.Instance.lions);
+
+        allEntities.sort(Comparator.comparingInt(entity -> entity.getY()));
+
+        for (MobileEntity entity : allEntities) {
+            entity.draw(g, offsetX, offsetY);
+        }
     }
 
     @Override

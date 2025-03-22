@@ -12,13 +12,13 @@ public class CoinNumberLabel extends JLabel {
 
     public CoinNumberLabel(CoinStackLabel image) {
         height = image.getHeight();
-        number = Logic.Instance.getCoin();
+        number = Logic.Instance.coin;
         setFont(Resources.Instance.menu_font.deriveFont(50f));
         updateText();
     }
 
     public void updateText() {
-        number = Logic.Instance.getCoin();
+        number = Logic.Instance.coin;
         String text = number + " $";
         setText(text);
 
