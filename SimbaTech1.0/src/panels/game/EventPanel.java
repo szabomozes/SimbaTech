@@ -24,6 +24,7 @@ public class EventPanel extends JPanel {
 
         add(Calendar.Instance);
 
+
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {

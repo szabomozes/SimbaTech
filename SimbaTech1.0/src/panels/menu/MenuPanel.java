@@ -8,8 +8,6 @@ import panels.menu.icon.LogoLabel;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class MenuPanel extends JPanel {
     private final BufferedImage backgroundImage = Resources.Instance.menu_background;
@@ -17,7 +15,6 @@ public class MenuPanel extends JPanel {
     private int direction = -1;
 
     public MenuPanel() {
-
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -28,7 +25,6 @@ public class MenuPanel extends JPanel {
         add(logoLabel, gbc);
 
         gbc.gridy++;
-
         gbc.insets = new Insets(0, 10, 10, 10);
         JLabel title = new TitleLabel();
         add(title, gbc);
@@ -41,13 +37,7 @@ public class MenuPanel extends JPanel {
         JPanel buttonPanel = new ButtonsPanel();
         add(buttonPanel, gbc);
 
-        java.util.Timer timer = new Timer(true);
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                moveBackground();
-            }
-        }, 1, 20);
+        new Timer(20, e -> moveBackground()).start();
     }
 
     private void moveBackground() {
@@ -63,8 +53,7 @@ public class MenuPanel extends JPanel {
             direction = -1;
         }
 
-        int scrollSpeed = 1;
-        xOffset += direction * scrollSpeed;
+        xOffset += direction;
         repaint();
     }
 
@@ -77,6 +66,5 @@ public class MenuPanel extends JPanel {
             int newWidth = (int) ((double) backgroundImage.getWidth() / backgroundImage.getHeight() * frameHeight);
             g.drawImage(backgroundImage, xOffset, 0, newWidth, frameHeight, this);
         }
-
     }
 }

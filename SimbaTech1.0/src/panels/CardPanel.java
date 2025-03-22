@@ -14,7 +14,6 @@ public class CardPanel extends JPanel {
     private CardPanel() {
         super(new CardLayout());
         add(new MenuPanel(), "menu");
-
     }
 
     public void showCard(String name) {

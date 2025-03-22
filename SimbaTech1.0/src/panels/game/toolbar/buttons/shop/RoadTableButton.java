@@ -2,6 +2,7 @@ package panels.game.toolbar.buttons.shop;
 
 import core.Resources;
 import panels.CardPanel;
+import panels.game.toolbar.ToolBarCardLayout;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -28,6 +29,7 @@ public class RoadTableButton extends JButton {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("raod-table");
+                ToolBarCardLayout.Instance.showCard("buildRoad");
             }
         });
     }

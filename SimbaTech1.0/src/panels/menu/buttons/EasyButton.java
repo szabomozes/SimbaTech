@@ -9,8 +9,6 @@ import java.awt.event.ActionListener;
 public class EasyButton extends StartButton {
     public EasyButton() {
         super("Könnyű");
-        this.setFont(Resources.Instance.menu_font.deriveFont(35f));
-        this.setFocusPainted(false);
 
         this.addActionListener(new ActionListener() {
             @Override

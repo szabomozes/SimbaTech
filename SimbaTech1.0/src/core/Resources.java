@@ -47,7 +47,7 @@ public class Resources {
     private void menu() {
 
         try {
-            menu_font = Font.createFont(Font.TRUETYPE_FONT, new File("res/font/menu/Jersey10-Regular.ttf"));
+            menu_font = Font.createFont(Font.TRUETYPE_FONT, new File("res/font/Jersey10-Regular.ttf"));
         } catch (FontFormatException | IOException e) {
             throw new RuntimeException(e);
         }
@@ -90,24 +90,28 @@ public class Resources {
     private void toolBar() {
         try {
             lionButton = ImageIO.read(new File("res/icons/toolkit/shop/animal/face/lion-face.png"));
+            //lionButton = ImageIO.read(new File("res/icons/toolkit/shop/animal/full-body/lion-body.png"));
             lionButton = resizeImage(lionButton, 60);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         try {
             leopardButton = ImageIO.read(new File("res/icons/toolkit/shop/animal/face/leopard-face.png"));
+            //leopardButton = ImageIO.read(new File("res/icons/toolkit/shop/animal/full-body/leopard-body.png"));
             leopardButton = resizeImage(leopardButton, 60);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         try {
             zebraButton = ImageIO.read(new File("res/icons/toolkit/shop/animal/face/zebra-face.png"));
+            //zebraButton = ImageIO.read(new File("res/icons/toolkit/shop/animal/full-body/zebra-body.png"));
             zebraButton = resizeImage(zebraButton, 60);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         try {
             giraffeButon = ImageIO.read(new File("res/icons/toolkit/shop/animal/face/giraffe-face.png"));
+            //giraffeButon = ImageIO.read(new File("res/icons/toolkit/shop/animal/full-body/giraffe-body.png"));
             giraffeButon = resizeImage(giraffeButon, 60);
         } catch (IOException e) {
             throw new RuntimeException(e);

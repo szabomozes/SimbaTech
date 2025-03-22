@@ -1,14 +1,19 @@
 package panels.menu.buttons;
 
+import core.Resources;
 import logic.Logic;
 import panels.CardPanel;
 import panels.game.toolbar.buttons.speed.SpeedButton;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class StartButton extends JButton {
     public StartButton(String text) {
         super(text);
+        setFocusPainted(false);
+        setFont(Resources.Instance.menu_font.deriveFont(35f));
+        setForeground(Color.BLACK);
     }
 
     protected void start(String text) {
@@ -34,7 +39,7 @@ public class StartButton extends JButton {
 
     private void generateGameBackground() {
         try {
-            Thread.sleep(5000);
+            Thread.sleep(1);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
