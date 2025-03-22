@@ -1,9 +1,9 @@
 package logic;
 
-import entity.mobile.Giraffe;
-import entity.mobile.Leopard;
-import entity.mobile.Lion;
-import entity.mobile.Zebra;
+import entity.mobile.animal.Giraffe;
+import entity.mobile.animal.Leopard;
+import entity.mobile.animal.Lion;
+import entity.mobile.animal.Zebra;
 import panels.game.Calendar;
 import panels.game.toolbar.ToolBarCardLayout;
 

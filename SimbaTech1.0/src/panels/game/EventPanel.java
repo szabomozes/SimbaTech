@@ -8,11 +8,15 @@ import java.util.ArrayList;
 
 import core.Resources;
 import entity.mobile.*;
+import entity.mobile.animal.Giraffe;
+import entity.mobile.animal.Leopard;
+import entity.mobile.animal.Lion;
+import entity.mobile.animal.Zebra;
 import logic.Logic;
 import panels.game.coin.CoinPanel;
 import panels.game.minimap.Minimap;
 import panels.game.toolbar.ToolBarCardLayout;
-import java.util.ArrayList;
+
 import java.util.Comparator;
 import java.util.List;
 

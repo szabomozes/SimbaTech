@@ -5,6 +5,7 @@ import logic.DifficultyEnum;
 import logic.Logic;
 import map.ImageMerger;
 import panels.CardPanel;
+import panels.game.toolbar.ToolBarCardLayout;
 import panels.game.toolbar.buttons.speed.SpeedButton;
 
 import javax.swing.*;
@@ -34,6 +35,7 @@ public class StartButton extends JButton {
             SwingUtilities.invokeLater(() -> {
                 Logic.Instance.reset(message);
                 SpeedButton.Instance.resetSpeed();
+                ToolBarCardLayout.Instance.showCard("toolbar");
                 System.out.println("Pálya betöltve");
                 CardPanel.Instance.updateGamePanel();
                 CardPanel.Instance.showCard("game");

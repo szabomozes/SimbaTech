@@ -228,25 +228,25 @@ public class Resources {
     public void animals() {
         try {
             lionBody = ImageIO.read(new File("res/icons/toolkit/shop/animal/full-body/lion-body.png"));
-            lionBody = resizeImage(lionBody, 60);
+            lionBody = resizeImage(lionBody, 70);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         try {
             leopardBody = ImageIO.read(new File("res/icons/toolkit/shop/animal/full-body/leopard-body.png"));
-            leopardBody = resizeImage(leopardBody, 60);
+            leopardBody = resizeImage(leopardBody, 50);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         try {
             zebraBody = ImageIO.read(new File("res/icons/toolkit/shop/animal/full-body/zebra-body.png"));
-            zebraBody = resizeImage(zebraBody, 60);
+            zebraBody = resizeImage(zebraBody, 50);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         try {
             giraffeBody = ImageIO.read(new File("res/icons/toolkit/shop/animal/full-body/giraffe-body.png"));
-            giraffeBody = resizeImage(giraffeBody, 60);
+            giraffeBody = resizeImage(giraffeBody, 100);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
