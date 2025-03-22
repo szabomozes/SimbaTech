@@ -27,9 +27,9 @@ public class LoadingPanel extends JPanel {
     private final Random random = new Random();
 
     public LoadingPanel() {
-        new Timer(20, e -> moveBackground()).start();
+        new Timer(0, e -> moveBackground()).start();
 
-        new Timer(10, e -> {
+        new Timer(0, e -> {
             angle -= Math.toRadians(1);
             if (angle <= -2 * Math.PI) angle = 0;
             repaint();

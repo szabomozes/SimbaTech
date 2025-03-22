@@ -34,12 +34,17 @@ public class Resources {
     public BufferedImage sellButton;
     public BufferedImage binButton;
     public BufferedImage roadTableButton;
+    public BufferedImage coinStack;
+    public BufferedImage minimap;
+    public BufferedImage ground;
+    public BufferedImage grass1;
+    public BufferedImage grass2;
 
     private Resources() {}
 
     public void load() {
         menu();
-        map();
+        mapCreate();
         game();
         toolBar();
     }
@@ -64,12 +69,31 @@ public class Resources {
         }
     }
 
+    private void mapCreate() {
+        try {
+            ground = ImageIO.read(new File("res/icons/mapCreate/ground.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            grass1 = ImageIO.read(new File("res/icons/mapCreate/grass1.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            grass2 = ImageIO.read(new File("res/icons/mapCreate/grass2.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void map() {
         try {
             map = ImageIO.read(new File("res/icons/game-panel/map.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        minimap = resizeImage(map, 150);
     }
 
     public void game() {
@@ -82,6 +106,12 @@ public class Resources {
         try {
             calender = ImageIO.read(new File("res/icons/game-panel/calendar.png"));
             calender = resizeImage(calender, 50);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            coinStack = ImageIO.read(new File("res/icons/game-panel/coin-stack.png"));
+            coinStack = resizeImage(coinStack, 50);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

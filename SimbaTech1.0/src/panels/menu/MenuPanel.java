@@ -37,7 +37,7 @@ public class MenuPanel extends JPanel {
         JPanel buttonPanel = new ButtonsPanel();
         add(buttonPanel, gbc);
 
-        new Timer(20, e -> moveBackground()).start();
+        new Timer(0, e -> moveBackground()).start();
     }
 
     private void moveBackground() {
