@@ -4,11 +4,12 @@ import panels.game.toolbar.buttons.shop.*;
 import panels.game.toolbar.buttons.speed.SpeedButton;
 
 import javax.swing.*;
+import java.awt.*;
 
-public class ToolBarPanelTest extends JPanel {
+public class ToolBarPanel extends JPanel {
     private final RoadTableButton roadTableButton = new RoadTableButton();
 
-    public ToolBarPanelTest() {
+    public ToolBarPanel() {
         setLayout(null);
 
         add(new LionButton());
@@ -28,6 +29,8 @@ public class ToolBarPanelTest extends JPanel {
         add(roadTableButton);
         add(SpeedButton.Instance);
 
+        setBackground(Color.DARK_GRAY);
+        setBorder(BorderFactory.createMatteBorder(2, 0, 0, 0, Color.BLACK));
 
     }
 

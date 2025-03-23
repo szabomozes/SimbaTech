@@ -9,7 +9,8 @@ import java.awt.*;
 public class GameContainer extends JPanel {
     public GameContainer() {
         super(new BorderLayout());
-        add(new EventPanel(), BorderLayout.CENTER);
+        add(EventPanel.Instance, BorderLayout.CENTER);
+        EventPanel.Instance.setClearArrays();
         add(ToolBarCardLayout.Instance, BorderLayout.SOUTH);
     }
 }
