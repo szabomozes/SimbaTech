@@ -1,6 +1,7 @@
 package panels.game.minimap;
 
 import core.Resources;
+import panels.feedback.FeedBackCardLayout;
 import panels.game.EventPanel;
 
 import javax.swing.*;
@@ -12,6 +13,9 @@ import java.awt.image.BufferedImage;
 
 public class Minimap extends JPanel {
     private BufferedImage backgroundImage = Resources.Instance.minimap;
+
+    //minimap letíltása
+    private final FeedBackCardLayout feedback = FeedBackCardLayout.Instance;
 
     public Minimap() {
         setSize(new Dimension(backgroundImage.getWidth(), backgroundImage.getHeight()));

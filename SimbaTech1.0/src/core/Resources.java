@@ -46,6 +46,11 @@ public class Resources {
     public BufferedImage saveButton;
     public BufferedImage deleteButton;
     public BufferedImage hourglass;
+    //game-plant
+    public BufferedImage palmTree;
+    public BufferedImage baobab;
+    public BufferedImage pancium;
+    public BufferedImage water;
 
     private Resources() {}
 
@@ -123,6 +128,58 @@ public class Resources {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+
+        // Feedback
+        try {
+            badFeddBack = ImageIO.read(new File("res/icons/message/bad.png"));
+            badFeddBack = resizeImage(badFeddBack, 50);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            loseFeddBack = ImageIO.read(new File("res/icons/message/lose.png"));
+            loseFeddBack = resizeImage(loseFeddBack, 50);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            winFeddBack = ImageIO.read(new File("res/icons/message/win.png"));
+            winFeddBack = resizeImage(winFeddBack, 50);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        //plants
+        try {
+            palmTree = ImageIO.read(new File("res/icons/toolkit/shop/plant/palm-tree.png"));
+            palmTree = resizeImage(palmTree, 60);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            baobab = ImageIO.read(new File("res/icons/toolkit/shop/plant/baobab.png"));
+            baobab = resizeImage(baobab, 60);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            pancium = ImageIO.read(new File("res/icons/toolkit/shop/plant/pancium.png"));
+            pancium = resizeImage(pancium, 60);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        //water
+        try {
+            water = ImageIO.read(new File("res/icons/toolkit/shop/object/water.png"));
+            water = resizeImage(water, 80);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
     }
 
     private void toolBar() {
@@ -226,6 +283,8 @@ public class Resources {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+
     }
 
     public void animals() {
