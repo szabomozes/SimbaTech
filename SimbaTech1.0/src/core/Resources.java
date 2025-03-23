@@ -43,6 +43,9 @@ public class Resources {
     public BufferedImage leopardBody;
     public BufferedImage zebraBody;
     public BufferedImage giraffeBody;
+    public BufferedImage saveButton;
+    public BufferedImage deleteButton;
+    public BufferedImage hourglass;
 
     private Resources() {}
 
@@ -247,6 +250,24 @@ public class Resources {
         try {
             giraffeBody = ImageIO.read(new File("res/icons/toolkit/shop/animal/full-body/giraffe-body.png"));
             giraffeBody = resizeImage(giraffeBody, 100);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            saveButton = ImageIO.read(new File("res/icons/toolkit/road/build.png"));
+            saveButton = resizeImage(saveButton, 60);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            deleteButton = ImageIO.read(new File("res/icons/toolkit/road/bin.png"));
+            deleteButton = resizeImage(deleteButton, 60);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            hourglass = ImageIO.read(new File("res/icons/menu/load/hourglass.png"));
+            hourglass = resizeImage(hourglass, 200);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
