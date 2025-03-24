@@ -3,12 +3,14 @@ package panels;
 import core.Resources;
 import javax.swing.*;
 import java.awt.*;
+import java.util.Random;
 
 public class LoadingPanel extends JPanel {
     private int r = 0, g = 0, b = 0;
     private boolean increasing = true;
     private Image hourglass;
     private String text = "Pálya generálása...";
+    private Random rnd = new Random();
 
     public LoadingPanel() {
         setPreferredSize(new Dimension(400, 300));
@@ -16,19 +18,19 @@ public class LoadingPanel extends JPanel {
         setBackground(Color.BLACK);
 
         // Színátmenetes háttér animáció
-        Timer timer = new Timer(100, e -> {
+        Timer timer = new Timer(1, e -> {
             if (increasing) {
-                r = Math.min(255, r + 5);
-                g = Math.min(255, g + 3);
-                b = Math.min(255, b + 2);
-                if (r == 255 && g == 255 && b == 255) {
+                r = Math.min(255, r + rnd.nextInt(1, 5));
+                g = Math.min(255, g + rnd.nextInt(1, 5));
+                b = Math.min(255, b + rnd.nextInt(1, 5));
+                if (r == 255 || g == 255 || b == 255) {
                     increasing = false;
                 }
             } else {
-                r = Math.max(0, r - 5);
-                g = Math.max(0, g - 3);
-                b = Math.max(0, b - 2);
-                if (r == 0 && g == 0 && b == 0) {
+                r = Math.max(0, r - rnd.nextInt(1, 5));
+                g = Math.max(0, g - rnd.nextInt(1, 5));
+                b = Math.max(0, b - rnd.nextInt(1, 5));
+                if (r == 0 || g == 0 || b == 0) {
                     increasing = true;
                 }
             }
