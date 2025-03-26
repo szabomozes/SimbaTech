@@ -1,0 +1,74 @@
+package panels.game.toolbar.buttons.speed;
+
+import core.Resources;
+import logic.Speed;
+import logic.SpeedEnum;
+import panels.CardPanel;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+
+public class SpeedButton extends JButton {
+
+    private SpeedEnum speedEnum = SpeedEnum.SNAIL;
+
+    public static SpeedButton Instance = new SpeedButton();
+
+    private final int x = 30;
+    private final int y = 45;
+
+    private SpeedButton() {
+
+        setBorderPainted(false);
+        setContentAreaFilled(false);
+        setFocusPainted(false);
+
+        ImageIcon icon = new ImageIcon(getBufferedImageBySpeedEnum());
+        setIcon(icon);
+
+        int width = icon.getIconWidth();
+        int height = icon.getIconHeight();
+        setBounds(CardPanel.Instance.getWidth() - width - x, y, width, height);
+
+        addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Speed.Instance.speedEnum = Speed.Instance.speedEnum.next();
+                ImageIcon icon = new ImageIcon(getBufferedImageBySpeedEnum());
+                setIcon(icon);
+                System.out.println(Speed.Instance.speedEnum.toString());
+                System.out.println(Speed.Instance.speedEnum.getDateTick());
+            }
+        });
+    }
+
+    private BufferedImage getBufferedImageBySpeedEnum() {
+        switch (Speed.Instance.speedEnum) {
+            case SNAIL -> {
+                return Resources.Instance.speedSnail;
+            }
+            case HIPPOPOTAMUS -> {
+                return Resources.Instance.speedHippopotamus;
+            }
+            case EAGLE -> {
+                return Resources.Instance.speedEadle;
+            }
+        }
+        return Resources.Instance.speedSnail;
+    }
+
+    public void updatePosition() {
+        setBounds(CardPanel.Instance.getWidth() - getWidth() - x, y, getWidth(), getHeight());
+    }
+
+    public void resetSpeed() {
+        while (Speed.Instance.speedEnum != SpeedEnum.SNAIL) {
+            Speed.Instance.speedEnum = Speed.Instance.speedEnum.next();
+        }
+        ImageIcon icon = new ImageIcon(getBufferedImageBySpeedEnum());
+        setIcon(icon);
+    }
+
+}
