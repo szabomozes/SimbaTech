@@ -1,4 +1,4 @@
-package logic;
+package safari;
 
 public enum SpeedEnum {
     SNAIL,

@@ -1,8 +1,8 @@
 package panels.menu.buttons;
 
 import core.Resources;
-import logic.DifficultyEnum;
-import logic.Logic;
+import safari.DifficultyEnum;
+import safari.Safari;
 import map.ImageMerger;
 import panels.CardPanel;
 import panels.game.toolbar.ToolBarCardLayout;
@@ -33,7 +33,7 @@ public class StartButton extends JButton {
             Resources.Instance.map();
 
             SwingUtilities.invokeLater(() -> {
-                Logic.Instance.reset(message);
+                Safari.Instance.reset(message);
                 SpeedButton.Instance.resetSpeed();
                 ToolBarCardLayout.Instance.showCard("toolbar");
                 System.out.println("Pálya betöltve");

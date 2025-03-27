@@ -1,8 +1,8 @@
 package panels.game.toolbar.buttons.speed;
 
 import core.Resources;
-import logic.Speed;
-import logic.SpeedEnum;
+import safari.Speed;
+import safari.SpeedEnum;
 import panels.CardPanel;
 
 import javax.swing.*;

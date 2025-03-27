@@ -2,7 +2,7 @@ package panels.game;
 
 import core.Resources;
 import entity.Entity;
-import logic.Logic;
+import safari.Safari;
 import panels.feedback.BasicFeedBackPanel;
 import panels.game.coin.CoinPanel;
 import panels.game.minimap.Minimap;
@@ -43,16 +43,16 @@ public class EventPanel extends JPanel {
                 lastY = e.getY();
 
                 if (SwingUtilities.isRightMouseButton(e)) {
-                    if (Logic.Instance.shopping != null) {
+                    if (Safari.Instance.shopping != null) {
                         boolean okay = true;
-                        List<Entity> allentities = Logic.Instance.getAllEntities();
+                        List<Entity> allentities = Safari.Instance.getAllEntities();
                         for (int i = 0; i < allentities.size() && okay; i++) {
                             if (allentities.get(i).enviromentContains(lastX - offsetX, lastY - offsetY)) {
                                 okay = false;
                             }
                         }
                         if (okay) {
-                            Logic.Instance.placeSomething(lastX - offsetX, lastY - offsetY);
+                            Safari.Instance.placeSomething(lastX - offsetX, lastY - offsetY);
                             ToolBarCardLayout.Instance.showCard("toolbar");
                             System.out.println("Hozzáadva a következő pozícióval: (" + lastX + ", " + lastY + ")");
                             repaint();
@@ -128,7 +128,7 @@ public class EventPanel extends JPanel {
         super.paintComponent(g);
         g.drawImage(background, offsetX, offsetY, this);
 
-        List<Entity> allEntities = Logic.Instance.getAllEntities();
+        List<Entity> allEntities = Safari.Instance.getAllEntities();
 
         for (Entity entity : allEntities) {
             entity.draw(g, offsetX, offsetY);

@@ -1,4 +1,4 @@
-package logic;
+package safari;
 
 import entity.Entity;
 import entity.mobile.animal.Giraffe;
@@ -17,8 +17,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class Logic {
-    public static Logic Instance = new Logic();
+public class Safari {
+    public static Safari Instance = new Safari();
 
     private DifficultyEnum difficultyEnum;
     private int date;
@@ -45,7 +45,7 @@ public class Logic {
     private List<Ranger> rangers = new ArrayList<>();
 
 
-    private Logic() {
+    private Safari() {
         dateTimer = new DateTimer();
         dateTimer.start();
     }
