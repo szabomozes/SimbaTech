@@ -1,4 +1,4 @@
-package logic;
+package safari;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -16,7 +16,7 @@ public class DateTimer extends Timer {
                 tick++;
                 System.out.println(tick);
                 if (tick >= Speed.Instance.speedEnum.getDateTick()){
-                    Logic.Instance.updateDate();
+                    Safari.Instance.updateDate();
                     tick = 0;
                 }
             }

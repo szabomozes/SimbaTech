@@ -1,7 +1,7 @@
 package panels.game;
 
 import core.Resources;
-import logic.Logic;
+import safari.Safari;
 import panels.CardPanel;
 
 import javax.swing.*;
@@ -19,7 +19,7 @@ public class LogoutButton extends JButton {
         addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Logic.Instance.shutDown();
+                Safari.Instance.shutDown();
                 CardPanel.Instance.showCard("menu");
             }
         });

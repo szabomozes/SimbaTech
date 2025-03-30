@@ -1,6 +1,6 @@
 package panels.game.toolbar.buttons.shop;
 
-import logic.Logic;
+import safari.Safari;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -26,7 +26,7 @@ public abstract class BasicLeftToolBarButton extends JButton {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println(message);
-                Logic.Instance.buySoemthing(message);
+                Safari.Instance.buySoemthing(message);
             }
         });
     }

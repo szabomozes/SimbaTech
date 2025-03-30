@@ -1,7 +1,7 @@
 package panels.game.toolbar.buttons;
 
 import core.Resources;
-import logic.Logic;
+import safari.Safari;
 import panels.game.toolbar.ToolBarCardLayout;
 
 import javax.swing.*;
@@ -21,7 +21,7 @@ public class BuyingToolBarBin extends JButton {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ToolBarCardLayout.Instance.showCard("toolbar");
-                Logic.Instance.shopping = null;
+                Safari.Instance.shopping = null;
             }
         });
     }

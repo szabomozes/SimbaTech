@@ -1,7 +1,7 @@
 package panels.feedback;
 
 import core.Resources;
-import logic.Logic;
+import safari.Safari;
 import panels.CardPanel;
 
 import javax.swing.*;
@@ -11,10 +11,10 @@ public class WinFeedBackPanel extends BasicFeedBackPanel{
         super("Gratulálok! Csodálatos munkát végeztél!", Resources.Instance.winFeddBack, getButton());
     }
     private static JButton getButton() {
-        Logic.Instance.shutDown();
+        Safari.Instance.shutDown();
         JButton button = new JButton("Kilépés");
         button.addActionListener(e-> {
-            Logic.Instance.shutDown();
+            Safari.Instance.shutDown();
             CardPanel.Instance.showCard("menu");
         });
         return button;

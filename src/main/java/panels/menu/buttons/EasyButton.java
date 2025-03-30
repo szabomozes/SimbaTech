@@ -1,7 +1,7 @@
 package panels.menu.buttons;
 
 
-import logic.DifficultyEnum;
+import safari.DifficultyEnum;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
