@@ -131,26 +131,26 @@ public class Resources {
             throw new RuntimeException(e);
         }
         try {
-            palmTree = ImageIO.read(new File("src/main/res/icons/toolkit/shop/plant/palm-tree.png"));
-            palmTree = resizeImage(palmTree, 70);
+            palmTree = ImageIO.read(new File("src/main/res/icons/game-panel/plants/palm-tree.png"));
+            palmTree = resizeImage(palmTree, 140);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         try {
-            baobab = ImageIO.read(new File("src/main/res/icons/toolkit/shop/plant/baobab.png"));
-            baobab = resizeImage(baobab, 90);
+            baobab = ImageIO.read(new File("src/main/res/icons/game-panel/plants/baobab.png"));
+            baobab = resizeImage(baobab, 180);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         try {
-            pancium = ImageIO.read(new File("src/main/res/icons/toolkit/shop/plant/pancium.png"));
-            pancium = resizeImage(pancium, 30);
+            pancium = ImageIO.read(new File("src/main/res/icons/game-panel/plants/grass.png"));
+            pancium = resizeImage(pancium, 50);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         try {
-            water = ImageIO.read(new File("src/main/res/icons/toolkit/shop/object/water.png"));
-            water = resizeImage(water, 80);
+            water = ImageIO.read(new File("src/main/res/icons/game-panel/lake.png"));
+            water = resizeImage(water, 110);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -282,26 +282,26 @@ public class Resources {
 
     public void animals() {
         try {
-            lionBody = ImageIO.read(new File("src/main/res/icons/toolkit/shop/animal/full-body/lion-body.png"));
-            lionBody = resizeImage(lionBody, 70);
+            lionBody = ImageIO.read(new File("src/main/res/icons/game-panel/animals/lion.png"));
+            lionBody = resizeImage(lionBody, 90);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         try {
-            leopardBody = ImageIO.read(new File("src/main/res/icons/toolkit/shop/animal/full-body/leopard-body.png"));
-            leopardBody = resizeImage(leopardBody, 50);
+            leopardBody = ImageIO.read(new File("src/main/res/icons/game-panel/animals/leopard.png"));
+            leopardBody = resizeImage(leopardBody, 70);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         try {
-            zebraBody = ImageIO.read(new File("src/main/res/icons/toolkit/shop/animal/full-body/zebra-body.png"));
-            zebraBody = resizeImage(zebraBody, 50);
+            zebraBody = ImageIO.read(new File("src/main/res/icons/game-panel/animals/zebra.png"));
+            zebraBody = resizeImage(zebraBody, 100);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         try {
-            giraffeBody = ImageIO.read(new File("src/main/res/icons/toolkit/shop/animal/full-body/giraffe-body.png"));
-            giraffeBody = resizeImage(giraffeBody, 100);
+            giraffeBody = ImageIO.read(new File("src/main/res/icons/game-panel/animals/giraffe.png"));
+            giraffeBody = resizeImage(giraffeBody, 140);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -327,8 +327,8 @@ public class Resources {
 
     private void persons() {
         try {
-            ranger = ImageIO.read(new File("src/main/res/basic.png"));
-            ranger = resizeImage(ranger, 60);
+            ranger = ImageIO.read(new File("src/main/res/icons/game-panel/ranger.png"));
+            ranger = resizeImage(ranger, 100);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
