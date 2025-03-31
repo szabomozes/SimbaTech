@@ -49,7 +49,7 @@ public class LoadingPanel extends JPanel {
         // Homokóra rajzolása
         if (hourglass != null) {
             int x = (getWidth() - hourglass.getWidth(null)) / 2;
-            int y = (getHeight() - hourglass.getHeight(null)) / 2;
+            int y = (getHeight() - hourglass.getHeight(null)) / 2 + 50;
             g.drawImage(hourglass, x, y, null);
         }
 
@@ -62,7 +62,7 @@ public class LoadingPanel extends JPanel {
         FontMetrics fm = g2.getFontMetrics();
         int textWidth = fm.stringWidth(text);
         int textX = (getWidth() - textWidth) / 2;  // Vízszintesen középre helyezés
-        int textY = 200;
+        int textY = getHeight() / 3;
 
         // Fekete kontúr
         g2.setColor(Color.BLACK);
