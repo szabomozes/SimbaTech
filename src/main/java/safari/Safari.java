@@ -24,15 +24,6 @@ public class Safari {
     private int date;
     public int coin;
     private DateTimer dateTimer;
-    public final int lionPrice = 1;
-    public final int leopardPrice = 1;
-    public final int zebraPrice = 1;
-    public final int giraffePrice = 1;
-    public final int palmTreePrice = 1;
-    public final int baobabPrice = 1;
-    public final int panciumPrice = 1;
-    public final int waterPrice = 1;
-    public final int rangerPrice = 1;
     public String shopping;
     private List<Lion> lions = new ArrayList<>();
     private List<Leopard> leopards = new ArrayList<>();
@@ -43,6 +34,7 @@ public class Safari {
     private List<Pancium> panciums = new ArrayList<>();
     private List<Water> waters = new ArrayList<>();
     private List<Ranger> rangers = new ArrayList<>();
+    private boolean selling = false;
 
 
     private Safari() {
@@ -64,6 +56,7 @@ public class Safari {
         difficultyEnum = diff;
         shopping = null;
         coin = 100;
+        selling = false;
 
         lions.clear();
         leopards.clear();
@@ -88,23 +81,25 @@ public class Safari {
     private int getPriceByMessage(String message) {
         switch (message) {
             case "lion":
-                return lionPrice;
+                return Prices.LION.getPrice();
             case "leopard":
-                return leopardPrice;
+                return Prices.LEOPARD.getPrice();
             case "zebra":
-                return zebraPrice;
+                return Prices.ZEBRA.getPrice();
             case "giraffe":
-                return giraffePrice;
+                return Prices.GIRAFFE.getPrice();
             case "palmtree":
-                return palmTreePrice;
+                return Prices.PALMTREE.getPrice();
             case "baobab":
-                return baobabPrice;
+                return Prices.BAOBAB.getPrice();
             case "pancium":
-                return panciumPrice;
+                return Prices.PANICUM.getPrice();
             case "water":
-                return waterPrice;
+                return Prices.WATER.getPrice();
             case "ranger":
-                return rangerPrice;
+                return Prices.RANGER.getPrice();
+            case "jeep":
+                return Prices.JEEP.getPrice();
             default:
                 return 999999999;
         }
@@ -122,42 +117,136 @@ public class Safari {
         switch (shopping) {
             case "lion":
                 lions.add(new Lion(x, y));
-                coin -= lionPrice;
+                coin -= Prices.LION.getPrice();
                 break;
             case "leopard":
                 leopards.add(new Leopard(x, y));
-                coin -= leopardPrice;
+                coin -= Prices.LEOPARD.getPrice();
                 break;
             case "zebra":
                 zebras.add(new Zebra(x, y));
-                coin -= zebraPrice;
+                coin -= Prices.ZEBRA.getPrice();
                 break;
             case "giraffe":
                 giraffes.add(new Giraffe(x, y));
-                coin -= giraffePrice;
+                coin -= Prices.GIRAFFE.getPrice();
                 break;
             case "baobab":
                 baobabs.add(new Baobab(x, y));
-                coin -= baobabPrice;
+                coin -= Prices.BAOBAB.getPrice();
                 break;
             case "palmtree":
                 palmTrees.add(new PalmTree(x, y));
-                coin -= palmTreePrice;
+                coin -= Prices.PALMTREE.getPrice();
                 break;
             case "pancium":
                 panciums.add(new Pancium(x, y));
-                coin -= panciumPrice;
+                coin -= Prices.PANICUM.getPrice();
                 break;
             case "water":
                 waters.add(new Water(x, y));
-                coin -= waterPrice;
+                coin -= Prices.WATER.getPrice();
                 break;
             case "ranger":
                 rangers.add(new Ranger(x, y));
-                coin -= rangerPrice;
+                coin -= Prices.RANGER.getPrice();
+                break;
+            case "jeep":
+                coin -= Prices.JEEP.getPrice();
                 break;
         }
         shopping = null;
+    }
+
+    public void sellSomething(int id) {
+        ToolBarCardLayout.Instance.showCard("selling");
+        Entity actual = getEntityById(id);
+        switch (typeOfEntity(actual)) {
+            case "giraffe":
+                coin += Prices.GIRAFFE.getPrice();
+                break;
+            case "leopard":
+                coin += Prices.LEOPARD.getPrice();
+                break;
+            case "lion":
+                coin += Prices.LION.getPrice();
+                break;
+            case "zebra":
+                coin += Prices.ZEBRA.getPrice();
+                break;
+            case "ranger":
+                coin += Prices.RANGER.getPrice();
+                break;
+            default:
+                break;
+        }
+        removeEntityById(id);
+        System.out.println("deleted");
+    }
+
+    public void setSellingMode(boolean mode) {
+        this.selling = mode;
+    }
+
+    public boolean getSellingMode() {
+        return this.selling;
+    }
+
+    public Entity getEntityById(int id) {
+        List<Entity> allentities = getAllEntities();
+        for (Entity e : allentities) {
+            if (e.id == id) {
+                return e;
+            }
+        }
+        return null;
+    }
+
+    public void removeEntityById(int id) {
+        Entity actual = getEntityById(id);
+        switch (typeOfEntity(actual)) {
+            case "giraffe":
+                giraffes.remove((Giraffe)actual);
+                break;
+            case "leopard":
+                leopards.remove((Leopard)actual);
+                break;
+            case "lion":
+                lions.remove((Lion)actual);
+                break;
+            case "zebra":
+                zebras.remove((Zebra)actual);
+                break;
+            case "palm-tree":
+                palmTrees.remove((PalmTree)actual);
+                break;
+            case "baobab":
+                baobabs.remove((Baobab)actual);
+                break;
+            case "pancium":
+                panciums.remove((Pancium)actual);
+                break;
+            case "water":
+                waters.remove((Water)actual);
+                break;
+            case "ranger":
+                rangers.remove((Ranger)actual);
+                break;
+        }
+    }
+
+    public String typeOfEntity(Entity e) {
+        if (e instanceof Giraffe) return "giraffe";
+        else if (e instanceof Leopard) return "leopard";
+        else if (e instanceof Lion) return "lion";
+        else if (e instanceof Zebra) return "zebra";
+        else if (e instanceof PalmTree) return "palm-tree";
+        else if (e instanceof Baobab) return "baobab";
+        else if (e instanceof Pancium) return "pancium";
+        else if (e instanceof Water) return "water";
+        else if (e instanceof Ranger) return "ranger";
+        // else if (e instanceof Jeep) return "giraffe";
+        return "error";
     }
 
     public List<Entity> getAllEntities() {

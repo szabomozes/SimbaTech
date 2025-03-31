@@ -1,10 +1,14 @@
 package panels.game.toolbar.buttons.shop;
 
+import panels.game.toolbar.SellingToolBar;
+import panels.game.toolbar.ToolBarCardLayout;
 import safari.Safari;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
 public abstract class BasicLeftToolBarButton extends JButton {
@@ -27,7 +31,15 @@ public abstract class BasicLeftToolBarButton extends JButton {
             public void actionPerformed(ActionEvent e) {
                 System.out.println(message);
                 Safari.Instance.buySoemthing(message);
+
+                if (message.equals("sell")) {
+                    System.out.println("Most kattints a térképre az eladás helyének kiválasztásához!");
+                    new SellingToolBar();
+                    ToolBarCardLayout.Instance.showCard("selling");
+                    Safari.Instance.setSellingMode(true);
+                }
             }
         });
+
     }
 }

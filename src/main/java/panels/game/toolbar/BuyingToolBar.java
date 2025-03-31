@@ -1,6 +1,6 @@
 package panels.game.toolbar;
 
-import panels.game.toolbar.buttons.BuyingToolBarBin;
+import panels.game.toolbar.buttons.BuyingSellingToolBarBin;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +19,7 @@ public class BuyingToolBar extends JPanel {
         gbc.weighty = 1.0;
         gbc.anchor = GridBagConstraints.CENTER;
 
-        add(new BuyingToolBarBin(), gbc);
+        add(new BuyingSellingToolBarBin(), gbc);
 
         setBackground(Color.DARK_GRAY);
         setBorder(BorderFactory.createMatteBorder(2, 0, 0, 0, Color.BLACK));
