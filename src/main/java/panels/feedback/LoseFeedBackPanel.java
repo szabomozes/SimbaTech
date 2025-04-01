@@ -1,14 +1,14 @@
 package panels.feedback;
 
 import core.Resources;
-import safari.Safari;
 import panels.CardPanel;
+import safari.Safari;
 
 import javax.swing.*;
 
-public class WinFeedBackPanel extends BasicFeedBackPanel{
-    public WinFeedBackPanel() {
-        super("Gratulálok! Csodálatos munkát végeztél!", Resources.Instance.winFeddBack);
+public class LoseFeedBackPanel extends BasicFeedBackPanel{
+    public LoseFeedBackPanel() {
+        super("Vesztettél!", Resources.Instance.loseFeddBack);
         add(getButton(), gbc);
     }
     private JButton getButton() {

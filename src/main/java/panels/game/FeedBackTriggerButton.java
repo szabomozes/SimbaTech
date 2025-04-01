@@ -1,5 +1,7 @@
 package panels.game;
 
+import panels.feedback.LoseFeedBackPanel;
+import panels.feedback.MessageFeedBackPanel;
 import panels.feedback.WinFeedBackPanel;
 
 import javax.swing.*;
@@ -16,7 +18,7 @@ public class FeedBackTriggerButton extends JButton {
         addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ((EventPanel) getParent()).setFeedback(new WinFeedBackPanel());
+                ((EventPanel) getParent()).setFeedback(new MessageFeedBackPanel("Idk, it's a message!"));
             }
         });
 

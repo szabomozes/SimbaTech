@@ -119,8 +119,10 @@ public class EventPanel extends JPanel {
     }
 
     public void setFeedback(BasicFeedBackPanel feedback) {
+        if (this.feedback != null) remove(this.feedback);
         this.feedback = feedback;
-        add(feedback);
+        if (this.feedback != null) add(feedback);
+        repaint();
     }
 
     @Override
