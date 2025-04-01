@@ -1,6 +1,7 @@
 package panels.game.minimap;
 
 import core.Resources;
+import entity.Entity;
 import entity.mobile.animal.Giraffe;
 import entity.mobile.animal.Leopard;
 import entity.mobile.animal.Lion;
@@ -19,6 +20,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 public class Minimap extends JPanel {
     private BufferedImage backgroundImage = Resources.Instance.minimap;
@@ -73,53 +75,19 @@ public class Minimap extends JPanel {
         int width = getWidth();
         int height = getHeight();
 
-        g.setColor(Color.RED);
-        for (Lion lion : Safari.Instance.getLions()) {
-            int x = (int) (width * ((double) lion.getX() / parentWidth));
-            int y = (int) (height * ((double) lion.getY() / parentHeight));
-            g.fillOval(x, y, 5, 5);
-        }
-        for (Leopard leopard : Safari.Instance.getLeopards()) {
-            int x = (int) (width * ((double) leopard.getX() / parentWidth));
-            int y = (int) (height * ((double) leopard.getY() / parentHeight));
-            g.fillOval(x, y, 5, 5);
-        }
-        for (Zebra zebra : Safari.Instance.getZebras()) {
-            int x = (int) (width * ((double) zebra.getX() / parentWidth));
-            int y = (int) (height * ((double) zebra.getY() / parentHeight));
-            g.fillOval(x, y, 5, 5);
-        }
-        for (Giraffe giraffe : Safari.Instance.getGiraffes()) {
-            int x = (int) (width * ((double) giraffe.getX() / parentWidth));
-            int y = (int) (height * ((double) giraffe.getY() / parentHeight));
-            g.fillOval(x, y, 5, 5);
-        }
-        g.setColor(Color.GREEN);
-        for (PalmTree palmTree : Safari.Instance.getPalmTrees()) {
-            int x = (int) (width * ((double) palmTree.getX() / parentWidth));
-            int y = (int) (height * ((double) palmTree.getY() / parentHeight));
-            g.fillOval(x, y, 5, 5);
-        }
-        for (Pancium pancium : Safari.Instance.getPanciums()) {
-            int x = (int) (width * ((double) pancium.getX() / parentWidth));
-            int y = (int) (height * ((double) pancium.getY() / parentHeight));
-            g.fillOval(x, y, 5, 5);
-        }
-        for (Baobab baobab : Safari.Instance.getBaobabs()) {
-            int x = (int) (width * ((double) baobab.getX() / parentWidth));
-            int y = (int) (height * ((double) baobab.getY() / parentHeight));
-            g.fillOval(x, y, 5, 5);
-        }
-        g.setColor(Color.CYAN);
-        for (Water water : Safari.Instance.getWaters()) {
-            int x = (int) (width * ((double) water.getX() / parentWidth));
-            int y = (int) (height * ((double) water.getY() / parentHeight));
-            g.fillOval(x, y, 5, 5);
-        }
-        g.setColor(Color.YELLOW);
-        for (Ranger ranger : Safari.Instance.getRangers()) {
-            int x = (int) (width * ((double) ranger.getX() / parentWidth));
-            int y = (int) (height * ((double) ranger.getY() / parentHeight));
+
+        List<Entity> entities = Safari.Instance.getAllEntities();
+
+        for (Entity entity : entities) {
+            String className = entity.getClass().getSimpleName();
+            switch (className) {
+                case "Lion", "Leopard", "Zebra", "Giraffe" -> g.setColor(Color.RED);
+                case "PalmTree", "Pancium", "Baobab" -> g.setColor(Color.GREEN);
+                case "Water" -> g.setColor(Color.CYAN);
+                case "Ranger" -> g.setColor(Color.YELLOW);
+            }
+            int x = (int) (width * ((double) entity.getX() / parentWidth));
+            int y = (int) (height * ((double) entity.getY() / parentHeight));
             g.fillOval(x, y, 5, 5);
         }
 
@@ -134,6 +102,6 @@ public class Minimap extends JPanel {
         int rectWidth = endX - startX - 1;
         int rectHeight = endY - startY - 1;
 
-        g.drawRect(startX, startY, rectWidth, rectHeight);;
+        g.drawRect(startX, startY, rectWidth, rectHeight);
     }
 }
