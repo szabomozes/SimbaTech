@@ -2,6 +2,7 @@ package panels.game.toolbar.buttons.road;
 
 import core.Resources;
 import entity.Path;
+import panels.feedback.MessageFeedBackPanel;
 import panels.feedback.WinFeedBackPanel;
 import panels.game.EventPanel;
 import panels.game.GameContainer;
@@ -38,10 +39,7 @@ public class SaveButton extends JButton {
                 cardLayout.show(ToolBarCardLayout.Instance, "toolbar");
 
                 if (!Safari.Instance.getTempPaths().getLast().getRoads().isEmpty()) {
-                    Safari.Instance.clearTempPaths();
-                    Safari.Instance.setRoadBuilding(false);
-
-                    ((EventPanel) getParent().getParent().getParent().getComponent(0)).setFeedback(new WinFeedBackPanel());
+                    ((EventPanel) getParent().getParent().getParent().getComponent(0)).setFeedback(new MessageFeedBackPanel("Zárd le az összes utat vásárlás előtt!", "buildRoad"));
                 } else {
                     int price = Safari.Instance.getTempPathsPrice();
                     System.out.println(price + " $");
@@ -50,11 +48,11 @@ public class SaveButton extends JButton {
                             Safari.Instance.addAPathToPaths(path);
                         }
                         Safari.Instance.coin -= price;
+                        Safari.Instance.setRoadBuilding(false);
+                        Safari.Instance.clearTempPaths();
                     } else {
-                        ((EventPanel) getParent().getParent().getParent().getComponent(0)).setFeedback(new WinFeedBackPanel());
+                        ((EventPanel) getParent().getParent().getParent().getComponent(0)).setFeedback(new MessageFeedBackPanel(price + "$ kerül az építkezés!", "buildRoad"));
                     }
-                    Safari.Instance.setRoadBuilding(false);
-                    Safari.Instance.clearTempPaths();
                 }
 
                 ((GameContainer) getParent().getParent().getParent()).repaint();

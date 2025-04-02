@@ -18,7 +18,7 @@ public class FeedBackTriggerButton extends JButton {
         addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ((EventPanel) getParent()).setFeedback(new MessageFeedBackPanel("Idk, it's a message!"));
+                ((EventPanel) getParent()).setFeedback(new MessageFeedBackPanel("Idk, it's a message!", "toolbar"));
             }
         });
 

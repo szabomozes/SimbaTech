@@ -9,19 +9,17 @@ import safari.Safari;
 import javax.swing.*;
 
 public class MessageFeedBackPanel extends BasicFeedBackPanel{
-    public MessageFeedBackPanel(String text) {
+    public MessageFeedBackPanel(String text, String toolBarCardLayout) {
         super(text, Resources.Instance.badFeddBack);
-        add(getButton(), gbc);
-    }
-    private JButton getButton() {
-        Safari.Instance.shutDown();
+
         JButton button = new JButton("Rendben");
         button.setFocusPainted(false);
         button.setFont(Resources.Instance.menu_font.deriveFont(20f));
         button.addActionListener(e-> {
-            ToolBarCardLayout.Instance.showCard("toolbar");
+            ToolBarCardLayout.Instance.showCard(toolBarCardLayout);
             ((EventPanel) getParent()).setFeedback(null);
         });
-        return button;
+
+        add(button, gbc);
     }
 }
