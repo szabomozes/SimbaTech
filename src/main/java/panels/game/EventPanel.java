@@ -146,5 +146,7 @@ public class EventPanel extends JPanel {
             feedback.updatePosition();
         }
         Calendar.Instance.updatePosition();
+        offsetX = Math.max(Math.min(0, offsetX), getWidth() - background.getWidth());
+        offsetY = Math.max(Math.min(0, offsetY), getHeight() - background.getHeight());
     }
 }

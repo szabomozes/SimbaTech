@@ -83,6 +83,7 @@ public class Safari {
 
         entry = EntityCreate.getEntry();
         exit = EntityCreate.getExit();
+        lions = EntityCreate.getLions();
 
         dateTimer = new DateTimer();
         dateTimer.start();
