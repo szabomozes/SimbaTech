@@ -133,6 +133,9 @@ public class EventPanel extends JPanel {
         for (Entity entity : allEntities) {
             entity.draw(g, offsetX, offsetY);
         }
+
+        Safari.Instance.getEntry().draw(g, offsetX, offsetY);
+        Safari.Instance.getExit().draw(g, offsetX, offsetY);
     }
 
     @Override

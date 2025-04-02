@@ -6,10 +6,13 @@ import entity.mobile.animal.Leopard;
 import entity.mobile.animal.Lion;
 import entity.mobile.animal.Zebra;
 import entity.mobile.person.Ranger;
+import entity.notmobile.Entry;
+import entity.notmobile.Exit;
 import entity.notmobile.Water;
 import entity.notmobile.plant.Baobab;
 import entity.notmobile.plant.PalmTree;
 import entity.notmobile.plant.Pancium;
+import map.EntityCreate;
 import panels.game.Calendar;
 import panels.game.toolbar.ToolBarCardLayout;
 
@@ -43,6 +46,9 @@ public class Safari {
     private List<Pancium> panciums = new ArrayList<>();
     private List<Water> waters = new ArrayList<>();
     private List<Ranger> rangers = new ArrayList<>();
+    private Entry entry = null;
+    private Exit exit = null;
+    private boolean roadBuilding = false;
 
 
     private Safari() {
@@ -74,6 +80,9 @@ public class Safari {
         panciums.clear();
         waters.clear();
         rangers.clear();
+
+        entry = EntityCreate.getEntry();
+        exit = EntityCreate.getExit();
 
         dateTimer = new DateTimer();
         dateTimer.start();
@@ -213,5 +222,20 @@ public class Safari {
 
     public List<Ranger> getRangers() {
         return rangers;
+    }
+
+    public boolean getRoadBuilding() {
+        return roadBuilding;
+    }
+
+    public void setRoadBuilding(boolean roadBuilding) {
+        this.roadBuilding = roadBuilding;
+    }
+
+    public Entry getEntry() {
+        return entry;
+    }
+    public Exit getExit() {
+        return exit;
     }
 }

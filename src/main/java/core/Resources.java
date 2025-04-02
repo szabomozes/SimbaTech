@@ -51,6 +51,8 @@ public class Resources {
     public BufferedImage pancium;
     public BufferedImage water;
     public BufferedImage ranger;
+    public BufferedImage entry;
+    public BufferedImage exit;
 
     private Resources() {}
 
@@ -151,6 +153,18 @@ public class Resources {
         try {
             water = ImageIO.read(new File("src/main/res/icons/game-panel/lake.png"));
             water = resizeImage(water, 110);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            entry = ImageIO.read(new File("src/main/res/icons/game-panel/entry.png"));
+            entry = resizeImage(entry, 200);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            exit = ImageIO.read(new File("src/main/res/icons/game-panel/exit.png"));
+            exit = resizeImage(exit, 200);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
