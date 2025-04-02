@@ -43,7 +43,6 @@ public class Safari {
     private boolean roadBuilding = false;
     private List<Path> paths = new ArrayList<>();
     private List<Path> tempPaths = new ArrayList<>();
-    private final double roadPricePerPixel = 0.01;
     private boolean selling = false;
 
 
@@ -152,8 +151,10 @@ public class Safari {
 
     public void sellSomething(int id) {
         ToolBarCardLayout.Instance.showCard("selling");
+
         String message = getEntityById(id).getClass().getSimpleName().toLowerCase();
         int price = (int) Prices.getPriceByEnum(Prices.getPricesByString(message));
+
         coin += price;
         removeEntityById(id);
         System.out.println("deleted");
@@ -180,7 +181,6 @@ public class Safari {
     public void removeEntityById(int id) {
         Entity actual = getEntityById(id);
         String message = actual.getClass().getSimpleName().toLowerCase();
-        System.out.println("---------------"+message);
         switch (message) {
             case "giraffe":
                 giraffes.remove((Giraffe)actual);
@@ -195,7 +195,6 @@ public class Safari {
                 zebras.remove((Zebra)actual);
                 break;
             case "palmtree":
-                System.out.println("----------------");
                 palmTrees.remove((PalmTree)actual);
                 break;
             case "baobab":
@@ -301,7 +300,7 @@ public class Safari {
         for (Path path : tempPaths) {
             sum += path.getPixelCount();
         }
-        sum = (int) (sum * roadPricePerPixel);
+        sum = (int) (sum * Prices.getPriceByEnum(Prices.ROAD));
         return sum;
     }
 
