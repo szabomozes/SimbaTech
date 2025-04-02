@@ -1,13 +1,11 @@
 package panels.game.toolbar.buttons.road;
 
 import core.Resources;
-import entity.Path;
+import road.Path;
 import panels.feedback.MessageFeedBackPanel;
-import panels.feedback.WinFeedBackPanel;
 import panels.game.EventPanel;
 import panels.game.GameContainer;
 import panels.game.toolbar.ToolBarCardLayout;
-import panels.game.toolbar.buttons.shop.BasicLeftToolBarButton;
 import safari.Safari;
 
 import javax.swing.*;

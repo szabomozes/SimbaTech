@@ -1,4 +1,4 @@
-package entity;
+package road;
 
 
 import map.Coordinate;

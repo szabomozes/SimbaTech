@@ -1,7 +1,9 @@
 package safari;
 
+import core.Resources;
 import entity.Entity;
-import entity.Path;
+import entity.mobile.Jeep;
+import road.Path;
 import entity.mobile.animal.Giraffe;
 import entity.mobile.animal.Leopard;
 import entity.mobile.animal.Lion;
@@ -44,6 +46,7 @@ public class Safari {
     private List<Path> paths = new ArrayList<>();
     private List<Path> tempPaths = new ArrayList<>();
     private boolean selling = false;
+    private List<Jeep> jeeps = new ArrayList<>();
 
 
     private Safari() {
@@ -80,6 +83,7 @@ public class Safari {
         rangers.clear();
         paths.clear();
         tempPaths.clear();
+        jeeps.clear();
 
         entry = EntityCreate.getEntry();
         exit = EntityCreate.getExit();
@@ -224,6 +228,7 @@ public class Safari {
         allEntities.addAll(panciums);
         allEntities.addAll(waters);
         allEntities.addAll(rangers);
+        allEntities.addAll(jeeps);
 
 
         allEntities.sort(Comparator.comparingInt(entity -> entity.getY()));
@@ -315,5 +320,9 @@ public class Safari {
         path.addANewRoad();
         path.endCoorinateCopyToStartCoordinate();
         System.out.println("Mentve");
+    }
+
+    public void addAJeep() {
+        jeeps.add(new Jeep(EntityCreate.entryX + Resources.Instance.entry.getWidth() / 2, EntityCreate.entryY + Resources.Instance.entry.getHeight() / 2));
     }
 }

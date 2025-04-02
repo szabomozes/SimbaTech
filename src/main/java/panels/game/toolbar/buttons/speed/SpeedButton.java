@@ -39,7 +39,7 @@ public class SpeedButton extends JButton {
                 ImageIcon icon = new ImageIcon(getBufferedImageBySpeedEnum());
                 setIcon(icon);
                 System.out.println(Speed.Instance.speedEnum.toString());
-                System.out.println(Speed.Instance.speedEnum.getDateTick());
+                System.out.println(Speed.Instance.speedEnum.getDateSec());
             }
         });
     }

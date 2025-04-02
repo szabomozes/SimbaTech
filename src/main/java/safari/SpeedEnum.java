@@ -11,16 +11,30 @@ public enum SpeedEnum {
         return values[(ordinal + 1) % values.length];
     }
 
-    public int getDateTick() {
+    public int getDateSec() {
         switch (this) {
             case HIPPOPOTAMUS -> {
-                return 10; // 60MP -> 1P = 1 nap
+                return 10; // 10mp
             }
             case EAGLE -> {
-                return 1; // 10MP -> 0,17P = 1 nap
+                return 1; // 1mp
             }
             default -> {
-                return 60; // 600MP -> 10P = 1 nap
+                return 60; // 60mp
+            }
+        }
+    }
+
+    public double getJeepSec() {
+        switch (this) {
+            case HIPPOPOTAMUS -> {
+                return 0.1; // 0,1mp
+            }
+            case EAGLE -> {
+                return 0.01; // 0,01mp
+            }
+            default -> {
+                return 1; // 1mp
             }
         }
     }

@@ -1,7 +1,7 @@
 package panels.game.toolbar.buttons.shop;
 
 import core.Resources;
-import entity.Path;
+import road.Path;
 import map.EntityCreate;
 import panels.CardPanel;
 import panels.game.toolbar.ToolBarCardLayout;

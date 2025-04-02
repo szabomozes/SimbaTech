@@ -1,8 +1,6 @@
 package panels.game.toolbar;
 
 import panels.game.toolbar.buttons.shop.*;
-import panels.game.toolbar.buttons.shop.*;
-import panels.game.toolbar.buttons.shop.*;
 import panels.game.toolbar.buttons.speed.SpeedButton;
 
 import javax.swing.*;

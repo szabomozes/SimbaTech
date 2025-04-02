@@ -51,6 +51,7 @@ public class Resources {
     public BufferedImage pancium;
     public BufferedImage water;
     public BufferedImage ranger;
+    public BufferedImage jeep;
     public BufferedImage entry;
     public BufferedImage exit;
 
@@ -168,6 +169,13 @@ public class Resources {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        try {
+            jeep = ImageIO.read(new File("src/main/res/icons/game-panel/jeep.png"));
+            jeep = resizeImage(jeep, 100);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     private void feedBacks() {

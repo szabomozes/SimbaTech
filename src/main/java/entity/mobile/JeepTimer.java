@@ -1,4 +1,7 @@
-package safari;
+package entity.mobile;
+
+import safari.Safari;
+import safari.Speed;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -6,12 +9,12 @@ import java.awt.event.ActionListener;
 import java.time.Instant;
 import java.time.Duration;
 
-public class DateTimer extends Timer {
+public class JeepTimer extends Timer {
 
     private Instant lastUpdate;
 
-    public DateTimer() {
-        super(1000, null);
+    public JeepTimer() {
+        super(1, null); // 10 milliszekundumonként futtatjuk
         lastUpdate = Instant.now();
         addActionListener(new ActionListener() {
             @Override
@@ -19,9 +22,9 @@ public class DateTimer extends Timer {
                 Instant now = Instant.now();
                 Duration elapsed = Duration.between(lastUpdate, now);
 
-                if (elapsed.getSeconds() >= Speed.Instance.speedEnum.getDateSec()) {
-                    Safari.Instance.updateDate();
+                if (elapsed.toMillis() >= Speed.Instance.speedEnum.getJeepSec() * 1000) {
                     lastUpdate = now;
+                    // mozgás
                 }
             }
         });
@@ -31,5 +34,4 @@ public class DateTimer extends Timer {
         stop();  // Swing Timer beépített stop() metódusa
         lastUpdate = Instant.now(); // Reseteljük az időzítőt
     }
-
 }

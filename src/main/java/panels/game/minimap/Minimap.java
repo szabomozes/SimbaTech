@@ -2,17 +2,8 @@ package panels.game.minimap;
 
 import core.Resources;
 import entity.Entity;
-import entity.Path;
-import entity.Road;
-import entity.mobile.animal.Giraffe;
-import entity.mobile.animal.Leopard;
-import entity.mobile.animal.Lion;
-import entity.mobile.animal.Zebra;
-import entity.mobile.person.Ranger;
-import entity.notmobile.Water;
-import entity.notmobile.plant.Baobab;
-import entity.notmobile.plant.PalmTree;
-import entity.notmobile.plant.Pancium;
+import road.Path;
+import road.Road;
 import safari.Safari;
 import panels.game.EventPanel;
 

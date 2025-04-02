@@ -2,13 +2,9 @@ package panels.game;
 
 import core.Resources;
 import entity.Entity;
-import entity.Path;
-import entity.Road;
+import road.Path;
+import road.Road;
 import map.EntityCreate;
-import entity.notmobile.Water;
-import entity.notmobile.plant.Baobab;
-import entity.notmobile.plant.PalmTree;
-import entity.notmobile.plant.Pancium;
 import safari.Safari;
 import panels.feedback.BasicFeedBackPanel;
 import panels.game.coin.CoinPanel;
@@ -55,9 +51,9 @@ public class EventPanel extends JPanel {
                         boolean okay = true;
                         List<Entity> allentities = Safari.Instance.getAllEntities();
                         for (int i = 0; i < allentities.size() && okay; i++) {
-                            if (allentities.get(i).enviromentContains(lastX - offsetX, lastY - offsetY)) {
-                                okay = false;
-                            }
+                            //if (allentities.get(i).enviromentContains(lastX - offsetX, lastY - offsetY)) {
+                            //    okay = false;
+                            //}
                         }
                         if (okay) {
                             Safari.Instance.placeSomething(lastX - offsetX, lastY - offsetY);
@@ -179,16 +175,16 @@ public class EventPanel extends JPanel {
             }
         }
 
+        // bejarat - kijarat
+        Safari.Instance.getEntry().draw(g, offsetX, offsetY);
+        Safari.Instance.getExit().draw(g, offsetX, offsetY);
+
         // entityk
         List<Entity> allEntities = Safari.Instance.getAllEntities();
 
         for (Entity entity : allEntities) {
             entity.draw(g, offsetX, offsetY);
         }
-
-        // bejarat - kijarat
-        Safari.Instance.getEntry().draw(g, offsetX, offsetY);
-        Safari.Instance.getExit().draw(g, offsetX, offsetY);
     }
 
     @Override
