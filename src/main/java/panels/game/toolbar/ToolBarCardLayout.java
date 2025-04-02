@@ -12,6 +12,7 @@ public class ToolBarCardLayout extends JPanel {
         add(new ToolBarPanel(), "toolbar");
         add(new RoadBuildingPanel(), "buildRoad");
         add(new BuyingToolBar(), "buying");
+        add(new SellingToolBar(), "selling");
         add(new ToolBarFeedBackPanel(), "void");
         setPreferredSize(new Dimension(0, 150));
 

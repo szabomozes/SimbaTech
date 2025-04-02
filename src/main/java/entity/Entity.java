@@ -4,6 +4,10 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public abstract class Entity {
+
+    private static int idGenerator = 1;
+
+    public final int id = idGenerator++;
     protected BufferedImage image;
     protected int x, y;
     protected int width, height;

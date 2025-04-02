@@ -8,8 +8,8 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class BuyingToolBarBin extends JButton {
-    public BuyingToolBarBin() {
+public class BuyingSellingToolBarBin extends JButton {
+    public BuyingSellingToolBarBin() {
         ImageIcon image = new ImageIcon(Resources.Instance.binButton);
         setIcon(image);
 
@@ -22,6 +22,7 @@ public class BuyingToolBarBin extends JButton {
             public void actionPerformed(ActionEvent e) {
                 ToolBarCardLayout.Instance.showCard("toolbar");
                 Safari.Instance.shopping = null;
+                Safari.Instance.setSellingMode(false);
             }
         });
     }
