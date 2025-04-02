@@ -37,7 +37,14 @@ public class Road {
         return points;
     }
 
-
+    public int getPixel() {
+        int sum = 0;
+        sum += mid.size();
+        System.out.println("asd");
+        System.out.println(sum);
+        System.out.println("asd");
+        return sum;
+    }
 
     public void draw(Graphics g, int offsetX, int offsetY) {
         Graphics2D g2d = (Graphics2D) g;

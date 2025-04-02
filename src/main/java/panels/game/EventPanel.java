@@ -5,6 +5,7 @@ import entity.Entity;
 import entity.Path;
 import entity.Road;
 import entity.notmobile.Entry;
+import map.EntityCreate;
 import safari.Safari;
 import panels.feedback.BasicFeedBackPanel;
 import panels.game.coin.CoinPanel;
@@ -49,8 +50,7 @@ public class EventPanel extends JPanel {
 
                     // interakciók blokkolása
                     if (Safari.Instance.getRoadBuilding()) {
-                        // building mode
-                        Safari.Instance.saveARoad(lastX - offsetX, lastY - offsetY);
+                        roadBuilding(lastX, lastY);
                     } else {
                         if (Safari.Instance.shopping != null) {
                             boolean okay = true;
@@ -86,8 +86,8 @@ public class EventPanel extends JPanel {
             public void mouseDragged(MouseEvent e) {
 
                 if (SwingUtilities.isRightMouseButton(e) && Safari.Instance.getRoadBuilding()) {
+                    roadBuilding(e.getX(), e.getY());
                     // building mode
-                    Safari.Instance.saveARoad(e.getX() - offsetX, e.getY() - offsetY);
                 } else if (dragging) {
                     int dx = e.getX() - lastX;
                     int dy = e.getY() - lastY;
@@ -137,6 +137,15 @@ public class EventPanel extends JPanel {
         add(feedback);
     }
 
+    public void roadBuilding(int lastX, int lastY) {
+        if (Safari.Instance.getExit().contains(lastX - offsetX, lastY - offsetY)){
+            Safari.Instance.saveARoad(EntityCreate.exitX - Resources.Instance.exit.getWidth() / 2, EntityCreate.exitY - Resources.Instance.exit.getHeight() / 2);
+            Safari.Instance.getTempPaths().add(new Path(EntityCreate.entryX + Resources.Instance.entry.getWidth()/2, EntityCreate.entryY + Resources.Instance.entry.getWidth() / 2));
+        } else {
+            Safari.Instance.saveARoad(lastX - offsetX, lastY - offsetY);
+        }
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -153,9 +162,9 @@ public class EventPanel extends JPanel {
         }
 
         // ideglenes ut
-        Path temp = Safari.Instance.getTempPath();
-        if (temp != null) {
-            List<Road> roads = temp.getRoads();
+        List<Path> tempPaths = Safari.Instance.getTempPaths();
+        for (Path path : tempPaths) {
+            List<Road> roads = path.getRoads();
             for (Road road : roads) {
                 road.draw(g, offsetX, offsetY);
             }

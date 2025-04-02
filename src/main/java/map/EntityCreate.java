@@ -13,7 +13,7 @@ public class EntityCreate {
     public static final int entryX = 0;
     public static final int entryY = 0;
     public static final int exitX = Resources.Instance.map.getWidth();
-    public static final int exitY = 0;
+    public static final int exitY = Resources.Instance.map.getHeight();
 
     public static Entry getEntry() {
         return new Entry(entryX + Resources.Instance.entry.getWidth() / 2, entryY + Resources.Instance.entry.getHeight() / 2);

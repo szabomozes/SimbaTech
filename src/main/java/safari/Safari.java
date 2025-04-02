@@ -51,7 +51,8 @@ public class Safari {
     private Exit exit = null;
     private boolean roadBuilding = false;
     private List<Path> paths = new ArrayList<>();
-    private Path tempPath = null;
+    private List<Path> tempPaths = new ArrayList<>();
+    private final double roadPricePerPixel = 0.01;
 
 
     private Safari() {
@@ -74,7 +75,6 @@ public class Safari {
         difficultyEnum = diff;
         shopping = null;
         roadBuilding = false;
-        tempPath = null;
 
         lions.clear();
         leopards.clear();
@@ -86,6 +86,7 @@ public class Safari {
         waters.clear();
         rangers.clear();
         paths.clear();
+        tempPaths.clear();
 
         entry = EntityCreate.getEntry();
         exit = EntityCreate.getExit();
@@ -251,19 +252,33 @@ public class Safari {
         return paths;
     }
 
-    public void setTempPath(Path temp) {
-        tempPath = temp;
+    public void clearTempPaths() {
+        tempPaths.clear();
     }
 
-    public Path getTempPath() {
-        return tempPath;
+    public List<Path> getTempPaths() {
+        return tempPaths;
+    }
+
+    public int getTempPathsPrice() {
+        int sum = 0;
+        for (Path path : tempPaths) {
+            sum += path.getPixelCount();
+        }
+        sum = (int) (sum * roadPricePerPixel);
+        return sum;
+    }
+
+    public void addAPathToPaths(Path path) {
+        paths.add(path);
     }
 
     public void saveARoad(int x, int y) {
-        tempPath.setEndX(x);
-        tempPath.setEndY(y);
-        tempPath.addANewRoad();
-        tempPath.endCoorinateCopyToStartCoordinate();
+        Path path = tempPaths.getLast();
+        path.setEndX(x);
+        path.setEndY(y);
+        path.addANewRoad();
+        path.endCoorinateCopyToStartCoordinate();
         System.out.println("Mentve");
     }
 }

@@ -35,4 +35,12 @@ public class Path {
         startX = endX;
         startY = endY;
     }
+
+    public int getPixelCount() {
+        int sum = 0;
+        for (Road road : roads) {
+            sum += road.getPixel();
+        }
+        return sum;
+    }
 }

@@ -1,6 +1,10 @@
 package panels.game.toolbar.buttons.road;
 
 import core.Resources;
+import entity.Path;
+import panels.feedback.WinFeedBackPanel;
+import panels.game.EventPanel;
+import panels.game.GameContainer;
 import panels.game.toolbar.ToolBarCardLayout;
 import panels.game.toolbar.buttons.shop.BasicLeftToolBarButton;
 import safari.Safari;
@@ -30,11 +34,30 @@ public class SaveButton extends JButton {
         addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("back to toolbar");
                 CardLayout cardLayout = (CardLayout) ToolBarCardLayout.Instance.getLayout();
                 cardLayout.show(ToolBarCardLayout.Instance, "toolbar");
-                Safari.Instance.setTempPath(null);
-                Safari.Instance.setRoadBuilding(false);
+
+                if (!Safari.Instance.getTempPaths().getLast().getRoads().isEmpty()) {
+                    Safari.Instance.clearTempPaths();
+                    Safari.Instance.setRoadBuilding(false);
+
+                    ((EventPanel) getParent().getParent().getParent().getComponent(0)).setFeedback(new WinFeedBackPanel());
+                } else {
+                    int price = Safari.Instance.getTempPathsPrice();
+                    System.out.println(price + " $");
+                    if (price <= Safari.Instance.coin) {
+                        for(Path path : Safari.Instance.getTempPaths()) {
+                            Safari.Instance.addAPathToPaths(path);
+                        }
+                        Safari.Instance.coin -= price;
+                    } else {
+                        ((EventPanel) getParent().getParent().getParent().getComponent(0)).setFeedback(new WinFeedBackPanel());
+                    }
+                    Safari.Instance.setRoadBuilding(false);
+                    Safari.Instance.clearTempPaths();
+                }
+
+                ((GameContainer) getParent().getParent().getParent()).repaint();
             }
         });
     }
