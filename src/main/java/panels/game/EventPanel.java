@@ -166,6 +166,7 @@ public class EventPanel extends JPanel {
         // ideglenes ut
         List<Path> tempPaths = Safari.Instance.getTempPaths();
         for (Path path : tempPaths) {
+            System.out.println("asdasd");
             List<Road> roads = path.getRoads();
             for (Road road : roads) {
                 road.draw(g, offsetX, offsetY);

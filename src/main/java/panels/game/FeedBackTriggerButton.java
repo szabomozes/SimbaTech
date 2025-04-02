@@ -1,8 +1,6 @@
 package panels.game;
 
-import panels.feedback.LoseFeedBackPanel;
 import panels.feedback.MessageFeedBackPanel;
-import panels.feedback.WinFeedBackPanel;
 
 import javax.swing.*;
 import java.awt.*;

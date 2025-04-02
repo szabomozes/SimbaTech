@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Road {
-    private final int startX;
-    private final int startY;
-    private final int endX;
-    private final int endY;
+    public final int startX;
+    public final int startY;
+    public final int endX;
+    public final int endY;
 
     private List<Coordinate> mid;
 
