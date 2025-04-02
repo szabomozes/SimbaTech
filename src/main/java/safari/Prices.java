@@ -12,13 +12,44 @@ public enum Prices {
     RANGER(12),
     JEEP(15);
 
-    private final int price;
+    private final double price;
 
-    Prices(int price) {
+    Prices(double price) {
         this.price = price;
     }
 
-    public int getPrice() {
-        return price;
+    public static double getPriceByEnum(Prices priceEnum) {
+        return priceEnum.price;
     }
+
+    public static Prices getPricesByString(String message) {
+        switch (message) {
+            case "lion":
+                return Prices.LION;
+            case "leopard":
+                return Prices.LEOPARD;
+            case "zebra":
+                return Prices.ZEBRA;
+            case "giraffe":
+                return Prices.GIRAFFE;
+            case "palmtree":
+                return Prices.PALMTREE;
+            case "baobab":
+                return Prices.BAOBAB;
+            case "pancium":
+                return Prices.PANICUM;
+            case "water":
+                return Prices.WATER;
+            case "ranger":
+                return Prices.RANGER;
+            case "jeep":
+                return Prices.JEEP;
+            default:
+                return Prices.LION;
+        }
+    }
+
+
+
+
 }

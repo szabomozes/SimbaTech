@@ -4,7 +4,6 @@ import core.Resources;
 import entity.Entity;
 import entity.Path;
 import entity.Road;
-import entity.notmobile.Entry;
 import map.EntityCreate;
 import entity.notmobile.Water;
 import entity.notmobile.plant.Baobab;
@@ -41,8 +40,6 @@ public class EventPanel extends JPanel {
         add(Calendar.Instance);
         add(minimap);
         add(new FeedBackTriggerButton());
-        //feedback = new WinFeedBackPanel();
-        //add(feedback);
 
         addMouseListener(new MouseAdapter() {
             @Override
@@ -51,32 +48,8 @@ public class EventPanel extends JPanel {
                 lastY = e.getY();
 
                 if (SwingUtilities.isRightMouseButton(e)) {
-
-                    // interakciók blokkolása
                     if (Safari.Instance.getRoadBuilding()) {
                         roadBuilding(lastX, lastY);
-                    } else {
-                        if (Safari.Instance.shopping != null) {
-                            boolean okay = true;
-                            List<Entity> allentities = Safari.Instance.getAllEntities();
-                            for (int i = 0; i < allentities.size() && okay; i++) {
-                                if (allentities.get(i).enviromentContains(lastX - offsetX, lastY - offsetY)) {
-                                    okay = false;
-                                }
-                            }
-                            if (okay) {
-                                Safari.Instance.placeSomething(lastX - offsetX, lastY - offsetY);
-                                ToolBarCardLayout.Instance.showCard("toolbar");
-                                System.out.println("Hozzáadva a következő pozícióval: (" + lastX + ", " + lastY + ")");
-                            }
-                    if (Safari.Instance.getSellingMode()){
-                        List<Entity> allentities = Safari.Instance.getAllEntities();
-                        for (Entity en : allentities) {
-                            boolean contains = en.contains(lastX - offsetX, lastY - offsetY);
-                            if (contains && !(en instanceof PalmTree) && !(en instanceof Baobab) && !(en instanceof Pancium) && !(en instanceof Water)) {
-                                Safari.Instance.sellSomething(en.id);
-                            }
-                        }
                     }
                     if (Safari.Instance.shopping != null) {
                         boolean okay = true;
@@ -90,7 +63,14 @@ public class EventPanel extends JPanel {
                             Safari.Instance.placeSomething(lastX - offsetX, lastY - offsetY);
                             ToolBarCardLayout.Instance.showCard("toolbar");
                             System.out.println("Hozzáadva a következő pozícióval: (" + lastX + ", " + lastY + ")");
-
+                        }
+                    }
+                    if (Safari.Instance.getSellingMode()){
+                        List<Entity> allentities = Safari.Instance.getAllEntities();
+                        for (Entity entity : allentities) {
+                            if (entity.contains(lastX - offsetX, lastY - offsetY)) {
+                                Safari.Instance.sellSomething(entity.id);
+                            }
                         }
                     }
                 } else {

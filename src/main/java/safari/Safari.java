@@ -96,35 +96,8 @@ public class Safari {
         Calendar.Instance.setDate(date);
     }
 
-    private int getPriceByMessage(String message) {
-        switch (message) {
-            case "lion":
-                return Prices.LION.getPrice();
-            case "leopard":
-                return Prices.LEOPARD.getPrice();
-            case "zebra":
-                return Prices.ZEBRA.getPrice();
-            case "giraffe":
-                return Prices.GIRAFFE.getPrice();
-            case "palmtree":
-                return Prices.PALMTREE.getPrice();
-            case "baobab":
-                return Prices.BAOBAB.getPrice();
-            case "pancium":
-                return Prices.PANICUM.getPrice();
-            case "water":
-                return Prices.WATER.getPrice();
-            case "ranger":
-                return Prices.RANGER.getPrice();
-            case "jeep":
-                return Prices.JEEP.getPrice();
-            default:
-                return 999999999;
-        }
-    }
-
     public void buySoemthing(String message) {
-        int price = getPriceByMessage(message);
+        int price = (int) Prices.getPriceByEnum(Prices.getPricesByString(message));
         if (coin >= price) {
             ToolBarCardLayout.Instance.showCard("buying");
             shopping = message;
@@ -132,45 +105,46 @@ public class Safari {
     }
 
     public void placeSomething(int x, int y) {
+        int price = (int) Prices.getPriceByEnum(Prices.getPricesByString(shopping));
         switch (shopping) {
             case "lion":
                 lions.add(new Lion(x, y));
-                coin -= Prices.LION.getPrice();
+                coin -= price;
                 break;
             case "leopard":
                 leopards.add(new Leopard(x, y));
-                coin -= Prices.LEOPARD.getPrice();
+                coin -= price;
                 break;
             case "zebra":
                 zebras.add(new Zebra(x, y));
-                coin -= Prices.ZEBRA.getPrice();
+                coin -= price;
                 break;
             case "giraffe":
                 giraffes.add(new Giraffe(x, y));
-                coin -= Prices.GIRAFFE.getPrice();
+                coin -= price;
                 break;
             case "baobab":
                 baobabs.add(new Baobab(x, y));
-                coin -= Prices.BAOBAB.getPrice();
+                coin -= price;
                 break;
             case "palmtree":
                 palmTrees.add(new PalmTree(x, y));
-                coin -= Prices.PALMTREE.getPrice();
+                coin -= price;
                 break;
             case "pancium":
                 panciums.add(new Pancium(x, y));
-                coin -= Prices.PANICUM.getPrice();
+                coin -= price;
                 break;
             case "water":
                 waters.add(new Water(x, y));
-                coin -= Prices.WATER.getPrice();
+                coin -= price;
                 break;
             case "ranger":
                 rangers.add(new Ranger(x, y));
-                coin -= Prices.RANGER.getPrice();
+                coin -= price;
                 break;
             case "jeep":
-                coin -= Prices.JEEP.getPrice();
+                coin -= price;
                 break;
         }
         shopping = null;
@@ -178,26 +152,9 @@ public class Safari {
 
     public void sellSomething(int id) {
         ToolBarCardLayout.Instance.showCard("selling");
-        Entity actual = getEntityById(id);
-        switch (typeOfEntity(actual)) {
-            case "giraffe":
-                coin += Prices.GIRAFFE.getPrice();
-                break;
-            case "leopard":
-                coin += Prices.LEOPARD.getPrice();
-                break;
-            case "lion":
-                coin += Prices.LION.getPrice();
-                break;
-            case "zebra":
-                coin += Prices.ZEBRA.getPrice();
-                break;
-            case "ranger":
-                coin += Prices.RANGER.getPrice();
-                break;
-            default:
-                break;
-        }
+        String message = getEntityById(id).getClass().getSimpleName().toLowerCase();
+        int price = (int) Prices.getPriceByEnum(Prices.getPricesByString(message));
+        coin += price;
         removeEntityById(id);
         System.out.println("deleted");
     }
@@ -222,7 +179,9 @@ public class Safari {
 
     public void removeEntityById(int id) {
         Entity actual = getEntityById(id);
-        switch (typeOfEntity(actual)) {
+        String message = actual.getClass().getSimpleName().toLowerCase();
+        System.out.println("---------------"+message);
+        switch (message) {
             case "giraffe":
                 giraffes.remove((Giraffe)actual);
                 break;
@@ -235,7 +194,8 @@ public class Safari {
             case "zebra":
                 zebras.remove((Zebra)actual);
                 break;
-            case "palm-tree":
+            case "palmtree":
+                System.out.println("----------------");
                 palmTrees.remove((PalmTree)actual);
                 break;
             case "baobab":
@@ -251,20 +211,6 @@ public class Safari {
                 rangers.remove((Ranger)actual);
                 break;
         }
-    }
-
-    public String typeOfEntity(Entity e) {
-        if (e instanceof Giraffe) return "giraffe";
-        else if (e instanceof Leopard) return "leopard";
-        else if (e instanceof Lion) return "lion";
-        else if (e instanceof Zebra) return "zebra";
-        else if (e instanceof PalmTree) return "palm-tree";
-        else if (e instanceof Baobab) return "baobab";
-        else if (e instanceof Pancium) return "pancium";
-        else if (e instanceof Water) return "water";
-        else if (e instanceof Ranger) return "ranger";
-        // else if (e instanceof Jeep) return "giraffe";
-        return "error";
     }
 
     public List<Entity> getAllEntities() {
