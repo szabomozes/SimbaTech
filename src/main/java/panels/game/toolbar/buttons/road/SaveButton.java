@@ -33,6 +33,7 @@ public class SaveButton extends JButton {
                 System.out.println("back to toolbar");
                 CardLayout cardLayout = (CardLayout) ToolBarCardLayout.Instance.getLayout();
                 cardLayout.show(ToolBarCardLayout.Instance, "toolbar");
+                Safari.Instance.setTempPath(null);
                 Safari.Instance.setRoadBuilding(false);
             }
         });

@@ -1,6 +1,8 @@
 package panels.game.toolbar.buttons.road;
 
 import core.Resources;
+import panels.CardPanel;
+import panels.game.GameContainer;
 import panels.game.toolbar.ToolBarCardLayout;
 import safari.Safari;
 
@@ -32,7 +34,9 @@ public class DeleteButton extends JButton {
                 System.out.println("back to toolbar");
                 CardLayout cardLayout = (CardLayout) ToolBarCardLayout.Instance.getLayout();
                 cardLayout.show(ToolBarCardLayout.Instance, "toolbar");
+                Safari.Instance.setTempPath(null);
                 Safari.Instance.setRoadBuilding(false);
+                ((GameContainer) getParent().getParent().getParent()).repaint();
             }
         });
     }

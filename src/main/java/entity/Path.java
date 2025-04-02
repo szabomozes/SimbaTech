@@ -5,11 +5,34 @@ import java.util.List;
 
 public class Path {
     private List<Road> roads = new ArrayList<>();
-    private int lastX;
-    private int lastY;
+    private int startX;
+    private int startY;
+    private int endX;
+    private int endY;
 
     public Path(int x, int y) {
-        lastX = x;
-        lastY = y;
+        startX = x;
+        startY = y;
+    }
+
+    public List<Road> getRoads() {
+        return roads;
+    }
+
+    public void setEndX (int x) {
+        endX = x;
+    }
+
+    public void setEndY (int y) {
+        endY = y;
+    }
+
+    public void addANewRoad() {
+        roads.add(new Road(startX, startY, endX, endY));
+    }
+
+    public void endCoorinateCopyToStartCoordinate () {
+        startX = endX;
+        startY = endY;
     }
 }

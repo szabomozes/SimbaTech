@@ -2,6 +2,7 @@ package panels.game;
 
 import core.Resources;
 import entity.Entity;
+import entity.Path;
 import entity.Road;
 import entity.notmobile.Entry;
 import safari.Safari;
@@ -47,7 +48,10 @@ public class EventPanel extends JPanel {
                 if (SwingUtilities.isRightMouseButton(e)) {
 
                     // interakciók blokkolása
-                    if (!Safari.Instance.getRoadBuilding()) {
+                    if (Safari.Instance.getRoadBuilding()) {
+                        // building mode
+                        Safari.Instance.saveARoad(lastX - offsetX, lastY - offsetY);
+                    } else {
                         if (Safari.Instance.shopping != null) {
                             boolean okay = true;
                             List<Entity> allentities = Safari.Instance.getAllEntities();
@@ -60,16 +64,13 @@ public class EventPanel extends JPanel {
                                 Safari.Instance.placeSomething(lastX - offsetX, lastY - offsetY);
                                 ToolBarCardLayout.Instance.showCard("toolbar");
                                 System.out.println("Hozzáadva a következő pozícióval: (" + lastX + ", " + lastY + ")");
-                                repaint();
                             }
                         }
-                    } else {
-                        // building mode
-
                     }
                 } else {
                     dragging = true;
                 }
+                repaint();
             }
 
             @Override
@@ -83,7 +84,11 @@ public class EventPanel extends JPanel {
         addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                if (dragging) {
+
+                if (SwingUtilities.isRightMouseButton(e) && Safari.Instance.getRoadBuilding()) {
+                    // building mode
+                    Safari.Instance.saveARoad(e.getX() - offsetX, e.getY() - offsetY);
+                } else if (dragging) {
                     int dx = e.getX() - lastX;
                     int dy = e.getY() - lastY;
                     offsetX += dx;
@@ -92,8 +97,8 @@ public class EventPanel extends JPanel {
                     offsetY = Math.max(Math.min(0, offsetY), getHeight() - background.getHeight());
                     lastX = e.getX();
                     lastY = e.getY();
-                    repaint();
                 }
+                repaint();
             }
         });
     }
@@ -135,17 +140,34 @@ public class EventPanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        // háttér
         g.drawImage(background, offsetX, offsetY, this);
 
-        List<Entity> allEntities = Safari.Instance.getAllEntities();
+        // utak
+        List<Path> paths = Safari.Instance.getPaths();
+        for (Path path : paths) {
+            List<Road> roads = path.getRoads();
+            for (Road road : roads) {
+                road.draw(g, offsetX, offsetY);
+            }
+        }
 
+        // ideglenes ut
+        Path temp = Safari.Instance.getTempPath();
+        if (temp != null) {
+            List<Road> roads = temp.getRoads();
+            for (Road road : roads) {
+                road.draw(g, offsetX, offsetY);
+            }
+        }
+
+        // entityk
+        List<Entity> allEntities = Safari.Instance.getAllEntities();
         for (Entity entity : allEntities) {
             entity.draw(g, offsetX, offsetY);
         }
 
-
-        new Road(300, 300, 600, 600).draw(g);
-
+        // bejarat - kijarat
         Safari.Instance.getEntry().draw(g, offsetX, offsetY);
         Safari.Instance.getExit().draw(g, offsetX, offsetY);
     }

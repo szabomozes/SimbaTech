@@ -1,6 +1,7 @@
 package safari;
 
 import entity.Entity;
+import entity.Path;
 import entity.mobile.animal.Giraffe;
 import entity.mobile.animal.Leopard;
 import entity.mobile.animal.Lion;
@@ -49,6 +50,8 @@ public class Safari {
     private Entry entry = null;
     private Exit exit = null;
     private boolean roadBuilding = false;
+    private List<Path> paths = new ArrayList<>();
+    private Path tempPath = null;
 
 
     private Safari() {
@@ -65,11 +68,13 @@ public class Safari {
             dateTimer.stop();
         }
 
+        coin = 100;
         date = 0;
         updateDate();
         difficultyEnum = diff;
         shopping = null;
-        coin = 100;
+        roadBuilding = false;
+        tempPath = null;
 
         lions.clear();
         leopards.clear();
@@ -80,6 +85,7 @@ public class Safari {
         panciums.clear();
         waters.clear();
         rangers.clear();
+        paths.clear();
 
         entry = EntityCreate.getEntry();
         exit = EntityCreate.getExit();
@@ -236,7 +242,28 @@ public class Safari {
     public Entry getEntry() {
         return entry;
     }
+
     public Exit getExit() {
         return exit;
+    }
+
+    public List<Path> getPaths() {
+        return paths;
+    }
+
+    public void setTempPath(Path temp) {
+        tempPath = temp;
+    }
+
+    public Path getTempPath() {
+        return tempPath;
+    }
+
+    public void saveARoad(int x, int y) {
+        tempPath.setEndX(x);
+        tempPath.setEndY(y);
+        tempPath.addANewRoad();
+        tempPath.endCoorinateCopyToStartCoordinate();
+        System.out.println("Mentve");
     }
 }
