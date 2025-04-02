@@ -2,6 +2,8 @@ package panels.game;
 
 import core.Resources;
 import entity.Entity;
+import entity.Road;
+import entity.notmobile.Entry;
 import safari.Safari;
 import panels.feedback.BasicFeedBackPanel;
 import panels.game.coin.CoinPanel;
@@ -43,20 +45,27 @@ public class EventPanel extends JPanel {
                 lastY = e.getY();
 
                 if (SwingUtilities.isRightMouseButton(e)) {
-                    if (Safari.Instance.shopping != null) {
-                        boolean okay = true;
-                        List<Entity> allentities = Safari.Instance.getAllEntities();
-                        for (int i = 0; i < allentities.size() && okay; i++) {
-                            if (allentities.get(i).enviromentContains(lastX - offsetX, lastY - offsetY)) {
-                                okay = false;
+
+                    // interakciók blokkolása
+                    if (!Safari.Instance.getRoadBuilding()) {
+                        if (Safari.Instance.shopping != null) {
+                            boolean okay = true;
+                            List<Entity> allentities = Safari.Instance.getAllEntities();
+                            for (int i = 0; i < allentities.size() && okay; i++) {
+                                if (allentities.get(i).enviromentContains(lastX - offsetX, lastY - offsetY)) {
+                                    okay = false;
+                                }
+                            }
+                            if (okay) {
+                                Safari.Instance.placeSomething(lastX - offsetX, lastY - offsetY);
+                                ToolBarCardLayout.Instance.showCard("toolbar");
+                                System.out.println("Hozzáadva a következő pozícióval: (" + lastX + ", " + lastY + ")");
+                                repaint();
                             }
                         }
-                        if (okay) {
-                            Safari.Instance.placeSomething(lastX - offsetX, lastY - offsetY);
-                            ToolBarCardLayout.Instance.showCard("toolbar");
-                            System.out.println("Hozzáadva a következő pozícióval: (" + lastX + ", " + lastY + ")");
-                            repaint();
-                        }
+                    } else {
+                        // building mode
+
                     }
                 } else {
                     dragging = true;
@@ -133,6 +142,9 @@ public class EventPanel extends JPanel {
         for (Entity entity : allEntities) {
             entity.draw(g, offsetX, offsetY);
         }
+
+
+        new Road(300, 300, 600, 600).draw(g);
 
         Safari.Instance.getEntry().draw(g, offsetX, offsetY);
         Safari.Instance.getExit().draw(g, offsetX, offsetY);
