@@ -125,10 +125,13 @@ public class Minimap extends JPanel {
                 case "PalmTree", "Pancium", "Baobab" -> g2d.setColor(Color.GREEN);
                 case "Water" -> g2d.setColor(Color.CYAN);
                 case "Ranger" -> g2d.setColor(Color.YELLOW);
+                case "Jeep" -> g2d.setColor(Color.MAGENTA);
             }
-            int x = (int) (width * ((double) entity.getX() / parentWidth));
-            int y = (int) (height * ((double) entity.getY() / parentHeight));
-            g2d.fillOval(x, y, 5, 5);
+            int x = (int) (width * ((double) (entity.getX()) / parentWidth));
+            int y = (int) (height * ((double) (entity.getY()) / parentHeight));
+            int tempWidth = (int) (width * ((double) (entity.getWidth()) / parentWidth));
+            int tempHeight = (int) (height * ((double) (entity.getHeight()) / parentHeight));
+            g2d.fillRect(x, y, tempWidth, tempHeight);
         }
 
         // Keret

@@ -45,4 +45,12 @@ public abstract class Entity {
     public void setX(int x) {
         this.x = x;
     }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
 }
