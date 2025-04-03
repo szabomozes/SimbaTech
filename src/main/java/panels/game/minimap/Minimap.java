@@ -2,6 +2,9 @@ package panels.game.minimap;
 
 import core.Resources;
 import entity.Entity;
+import entity.notmobile.Entry;
+import entity.notmobile.Exit;
+import map.EntityCreate;
 import road.Path;
 import road.Road;
 import safari.Safari;
@@ -61,17 +64,15 @@ public class Minimap extends JPanel {
 
         Graphics2D g2d = (Graphics2D) g; // Graphics2D, hogy tudjunk Stroke-ot állítani
 
-        // Háttér
-        g.drawImage(backgroundImage, 0, 0, this);
-
-        // Keret
-        g2d.setColor(Color.BLACK);
-        g2d.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
 
         int parentWidth = Resources.Instance.map.getWidth();
         int parentHeight = Resources.Instance.map.getHeight();
         int width = getWidth();
         int height = getHeight();
+
+        // Háttér
+        g.drawImage(backgroundImage, 0, 0, this);
+
 
         // Path
         g2d.setColor(Color.BLACK);
@@ -107,6 +108,14 @@ public class Minimap extends JPanel {
             }
         }
 
+        //Entry and Exit
+        g2d.setColor(Color.BLUE);
+        Entry entry = Safari.Instance.getEntry();
+        Exit exit = Safari.Instance.getExit();
+        g2d.fillRect((int) (width * ((double) entry.getX() / parentWidth)), (int) (height * ((double) entry.getY() / parentHeight)),10, 10);
+        g2d.fillRect((int) (width * ((double) exit.getX() / parentWidth)),(int) (height * ((double) exit.getY() / parentHeight)),10, 10);
+
+
         // Entity
         List<Entity> entities = Safari.Instance.getAllEntities();
         for (Entity entity : entities) {
@@ -121,6 +130,10 @@ public class Minimap extends JPanel {
             int y = (int) (height * ((double) entity.getY() / parentHeight));
             g2d.fillOval(x, y, 5, 5);
         }
+
+        // Keret
+        g2d.setColor(Color.BLACK);
+        g2d.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
 
         // Nézet keret
         int offsetX = ((EventPanel) getParent()).getOffsetX();

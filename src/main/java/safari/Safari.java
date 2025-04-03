@@ -323,6 +323,6 @@ public class Safari {
     }
 
     public void addAJeep() {
-        jeeps.add(new Jeep(EntityCreate.entryX + Resources.Instance.entry.getWidth() / 2, EntityCreate.entryY + Resources.Instance.entry.getHeight() / 2));
+        jeeps.add(new Jeep(EntityCreate.entryX, EntityCreate.entryY));
     }
 }

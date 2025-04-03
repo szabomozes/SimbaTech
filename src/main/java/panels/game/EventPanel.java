@@ -143,8 +143,8 @@ public class EventPanel extends JPanel {
 
     public void roadBuilding(int lastX, int lastY) {
         if (Safari.Instance.getExit().contains(lastX - offsetX, lastY - offsetY)){
-            Safari.Instance.saveARoad(EntityCreate.exitX - Resources.Instance.exit.getWidth() / 2, EntityCreate.exitY - Resources.Instance.exit.getHeight() / 2);
-            Safari.Instance.getTempPaths().add(new Path(EntityCreate.entryX + Resources.Instance.entry.getWidth()/2, EntityCreate.entryY + Resources.Instance.entry.getWidth() / 2));
+            Safari.Instance.saveARoad(EntityCreate.exitX, EntityCreate.exitY);
+            Safari.Instance.getTempPaths().add(new Path(EntityCreate.entryX, EntityCreate.entryY));
         } else {
             Safari.Instance.saveARoad(lastX - offsetX, lastY - offsetY);
         }
