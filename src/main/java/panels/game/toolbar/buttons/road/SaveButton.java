@@ -42,8 +42,8 @@ public class SaveButton extends JButton {
                     int price = Safari.Instance.getTempPathsPrice();
                     System.out.println(price + " $");
                     if (price <= Safari.Instance.coin) {
-                        for(Path path : Safari.Instance.getTempPaths()) {
-                            Safari.Instance.addAPathToPaths(path);
+                        for (int i = 0; i < Safari.Instance.getTempPaths().size() - 1; i++) {
+                            Safari.Instance.addAPathToPaths(Safari.Instance.getTempPaths().get(i));
                         }
                         Safari.Instance.coin -= price;
                         Safari.Instance.setRoadBuilding(false);

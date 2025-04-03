@@ -49,6 +49,7 @@ public class Safari {
     private boolean selling = false;
     private List<Jeep> jeeps = new ArrayList<>();
 
+    private List<JeepTimerPlus> jeepTimerPluses = new ArrayList<>();
 
     private Safari() {
         dateTimer = new DateTimer();
@@ -83,6 +84,11 @@ public class Safari {
         rangers.clear();
         paths.clear();
         tempPaths.clear();
+        jeeps.clear();
+
+        for(JeepTimerPlus jeepTimerPlus : jeepTimerPluses) {
+            jeepTimerPlus.stop();
+        }
         jeeps.clear();
 
         entry = EntityCreate.getEntry();
@@ -325,6 +331,6 @@ public class Safari {
     public void addAJeep() {
         Jeep jeep = new Jeep(EntityCreate.entryX, EntityCreate.entryY);
         jeeps.add(jeep);
-        new JeepTimerPlus(jeep);
+        jeepTimerPluses.add(new JeepTimerPlus(jeep));
     }
 }

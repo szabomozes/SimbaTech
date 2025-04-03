@@ -40,9 +40,6 @@ public class Road {
     public int getPixel() {
         int sum = 0;
         sum += mid.size();
-        System.out.println("asd");
-        System.out.println(sum);
-        System.out.println("asd");
         return sum;
     }
 
