@@ -1,9 +1,8 @@
 package safari;
 
-import core.Resources;
 import entity.Entity;
 import entity.mobile.Jeep;
-import entity.mobile.JeepTimerPlus;
+import entity.mobile.JeepTimer;
 import road.Path;
 import entity.mobile.animal.Giraffe;
 import entity.mobile.animal.Leopard;
@@ -49,7 +48,7 @@ public class Safari {
     private boolean selling = false;
     private List<Jeep> jeeps = new ArrayList<>();
 
-    private List<JeepTimerPlus> jeepTimerPluses = new ArrayList<>();
+    private List<JeepTimer> jeepTimers = new ArrayList<>();
 
     private Safari() {
         dateTimer = new DateTimer();
@@ -86,10 +85,10 @@ public class Safari {
         tempPaths.clear();
         jeeps.clear();
 
-        for(JeepTimerPlus jeepTimerPlus : jeepTimerPluses) {
-            jeepTimerPlus.stop();
+        for(JeepTimer jeepTimer : jeepTimers) {
+            jeepTimer.stop();
         }
-        jeeps.clear();
+        jeepTimers.clear();
 
         entry = EntityCreate.getEntry();
         exit = EntityCreate.getExit();
@@ -331,6 +330,6 @@ public class Safari {
     public void addAJeep() {
         Jeep jeep = new Jeep(EntityCreate.entryX, EntityCreate.entryY);
         jeeps.add(jeep);
-        jeepTimerPluses.add(new JeepTimerPlus(jeep));
+        jeepTimers.add(new JeepTimer(jeep));
     }
 }
