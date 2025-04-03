@@ -1,5 +1,7 @@
 package road;
 
+import map.Coordinate;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,5 +44,15 @@ public class Path {
             sum += road.getPixel();
         }
         return sum;
+    }
+
+    public List<Coordinate> getPathCoordinations() {
+        List<Coordinate> coordinates = new ArrayList<>();
+
+        for (Road road : roads) {
+            coordinates.addAll(road.getMid());
+        }
+
+        return coordinates;
     }
 }

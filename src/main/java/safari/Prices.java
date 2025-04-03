@@ -11,7 +11,8 @@ public enum Prices {
     WATER(7),
     RANGER(12),
     JEEP(15),
-    ROAD(0.01);
+    ROAD(0.01),
+    PASSENGER(10);
 
     private final double price;
 

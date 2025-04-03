@@ -46,6 +46,10 @@ public class Road {
         return sum;
     }
 
+    public List<Coordinate> getMid() {
+        return mid;
+    }
+
     public void draw(Graphics g, int offsetX, int offsetY) {
         Graphics2D g2d = (Graphics2D) g;
         Stroke originalStroke = g2d.getStroke();

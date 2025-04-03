@@ -63,13 +63,12 @@ public class Safari {
             dateTimer.stop();
         }
 
-        coin = 100;
+        coin = 10000;
         date = 0;
         updateDate();
         difficultyEnum = diff;
         shopping = null;
         roadBuilding = false;
-        coin = 100;
         selling = false;
 
         lions.clear();

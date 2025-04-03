@@ -14,27 +14,40 @@ public enum SpeedEnum {
     public int getDateSec() {
         switch (this) {
             case HIPPOPOTAMUS -> {
-                return 10; // 10mp
+                return 50;
             }
             case EAGLE -> {
-                return 1; // 1mp
+                return 5;
             }
             default -> {
-                return 60; // 60mp
+                return 300;
             }
         }
     }
 
-    public double getJeepSec() {
+    public double getJeepNanoSec() {
         switch (this) {
             case HIPPOPOTAMUS -> {
-                return 0.1; // 0,1mp
+                return 10_000_000; // 100ms (0,1mp)
             }
             case EAGLE -> {
-                return 0.01; // 0,01mp
+                return 5_000_000; // 50ms (0,05mp)
             }
             default -> {
-                return 1; // 1mp
+                return 20_000_000; // 200ms (0,2mp)
+            }
+        }
+    }
+    public int getJeepSteps() {
+        switch (this) {
+            case HIPPOPOTAMUS -> {
+                return 20;
+            }
+            case EAGLE -> {
+                return 42; // 50ms (0,05mp)
+            }
+            default -> {
+                return 1; // 200ms (0,2mp)
             }
         }
     }
