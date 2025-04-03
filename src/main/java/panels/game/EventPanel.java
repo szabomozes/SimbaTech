@@ -45,7 +45,7 @@ public class EventPanel extends JPanel {
 
                 if (SwingUtilities.isRightMouseButton(e)) {
                     if (Safari.Instance.getRoadBuilding()) {
-                        roadBuilding(lastX, lastY);
+                        Safari.Instance.saveARoad(lastX - offsetX, lastY - offsetY);
                     }
                     if (Safari.Instance.shopping != null) {
                         boolean okay = true;
@@ -79,6 +79,11 @@ public class EventPanel extends JPanel {
             public void mouseReleased(MouseEvent e) {
                 if (!SwingUtilities.isRightMouseButton(e)) {
                     dragging = false;
+                } else {
+                    if (Safari.Instance.getExit().contains(e.getX() - offsetX, e.getY() - offsetY)){
+                        Safari.Instance.saveARoad(EntityCreate.exitX, EntityCreate.exitY);
+                        Safari.Instance.getTempPaths().add(new Path(EntityCreate.entryX, EntityCreate.entryY));
+                    }
                 }
             }
         });
@@ -88,7 +93,7 @@ public class EventPanel extends JPanel {
             public void mouseDragged(MouseEvent e) {
 
                 if (SwingUtilities.isRightMouseButton(e) && Safari.Instance.getRoadBuilding()) {
-                    roadBuilding(e.getX(), e.getY());
+                    Safari.Instance.saveARoad(e.getX() - offsetX, e.getY() - offsetY);
                     // building mode
                 } else if (dragging) {
                     int dx = e.getX() - lastX;
@@ -141,14 +146,6 @@ public class EventPanel extends JPanel {
         repaint();
     }
 
-    public void roadBuilding(int lastX, int lastY) {
-        if (Safari.Instance.getExit().contains(lastX - offsetX, lastY - offsetY)){
-            Safari.Instance.saveARoad(EntityCreate.exitX, EntityCreate.exitY);
-            Safari.Instance.getTempPaths().add(new Path(EntityCreate.entryX, EntityCreate.entryY));
-        } else {
-            Safari.Instance.saveARoad(lastX - offsetX, lastY - offsetY);
-        }
-    }
 
     @Override
     protected void paintComponent(Graphics g) {

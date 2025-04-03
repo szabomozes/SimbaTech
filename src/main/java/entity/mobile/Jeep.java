@@ -14,11 +14,9 @@ public class Jeep extends MobileEntity{
     private int pathIndex = 0;
     private int MaxPathIndex = 0;
     private List<Coordinate> path = new ArrayList<>();
-    private JeepTimerPlus timer;
 
     public Jeep(int x, int y) {
         super(x, y, Resources.Instance.jeep);
-        timer = new JeepTimerPlus(this);
     }
 
     public int getPassenger() {

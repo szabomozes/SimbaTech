@@ -3,6 +3,7 @@ package safari;
 import core.Resources;
 import entity.Entity;
 import entity.mobile.Jeep;
+import entity.mobile.JeepTimerPlus;
 import road.Path;
 import entity.mobile.animal.Giraffe;
 import entity.mobile.animal.Leopard;
@@ -322,6 +323,8 @@ public class Safari {
     }
 
     public void addAJeep() {
-        jeeps.add(new Jeep(EntityCreate.entryX, EntityCreate.entryY));
+        Jeep jeep = new Jeep(EntityCreate.entryX, EntityCreate.entryY);
+        jeeps.add(jeep);
+        new JeepTimerPlus(jeep);
     }
 }
