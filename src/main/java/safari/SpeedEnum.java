@@ -38,16 +38,17 @@ public enum SpeedEnum {
             }
         }
     }
+
     public int getJeepSteps() {
         switch (this) {
             case HIPPOPOTAMUS -> {
                 return 20;
             }
             case EAGLE -> {
-                return 42; // 50ms (0,05mp)
+                return 42;
             }
             default -> {
-                return 1; // 200ms (0,2mp)
+                return 1;
             }
         }
     }

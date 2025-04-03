@@ -2,6 +2,7 @@ package panels.game;
 
 import core.Resources;
 import entity.Entity;
+import entity.mobile.person.Ranger;
 import road.Path;
 import road.Road;
 import map.EntityCreate;
@@ -179,7 +180,11 @@ public class EventPanel extends JPanel {
         List<Entity> allEntities = Safari.Instance.getAllEntities();
 
         for (Entity entity : allEntities) {
-            entity.draw(g, offsetX, offsetY);
+            if (entity instanceof Ranger && ((Ranger) entity).isSelected()) {
+
+            } else {
+                entity.draw(g, offsetX, offsetY);
+            }
         }
     }
 

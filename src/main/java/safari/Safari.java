@@ -47,7 +47,6 @@ public class Safari {
     private List<Path> tempPaths = new ArrayList<>();
     private boolean selling = false;
     private List<Jeep> jeeps = new ArrayList<>();
-
     private List<JeepTimer> jeepTimers = new ArrayList<>();
 
     private Safari() {
