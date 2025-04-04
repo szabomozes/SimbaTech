@@ -77,13 +77,27 @@ public class EventPanel extends JPanel {
                             }
                             if (i < maxi) {
                                 Ranger ranger = rangers.get(i);
-                                if (rangers.get(i).contains(lastX - offsetX, lastY - offsetY)) {
+                                // Vagy sajat maga, vagy valami mas
+                                if (ranger.contains(lastX - offsetX, lastY - offsetY)) {
                                     ranger.setSelected(false);
                                     Safari.Instance.setSelectedRanger(false);
                                 } else {
-                                    ranger.setNewPosition(true);
-                                    ranger.setNewPositionX(lastX - offsetX);
-                                    ranger.setNewPositionY(lastY - offsetY);
+                                    Entity entity = null;
+                                    for (int j = 0; j < Safari.Instance.getAnimalsPoachers().size() && entity == null; j++) {
+                                        if (Safari.Instance.getAnimalsPoachers().get(j).contains(lastX - offsetX, lastY - offsetY)) {
+                                            entity = Safari.Instance.getAnimalsPoachers().get(j);
+                                        }
+                                    }
+                                    // vagy pozicio, vagy entity
+                                    if (entity == null) {
+                                        ranger.setNewPosition(true);
+                                        ranger.setTarget(null);
+                                        ranger.setNewPositionX(lastX - offsetX);
+                                        ranger.setNewPositionY(lastY - offsetY);
+                                    } else {
+                                        ranger.setTarget(entity);
+                                        ranger.setNewPosition(false);
+                                    }
                                 }
                             }
                         } else {
@@ -203,7 +217,7 @@ public class EventPanel extends JPanel {
         Safari.Instance.getExit().draw(g, offsetX, offsetY);
 
         // entityk
-        List<Entity> allEntities = Safari.Instance.getAllEntities();
+        List<Entity> allEntities = Safari.Instance.getAllEntitiesWithSorted();
 
         for (Entity entity : allEntities) {
             entity.draw(g, offsetX, offsetY);

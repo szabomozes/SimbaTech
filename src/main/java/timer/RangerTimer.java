@@ -31,7 +31,9 @@ public class RangerTimer extends BasicTimer{
             if (elapsed.toNanos() >= Speed.Instance.speedEnum.getRangerNanoSec()) {
                 lastUpdate = now;
 
-                if (ranger.isNewPosition()) {
+                if (ranger.isTarget()) {
+                    // TODO: átírni a movingos dolgot nem utkereső algoritmusra
+                } else if (ranger.isNewPosition()) {
                     ranger.setMovingCoordinates(getReversed(pathFinder(ranger.getNewPositionX(), ranger.getNewPositionY(), Resources.Instance.map.getWidth() - Resources.Instance.ranger.getWidth() / 2, Resources.Instance.map.getHeight() - Resources.Instance.ranger.getHeight() / 2, Safari.Instance.getWrongCoordinates())));
                     ranger.setNewPosition(false);
                     ranger.setMovingNewPosition(true);

@@ -241,10 +241,40 @@ public class Safari {
         allEntities.addAll(rangers);
         allEntities.addAll(jeeps);
 
+        return allEntities;
+    }
 
-        allEntities.sort(Comparator.comparingInt(entity -> entity.getY()));
+    public List<Entity> getAllEntitiesWithSorted() {
+        List<Entity> allEntities = new ArrayList<>();
+
+        allEntities.addAll(giraffes);
+        allEntities.addAll(zebras);
+        allEntities.addAll(leopards);
+        allEntities.addAll(lions);
+        allEntities.addAll(palmTrees);
+        allEntities.addAll(baobabs);
+        allEntities.addAll(panciums);
+        allEntities.addAll(waters);
+        allEntities.addAll(rangers);
+        allEntities.addAll(jeeps);
+
+
+        allEntities.sort(Comparator.comparingInt(entity -> entity.getY()+entity.getHeight()));
 
         return allEntities;
+    }
+
+    public List<Entity> getAnimalsPoachers() {
+        List<Entity> entities = new ArrayList<>();
+
+        entities.addAll(giraffes);
+        entities.addAll(zebras);
+        entities.addAll(leopards);
+        entities.addAll(lions);
+        entities.addAll(jeeps);
+        //entities.addAll(poachers);
+
+        return entities;
     }
 
     public List<Lion> getLions() {

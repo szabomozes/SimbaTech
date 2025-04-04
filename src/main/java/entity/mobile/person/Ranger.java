@@ -1,12 +1,13 @@
 package entity.mobile.person;
 
 import core.Resources;
+import entity.Entity;
 import map.Coordinate;
 
 import java.util.List;
 
 public class Ranger extends Person{
-    private boolean target = false;
+    private Entity target = null;
     private int targetX = 0;
     private int targetY = 0;
     private boolean newPosition = false;
@@ -21,10 +22,10 @@ public class Ranger extends Person{
     }
 
     public boolean isTarget() {
-        return target;
+        return target != null;
     }
 
-    public void setTarget(boolean target) {
+    public void setTarget(Entity target) {
         this.target = target;
     }
 
