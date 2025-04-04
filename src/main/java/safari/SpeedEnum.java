@@ -52,4 +52,32 @@ public enum SpeedEnum {
             }
         }
     }
+
+    public double getRangerNanoSec() {
+        switch (this) {
+            case HIPPOPOTAMUS -> {
+                return 10_000_000; // 100ms (0,1mp)
+            }
+            case EAGLE -> {
+                return 5_000_000; // 50ms (0,05mp)
+            }
+            default -> {
+                return 20_000_000; // 200ms (0,2mp)
+            }
+        }
+    }
+
+    public int getRangerSteps() {
+        switch (this) {
+            case HIPPOPOTAMUS -> {
+                return 20;
+            }
+            case EAGLE -> {
+                return 42;
+            }
+            default -> {
+                return 1;
+            }
+        }
+    }
 }

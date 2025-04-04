@@ -3,6 +3,7 @@ package safari;
 import entity.Entity;
 import entity.mobile.Jeep;
 import entity.mobile.JeepTimer;
+import entity.mobile.person.RangerTimer;
 import road.Path;
 import entity.mobile.animal.Giraffe;
 import entity.mobile.animal.Leopard;
@@ -48,6 +49,8 @@ public class Safari {
     private boolean selling = false;
     private List<Jeep> jeeps = new ArrayList<>();
     private List<JeepTimer> jeepTimers = new ArrayList<>();
+    private boolean selectedRanger = false;
+    private List<RangerTimer> rangerTimers = new ArrayList<>();
 
     private Safari() {
         dateTimer = new DateTimer();
@@ -70,6 +73,7 @@ public class Safari {
         shopping = null;
         roadBuilding = false;
         selling = false;
+        selectedRanger = false;
 
         lions.clear();
         leopards.clear();
@@ -84,10 +88,14 @@ public class Safari {
         tempPaths.clear();
         jeeps.clear();
 
-        for(JeepTimer jeepTimer : jeepTimers) {
+        for (JeepTimer jeepTimer : jeepTimers) {
             jeepTimer.stop();
         }
         jeepTimers.clear();
+        for (RangerTimer rangerTimer : rangerTimers) {
+            rangerTimer.stop();
+        }
+        rangerTimers.clear();
 
         entry = EntityCreate.getEntry();
         exit = EntityCreate.getExit();
@@ -147,7 +155,9 @@ public class Safari {
                 coin -= price;
                 break;
             case "ranger":
-                rangers.add(new Ranger(x, y));
+                Ranger ranger = new Ranger(x, y);
+                rangers.add(ranger);
+                rangerTimers.add(new RangerTimer(ranger));
                 coin -= price;
                 break;
             case "jeep":
@@ -330,5 +340,13 @@ public class Safari {
         Jeep jeep = new Jeep(EntityCreate.entryX, EntityCreate.entryY);
         jeeps.add(jeep);
         jeepTimers.add(new JeepTimer(jeep));
+    }
+
+    public boolean isSelectedRanger() {
+        return selectedRanger;
+    }
+
+    public void setSelectedRanger(boolean selectedRanger) {
+        this.selectedRanger = selectedRanger;
     }
 }

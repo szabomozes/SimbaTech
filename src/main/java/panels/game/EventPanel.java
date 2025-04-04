@@ -47,8 +47,7 @@ public class EventPanel extends JPanel {
                 if (SwingUtilities.isRightMouseButton(e)) {
                     if (Safari.Instance.getRoadBuilding()) {
                         Safari.Instance.saveARoad(lastX - offsetX, lastY - offsetY);
-                    }
-                    if (Safari.Instance.shopping != null) {
+                    } else if (Safari.Instance.shopping != null) {
                         boolean okay = true;
                         List<Entity> allentities = Safari.Instance.getAllEntities();
                         for (int i = 0; i < allentities.size() && okay; i++) {
@@ -61,12 +60,39 @@ public class EventPanel extends JPanel {
                             ToolBarCardLayout.Instance.showCard("toolbar");
                             System.out.println("Hozzáadva a következő pozícióval: (" + lastX + ", " + lastY + ")");
                         }
-                    }
-                    if (Safari.Instance.getSellingMode()){
+                    } else if (Safari.Instance.getSellingMode()){
                         List<Entity> allentities = Safari.Instance.getAllEntities();
                         for (Entity entity : allentities) {
                             if (entity.contains(lastX - offsetX, lastY - offsetY)) {
                                 Safari.Instance.sellSomething(entity.id);
+                            }
+                        }
+                    } else {
+                        List<Ranger> rangers = Safari.Instance.getRangers();
+                        int maxi = rangers.size();
+                        int i = 0;
+                        if (Safari.Instance.isSelectedRanger()) {
+                            while (i < maxi && !rangers.get(i).isSelected()) {
+                                i++;
+                            }
+                            if (i < maxi) {
+                                Ranger ranger = rangers.get(i);
+                                if (rangers.get(i).contains(lastX - offsetX, lastY - offsetY)) {
+                                    ranger.setSelected(false);
+                                    Safari.Instance.setSelectedRanger(false);
+                                } else {
+                                    ranger.setNewPosition(true);
+                                    ranger.setNewPositionX(lastX - offsetX);
+                                    ranger.setNewPositionY(lastY - offsetY);
+                                }
+                            }
+                        } else {
+                            while (i < maxi && !rangers.get(i).contains(lastX - offsetX, lastY - offsetY)) {
+                                i++;
+                            }
+                            if (i < maxi) {
+                                rangers.get(i).setSelected(true);
+                                Safari.Instance.setSelectedRanger(true);
                             }
                         }
                     }
@@ -180,10 +206,16 @@ public class EventPanel extends JPanel {
         List<Entity> allEntities = Safari.Instance.getAllEntities();
 
         for (Entity entity : allEntities) {
-            if (entity instanceof Ranger && ((Ranger) entity).isSelected()) {
+            entity.draw(g, offsetX, offsetY);
 
-            } else {
-                entity.draw(g, offsetX, offsetY);
+            if (entity instanceof Ranger && ((Ranger) entity).isSelected()) {
+                int x = entity.getX() + offsetX;
+                int y = entity.getY() + offsetY;
+                int width = entity.getWidth();
+                int height = entity.getHeight();
+
+                g.setColor(Color.RED);
+                g.drawRect(x, y, width, height);
             }
         }
     }

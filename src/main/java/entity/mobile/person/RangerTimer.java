@@ -37,7 +37,20 @@ public class RangerTimer {
 
     private void updateRanger() {
         try {
+            Instant now = Instant.now();
+            Duration elapsed = Duration.between(lastUpdate, now);
 
+            if (elapsed.toNanos() >= Speed.Instance.speedEnum.getRangerNanoSec()) {
+                lastUpdate = now;
+
+                if (ranger.isNewPosition()) {
+                    // seta a kijelolt poziba
+                }
+
+
+                // Frissítjük a megjelenítést
+                CardPanel.Instance.repaint();
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
