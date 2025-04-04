@@ -25,16 +25,16 @@ public enum SpeedEnum {
         }
     }
 
-    public double getJeepNanoSec() {
+    public int getJeepNanoSec() {
         switch (this) {
             case HIPPOPOTAMUS -> {
-                return 10_000_000; // 100ms (0,1mp)
+                return 10_000_000;
             }
             case EAGLE -> {
-                return 5_000_000; // 50ms (0,05mp)
+                return 5_000_000;
             }
             default -> {
-                return 20_000_000; // 200ms (0,2mp)
+                return 20_000_000;
             }
         }
     }

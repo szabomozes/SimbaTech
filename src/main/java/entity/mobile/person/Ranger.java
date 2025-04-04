@@ -1,12 +1,17 @@
 package entity.mobile.person;
 
 import core.Resources;
+import map.Coordinate;
+
+import java.util.List;
 
 public class Ranger extends Person{
     private boolean target = false;
     private int targetX = 0;
     private int targetY = 0;
     private boolean newPosition = false;
+    private boolean isMovingNewPosition = false;
+    private List<Coordinate> movingCoordinates = null;
     private int newPositionX = 0;
     private int newPositionY = 0;
     private boolean selected = false;
@@ -69,5 +74,25 @@ public class Ranger extends Person{
 
     public void setNewPositionY(int newPositionY) {
         this.newPositionY = newPositionY;
+    }
+
+    public boolean isMovingNewPosition() {
+        return isMovingNewPosition;
+    }
+
+    public void setMovingNewPosition(boolean movingNewPosition) {
+        isMovingNewPosition = movingNewPosition;
+    }
+
+    public List<Coordinate> getMovingCoordinates() {
+        return movingCoordinates;
+    }
+
+    public void setMovingCoordinates(List<Coordinate> movingCoordinates) {
+        this.movingCoordinates = movingCoordinates;
+    }
+
+    public Coordinate deleteLastCoordinateFromMovingCoordinates() {
+        return movingCoordinates.removeLast();
     }
 }

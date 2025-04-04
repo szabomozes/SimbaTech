@@ -1,5 +1,6 @@
-package entity.mobile;
+package timer;
 
+import entity.mobile.Jeep;
 import panels.CardPanel;
 import safari.Prices;
 import safari.Safari;
@@ -7,34 +8,18 @@ import safari.Speed;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.Random;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
-public class JeepTimer {
+public class JeepTimer extends BasicTimer {
 
-    private Instant lastUpdate;
-    private ScheduledExecutorService scheduler;
     private final Jeep jeep;
-    private final Random rnd = new Random();
 
     public JeepTimer(Jeep jeep) {
+        super();
         this.jeep = jeep;
-        lastUpdate = Instant.now();
-        startTimer();
     }
 
-    private void startTimer() {
-        if (scheduler != null) {
-            scheduler.shutdown(); // Leállítjuk az előző időzítőt, ha létezik
-        }
-
-        scheduler = Executors.newScheduledThreadPool(1);
-        scheduler.scheduleAtFixedRate(this::updateJeep, 1_000_000_000, 5_000_000, TimeUnit.NANOSECONDS);
-    }
-
-    private void updateJeep() {
+    @Override
+    protected void update() {
         try {
             Instant now = Instant.now();
             Duration elapsed = Duration.between(lastUpdate, now);
@@ -47,7 +32,7 @@ public class JeepTimer {
                     if (jeep.isAvaliable()) {
                         jeep.setAvaliable(false);
                         jeep.setPassenger(rnd.nextInt(4) + 1);
-                        jeep.setSelectedPathIndex(rnd.nextInt(0, Safari.Instance.getPaths().size()));
+                        jeep.setSelectedPathIndex(rnd.nextInt(Safari.Instance.getPaths().size()));
                         jeep.setForward(true);
                         jeep.setPathIndex(0);
                         jeep.setPath(Safari.Instance.getPaths().get(jeep.getSelectedPathIndex()).getPathCoordinations());
@@ -65,7 +50,7 @@ public class JeepTimer {
                         jeep.setPassenger(0);
                     } else if (!jeep.isForward() && jeep.getPassenger() == 0) {
                         jeep.setPathIndex(jeep.getPathIndex() - Speed.Instance.speedEnum.getJeepSteps());
-                        if (jeep.getPathIndex() <= 0) {
+                        if (jeep.getPathIndex() < 0) {
                             jeep.setPathIndex(0);
                             jeep.setAvaliable(true);
                         }
@@ -82,9 +67,4 @@ public class JeepTimer {
         }
     }
 
-    public void stop() {
-        if (scheduler != null) {
-            scheduler.shutdown();
-        }
-    }
 }
