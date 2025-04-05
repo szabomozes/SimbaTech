@@ -151,6 +151,7 @@ public class Safari {
             case "water":
                 waters.add(new Water(x, y));
                 coin -= price;
+                updateWrongCoordinates();
                 break;
             case "ranger":
                 Ranger ranger = new Ranger(x, y);
@@ -221,6 +222,7 @@ public class Safari {
                 break;
             case "water":
                 waters.remove((Water)actual);
+                updateWrongCoordinates();
                 break;
         }
     }

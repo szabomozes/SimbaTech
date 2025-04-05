@@ -82,6 +82,7 @@ public class EventPanel extends JPanel {
                                 if (ranger.contains(lastX - offsetX, lastY - offsetY)) {
                                     ranger.setSelected(false);
                                     Safari.Instance.setSelectedRanger(false);
+                                    //ToolBarCardLayout.Instance.showCard("toolbar");
                                 } else {
                                     Entity entity = null;
                                     for (int j = 0; j < Safari.Instance.getAnimalsPoachers().size() && entity == null; j++) {
@@ -108,6 +109,7 @@ public class EventPanel extends JPanel {
                             if (i < maxi) {
                                 rangers.get(i).setSelected(true);
                                 Safari.Instance.setSelectedRanger(true);
+                                //ToolBarCardLayout.Instance.showCard("selectedRanger");
                             }
                         }
                     }
