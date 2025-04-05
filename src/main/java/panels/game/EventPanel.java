@@ -39,6 +39,7 @@ public class EventPanel extends JPanel {
         add(new FeedBackTriggerButton());
         //feedback = new WinFeedBackPanel();
         //add(feedback);
+        Safari.Instance.placePoachers(2);
 
         addMouseListener(new MouseAdapter() {
             @Override

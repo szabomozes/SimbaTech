@@ -198,6 +198,8 @@ public class Safari {
             Poacher poacher = new Poacher(x, y);
             poacher.move();
             poachers.add(poacher);
+            System.out.println("poacher out");
+            poacher.reveal();
         }
     }
 
