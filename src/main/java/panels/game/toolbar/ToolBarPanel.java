@@ -8,6 +8,8 @@ import java.awt.*;
 
 public class ToolBarPanel extends JPanel {
     private final RoadTableButton roadTableButton = new RoadTableButton();
+    private final SpeedButton speedButton = new SpeedButton();
+
 
     public ToolBarPanel() {
         setLayout(null);
@@ -27,7 +29,7 @@ public class ToolBarPanel extends JPanel {
         add(new SellButton());
 
         add(roadTableButton);
-        add(SpeedButton.Instance);
+        add(speedButton);
 
         setBackground(Color.DARK_GRAY);
         setBorder(BorderFactory.createMatteBorder(2, 0, 0, 0, Color.BLACK));
@@ -37,7 +39,7 @@ public class ToolBarPanel extends JPanel {
     @Override
     public void doLayout() {
         super.doLayout();
-        SpeedButton.Instance.updatePosition();
+        speedButton.updatePosition();
         roadTableButton.updatePosition();
     }
 }

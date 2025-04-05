@@ -1,6 +1,5 @@
 package timer;
 
-import core.Resources;
 import entity.mobile.person.Ranger;
 import map.Coordinate;
 import panels.CardPanel;
@@ -9,16 +8,14 @@ import safari.Speed;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.Arrays;
 
-public class RangerTimer extends BasicTimer{
+public class RangerTimer extends BasicTimer {
 
     private final Ranger ranger;
 
     public RangerTimer(Ranger ranger) {
-        super();
+        super(ranger.id);
         this.ranger = ranger;
     }
 
@@ -30,27 +27,7 @@ public class RangerTimer extends BasicTimer{
 
             if (elapsed.toNanos() >= Speed.Instance.speedEnum.getRangerNanoSec()) {
                 lastUpdate = now;
-
-                if (ranger.isTarget()) {
-                    // TODO: átírni a movingos dolgot nem utkereső algoritmusra
-                } else if (ranger.isNewPosition()) {
-                    ranger.setMovingCoordinates(getReversed(pathFinder(ranger.getNewPositionX(), ranger.getNewPositionY(), Resources.Instance.map.getWidth() - Resources.Instance.ranger.getWidth() / 2, Resources.Instance.map.getHeight() - Resources.Instance.ranger.getHeight() / 2, Safari.Instance.getWrongCoordinates())));
-                    ranger.setNewPosition(false);
-                    ranger.setMovingNewPosition(true);
-                } else if (ranger.isMovingNewPosition()) {
-                    for (int i = 0; i < Math.min(Speed.Instance.speedEnum.getRangerSteps(), ranger.getMovingCoordinates().size() - 1); i++) {
-                        ranger.deleteLastCoordinateFromMovingCoordinates();
-                    }
-                    Coordinate coordinate = ranger.deleteLastCoordinateFromMovingCoordinates();
-                    if (ranger.getMovingCoordinates().isEmpty()) {
-                        ranger.setMovingNewPosition(false);
-                    }
-                    ranger.setX(coordinate.x - ranger.getWidth() / 2);
-                    ranger.setY(coordinate.y - ranger.getHeight() / 2);
-                }
-
-
-                // Frissítjük a megjelenítést
+                handleRangerMovement();
                 CardPanel.Instance.repaint();
             }
         } catch (Exception ex) {
@@ -58,115 +35,89 @@ public class RangerTimer extends BasicTimer{
         }
     }
 
+    private void handleRangerMovement() {
+        if (ranger.isTarget()) {
+            // TODO: célpont kovetése
+        } else if (ranger.isNewPosition()) {
+            startMovingToNewPosition();
+        } else if (ranger.isMovingNewPosition()) {
+            moveToNewPosition();
+        }
+    }
 
+    private void startMovingToNewPosition() {
+        ranger.setNewPosition(false);
+        ranger.setMovingNewPosition(true);
+    }
 
+    private void moveToNewPosition() {
+        if (hasReachedNewPosition()) {
+            ranger.setMovingNewPosition(false);
+            return;
+        }
 
+        int[] step = calculateStep();
+        int[][] directions = generatePossibleDirections(step);
 
+        int[] bestDirection = findBestDirection(directions);
+        if (bestDirection != null) {
+            updateRangerPosition(bestDirection[0], bestDirection[1]);
+        }
+    }
 
+    private boolean hasReachedNewPosition() {
+        return ranger.getX() == ranger.getNewPositionX() && ranger.getY() == ranger.getNewPositionY();
+    }
 
+    private int[] calculateStep() {
+        int tempx = Math.min(Math.abs(ranger.getX() - ranger.getNewPositionX()), Speed.Instance.speedEnum.getRangerSteps());
+        int tempy = Math.min(Math.abs(ranger.getY() - ranger.getNewPositionY()), Speed.Instance.speedEnum.getRangerSteps());
+        return new int[] {tempx, tempy};
+    }
 
+    private int[][] generatePossibleDirections(int[] step) {
+        return new int[][]{
+                {step[0], step[1]}, {-step[0], step[1]}, {step[0], -step[1]}, {-step[0], -step[1]},
+                {step[0], 0}, {-step[0], 0}, {0, step[1]}, {0, -step[1]}
+        };
+    }
 
+    private int[] findBestDirection(int[][] directions) {
+        int bestX = -1, bestY = -1;
 
+        for (int[] dir : directions) {
+            int newX = ranger.getX() + dir[0];
+            int newY = ranger.getY() + dir[1];
 
-
-
-
-    private List<Coordinate> pathFinder(int goalX, int goalY, int maxWidth, int maxHeight, List<Coordinate> wrongCoordinates) {
-        List<Coordinate> path = new ArrayList<>();
-
-        Coordinate start = new Coordinate(ranger.getX() + ranger.getWidth() / 2, ranger.getY() + ranger.getHeight() / 2);
-        Coordinate goal = new Coordinate(goalX, goalY);
-
-        boolean[][] visited = new boolean[maxWidth][maxHeight];
-        Coordinate[][] cameFrom = new Coordinate[maxWidth][maxHeight];
-        int[][] gScore = new int[maxWidth][maxHeight];
-
-        for (int i = 0; i < maxWidth; i++) {
-            for (int j = 0; j < maxHeight; j++) {
-                gScore[i][j] = Integer.MAX_VALUE;
+            if (isValidPosition(newX, newY)) {
+                int newDistance = calculateDistance(newX, newY);
+                if (bestX == -1 || newDistance < calculateDistance(bestX, bestY)) {
+                    bestX = newX;
+                    bestY = newY;
+                }
             }
         }
 
-        gScore[start.x][start.y] = 0;
+        return bestX != -1 && bestY != -1 ? new int[] {bestX, bestY} : null;
+    }
 
-        class Node {
-            Coordinate coord;
-            int fScore;
-
-            Node(Coordinate coord, int fScore) {
-                this.coord = coord;
-                this.fScore = fScore;
-            }
-        }
-
-        List<Node> openSet = new ArrayList<>();
-        openSet.add(new Node(start, heuristic(start, goal)));
-
-        // Minden lehetséges irány (8 irány: 4 egyenes, 4 átlós)
-        int[][] directions = {
-                {1, 0}, {-1, 0}, {0, 1}, {0, -1},
-                {1, 1}, {-1, -1}, {1, -1}, {-1, 1}
+    private boolean isValidPosition(int newX, int newY) {
+        Coordinate[] coords = {
+                new Coordinate(newX, newY),
+                new Coordinate(newX + ranger.getWidth(), newY),
+                new Coordinate(newX + ranger.getWidth(), newY + ranger.getHeight()),
+                new Coordinate(newX, newY + ranger.getHeight())
         };
 
-        while (!openSet.isEmpty()) {
-            // Legkisebb fScore-ral rendelkező node kiválasztása
-            Node currentNode = openSet.stream().min((a, b) -> Integer.compare(a.fScore, b.fScore)).orElse(null);
-            Coordinate current = currentNode.coord;
-            openSet.remove(currentNode);
-
-            if (current.equals(goal)) {
-                // Útvonal visszafejtése
-                Coordinate step = goal;
-                while (step != null && !step.equals(start)) {
-                    path.add(step);
-                    step = cameFrom[step.x][step.y];
-                }
-                path.add(start);
-                Collections.reverse(path);
-                System.out.println("Good path");
-                return path;
-            }
-
-            visited[current.x][current.y] = true;
-
-            for (int[] dir : directions) {
-                int newX = current.x + dir[0];
-                int newY = current.y + dir[1];
-                Coordinate neighbor = new Coordinate(newX, newY);
-
-                if (newX < 0 || newY < 0 || newX >= maxWidth || newY >= maxHeight) continue;
-                if (visited[newX][newY]) continue;
-                if (wrongCoordinates.contains(neighbor)) continue;
-
-                int tentativeGScore = gScore[current.x][current.y] + 1;
-
-                if (tentativeGScore < gScore[newX][newY]) {
-                    cameFrom[newX][newY] = current;
-                    gScore[newX][newY] = tentativeGScore;
-                    int fScore = tentativeGScore + heuristic(neighbor, goal);
-
-                    boolean inOpenSet = openSet.stream().anyMatch(n -> n.coord.equals(neighbor));
-                    if (!inOpenSet) {
-                        openSet.add(new Node(neighbor, fScore));
-                    }
-                }
-            }
-        }
-
-        System.out.println("Bad path");
-        return path;
+        return Arrays.stream(coords).noneMatch(c -> Safari.Instance.getWrongCoordinates().contains(c));
     }
 
-    // Octile heuristics (egyenlő mozgási költség minden irányban)
-    private int heuristic(Coordinate a, Coordinate b) {
-        int dx = Math.abs(a.x - b.x);
-        int dy = Math.abs(a.y - b.y);
-        return Math.max(dx, dy);
-    }
-    private List<Coordinate> getReversed(List<Coordinate> path) {
-        List<Coordinate> reversed = new ArrayList<>(path);
-        Collections.reverse(reversed);
-        return reversed;
+    private int calculateDistance(int x, int y) {
+        return Math.abs(x - ranger.getNewPositionX()) + Math.abs(y - ranger.getNewPositionY());
     }
 
+    private void updateRangerPosition(int bestX, int bestY) {
+        ranger.setX(bestX);
+        ranger.setY(bestY);
+    }
 }

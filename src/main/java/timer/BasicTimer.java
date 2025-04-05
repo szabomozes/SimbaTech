@@ -11,8 +11,10 @@ public abstract class BasicTimer {
     protected Instant lastUpdate;
     protected final ScheduledExecutorService executor;
     protected final Random rnd = new Random();
+    protected final int entityID;
 
-    public BasicTimer() {
+    public BasicTimer(int id) {
+        entityID = id;
         executor = Executors.newScheduledThreadPool(1);
         lastUpdate = Instant.now();
         executor.scheduleAtFixedRate(this::update, 1_000_000_000, 5_000_000, TimeUnit.NANOSECONDS);
@@ -30,6 +32,10 @@ public abstract class BasicTimer {
 
     public boolean isRunning() {
         return executor != null && !executor.isShutdown() && !executor.isTerminated();
+    }
+
+    public int getEntityID() {
+        return entityID;
     }
 
 }

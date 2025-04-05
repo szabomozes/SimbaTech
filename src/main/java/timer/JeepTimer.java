@@ -14,7 +14,7 @@ public class JeepTimer extends BasicTimer {
     private final Jeep jeep;
 
     public JeepTimer(Jeep jeep) {
-        super();
+        super(jeep.id);
         this.jeep = jeep;
     }
 
@@ -24,47 +24,63 @@ public class JeepTimer extends BasicTimer {
             Instant now = Instant.now();
             Duration elapsed = Duration.between(lastUpdate, now);
 
-            if (!Safari.Instance.getPaths().isEmpty()) {
-
-                if (elapsed.toNanos() >= Speed.Instance.speedEnum.getJeepNanoSec()) {
-                    lastUpdate = now;
-
-                    if (jeep.isAvaliable()) {
-                        jeep.setAvaliable(false);
-                        jeep.setPassenger(rnd.nextInt(4) + 1);
-                        jeep.setSelectedPathIndex(rnd.nextInt(Safari.Instance.getPaths().size()));
-                        jeep.setForward(true);
-                        jeep.setPathIndex(0);
-                        jeep.setPath(Safari.Instance.getPaths().get(jeep.getSelectedPathIndex()).getPathCoordinations());
-                        jeep.setMaxPathIndex(jeep.getPath().size());
-                    } else if (jeep.isForward()) {
-                        jeep.setPathIndex(jeep.getPathIndex() + Speed.Instance.speedEnum.getJeepSteps());
-                        if (jeep.getPathIndex() >= jeep.getMaxPathIndex()) {
-                            jeep.setPathIndex(jeep.getMaxPathIndex() - 1);
-                            jeep.setForward(false);
-                        }
-                        jeep.setX(jeep.getPath().get(jeep.getPathIndex()).x - jeep.getWidth() / 2);
-                        jeep.setY(jeep.getPath().get(jeep.getPathIndex()).y - jeep.getHeight() / 2);
-                    } else if (!jeep.isForward() && jeep.getPassenger() > 0) {
-                        Safari.Instance.coin += (int) (Prices.getPriceByEnum(Prices.PASSENGER) * jeep.getPassenger());
-                        jeep.setPassenger(0);
-                    } else if (!jeep.isForward() && jeep.getPassenger() == 0) {
-                        jeep.setPathIndex(jeep.getPathIndex() - Speed.Instance.speedEnum.getJeepSteps());
-                        if (jeep.getPathIndex() < 0) {
-                            jeep.setPathIndex(0);
-                            jeep.setAvaliable(true);
-                        }
-                        jeep.setX(jeep.getPath().get(jeep.getPathIndex()).x - jeep.getWidth() / 2);
-                        jeep.setY(jeep.getPath().get(jeep.getPathIndex()).y - jeep.getHeight() / 2);
-                    }
-
-                    // Frissítjük a megjelenítést
-                    CardPanel.Instance.repaint();
-                }
+            if (!Safari.Instance.getPaths().isEmpty() && elapsed.toNanos() >= Speed.Instance.speedEnum.getJeepNanoSec()) {
+                lastUpdate = now;
+                handleJeepMovement();
+                CardPanel.Instance.repaint();
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
+    private void handleJeepMovement() {
+        if (jeep.isAvaliable()) {
+            initializeJeep();
+        } else if (jeep.isForward()) {
+            moveJeepForward();
+        } else if (!jeep.isForward() && jeep.getPassenger() > 0) {
+            collectPassengerPayment();
+        } else if (!jeep.isForward() && jeep.getPassenger() == 0) {
+            moveJeepBackward();
+        }
+    }
+
+    private void initializeJeep() {
+        jeep.setAvaliable(false);
+        jeep.setPassenger(rnd.nextInt(4) + 1);
+        jeep.setSelectedPathIndex(rnd.nextInt(Safari.Instance.getPaths().size()));
+        jeep.setForward(true);
+        jeep.setPathIndex(0);
+        jeep.setPath(Safari.Instance.getPaths().get(jeep.getSelectedPathIndex()).getPathCoordinations());
+        jeep.setMaxPathIndex(jeep.getPath().size());
+    }
+
+    private void moveJeepForward() {
+        jeep.setPathIndex(jeep.getPathIndex() + Speed.Instance.speedEnum.getJeepSteps());
+        if (jeep.getPathIndex() >= jeep.getMaxPathIndex()) {
+            jeep.setPathIndex(jeep.getMaxPathIndex() - 1);
+            jeep.setForward(false);
+        }
+        updateJeepPosition();
+    }
+
+    private void collectPassengerPayment() {
+        Safari.Instance.coin += (int) (Prices.getPriceByEnum(Prices.PASSENGER) * jeep.getPassenger());
+        jeep.setPassenger(0);
+    }
+
+    private void moveJeepBackward() {
+        jeep.setPathIndex(jeep.getPathIndex() - Speed.Instance.speedEnum.getJeepSteps());
+        if (jeep.getPathIndex() < 0) {
+            jeep.setPathIndex(0);
+            jeep.setAvaliable(true);
+        }
+        updateJeepPosition();
+    }
+
+    private void updateJeepPosition() {
+        jeep.setX(jeep.getPath().get(jeep.getPathIndex()).x - jeep.getWidth() / 2);
+        jeep.setY(jeep.getPath().get(jeep.getPathIndex()).y - jeep.getHeight() / 2);
+    }
 }

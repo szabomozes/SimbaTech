@@ -11,6 +11,7 @@ public enum SpeedEnum {
         return values[(ordinal + 1) % values.length];
     }
 
+
     public int getDateSec() {
         switch (this) {
             case HIPPOPOTAMUS -> {
@@ -56,13 +57,13 @@ public enum SpeedEnum {
     public double getRangerNanoSec() {
         switch (this) {
             case HIPPOPOTAMUS -> {
-                return 10_000_000; // 100ms (0,1mp)
+                return 10_000_000;
             }
             case EAGLE -> {
-                return 5_000_000; // 50ms (0,05mp)
+                return 5_000_000;
             }
             default -> {
-                return 20_000_000; // 200ms (0,2mp)
+                return 20_000_000;
             }
         }
     }
@@ -76,7 +77,7 @@ public enum SpeedEnum {
                 return 42;
             }
             default -> {
-                return 1;
+                return 5;
             }
         }
     }

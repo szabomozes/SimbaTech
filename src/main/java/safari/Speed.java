@@ -6,4 +6,11 @@ public class Speed{
 
     public SpeedEnum speedEnum = SpeedEnum.SNAIL;
 
+    public SpeedEnum getCurrentSpeedEnum() {
+        return speedEnum;
+    }
+
+    public void reset() {
+        speedEnum = SpeedEnum.SNAIL;
+    }
 }

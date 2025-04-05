@@ -37,7 +37,7 @@ public abstract class BasicLeftToolBarButton extends JButton {
                     ToolBarCardLayout.Instance.showCard("selling");
                     Safari.Instance.setSellingMode(true);
                 } else {
-                    Safari.Instance.buySoemthing(message);
+                    Safari.Instance.buySomething(message);
                 }
             }
         });

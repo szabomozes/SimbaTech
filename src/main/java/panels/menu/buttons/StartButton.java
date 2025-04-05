@@ -7,6 +7,7 @@ import map.ImageMerger;
 import panels.CardPanel;
 import panels.game.toolbar.ToolBarCardLayout;
 import panels.game.toolbar.buttons.speed.SpeedButton;
+import safari.Speed;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,7 +35,7 @@ public class StartButton extends JButton {
 
             SwingUtilities.invokeLater(() -> {
                 Safari.Instance.reset(message);
-                SpeedButton.Instance.resetSpeed();
+                Speed.Instance.reset();
                 ToolBarCardLayout.Instance.showCard("toolbar");
                 System.out.println("Pálya betöltve");
                 CardPanel.Instance.updateGamePanel();

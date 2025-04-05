@@ -7,40 +7,27 @@ import timer.BasicTimer;
 import timer.JeepTimer;
 import timer.RangerTimer;
 import road.Path;
-import entity.mobile.animal.Giraffe;
-import entity.mobile.animal.Leopard;
-import entity.mobile.animal.Lion;
-import entity.mobile.animal.Zebra;
+import entity.mobile.animal.*;
 import entity.mobile.person.Ranger;
-import entity.notmobile.Entry;
-import entity.notmobile.Exit;
-import entity.notmobile.Water;
-import entity.notmobile.plant.Baobab;
-import entity.notmobile.plant.PalmTree;
-import entity.notmobile.plant.Pancium;
+import entity.notmobile.*;
+import entity.notmobile.plant.*;
 import map.EntityCreate;
 import panels.game.Calendar;
 import panels.game.toolbar.ToolBarCardLayout;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Safari {
-    public static Safari Instance = new Safari();
+    public static final Safari Instance = new Safari();
 
     private DifficultyEnum difficultyEnum;
     private int date;
     public int coin;
     private DateTimer dateTimer;
     public String shopping;
-    private List<Lion> lions = new ArrayList<>();
-    private List<Leopard> leopards = new ArrayList<>();
-    private List<Zebra> zebras = new ArrayList<>();
-    private List<Giraffe> giraffes = new ArrayList<>();
-    private List<PalmTree> palmTrees = new ArrayList<>();
-    private List<Baobab> baobabs = new ArrayList<>();
-    private List<Pancium> panciums = new ArrayList<>();
+    private List<Entity> animals = new ArrayList<>();
+    private List<Entity> plants = new ArrayList<>();
     private List<Water> waters = new ArrayList<>();
     private List<Ranger> rangers = new ArrayList<>();
     private Entry entry = null;
@@ -61,9 +48,7 @@ public class Safari {
 
     public void shutDown() {
         dateTimer.stopTimer();
-        for (BasicTimer timer : timers) {
-            timer.stop();
-        }
+        timers.forEach(BasicTimer::stop);
     }
 
     public void reset(DifficultyEnum diff) {
@@ -80,13 +65,19 @@ public class Safari {
         selling = false;
         selectedRanger = false;
 
-        lions.clear();
-        leopards.clear();
-        zebras.clear();
-        giraffes.clear();
-        palmTrees.clear();
-        baobabs.clear();
-        panciums.clear();
+        clearAllEntities();
+
+        entry = EntityCreate.getEntry();
+        exit = EntityCreate.getExit();
+        animals.addAll(EntityCreate.getLions());
+
+        dateTimer = new DateTimer();
+        dateTimer.start();
+    }
+
+    private void clearAllEntities() {
+        animals.clear();
+        plants.clear();
         waters.clear();
         rangers.clear();
         paths.clear();
@@ -94,13 +85,6 @@ public class Safari {
         jeeps.clear();
         timers.clear();
         wrongCoordinates.clear();
-
-        entry = EntityCreate.getEntry();
-        exit = EntityCreate.getExit();
-        lions = EntityCreate.getLions();
-
-        dateTimer = new DateTimer();
-        dateTimer.start();
     }
 
     public void updateDate() {
@@ -109,7 +93,7 @@ public class Safari {
         Calendar.Instance.setDate(date);
     }
 
-    public void buySoemthing(String message) {
+    public void buySomething(String message) {
         int price = (int) Prices.getPriceByEnum(Prices.getPricesByString(message));
         if (coin >= price) {
             ToolBarCardLayout.Instance.showCard("buying");
@@ -119,62 +103,32 @@ public class Safari {
 
     public void placeSomething(int x, int y) {
         int price = (int) Prices.getPriceByEnum(Prices.getPricesByString(shopping));
+
         switch (shopping) {
-            case "lion":
-                lions.add(new Lion(x, y));
-                coin -= price;
-                break;
-            case "leopard":
-                leopards.add(new Leopard(x, y));
-                coin -= price;
-                break;
-            case "zebra":
-                zebras.add(new Zebra(x, y));
-                coin -= price;
-                break;
-            case "giraffe":
-                giraffes.add(new Giraffe(x, y));
-                coin -= price;
-                break;
-            case "baobab":
-                baobabs.add(new Baobab(x, y));
-                coin -= price;
-                break;
-            case "palmtree":
-                palmTrees.add(new PalmTree(x, y));
-                coin -= price;
-                break;
-            case "pancium":
-                panciums.add(new Pancium(x, y));
-                coin -= price;
-                break;
-            case "water":
-                waters.add(new Water(x, y));
-                coin -= price;
-                updateWrongCoordinates();
-                break;
-            case "ranger":
-                Ranger ranger = new Ranger(x, y);
-                rangers.add(ranger);
-                timers.add(new RangerTimer(ranger));
-                coin -= price;
-                break;
-            case "jeep":
-                coin -= price;
-                break;
+            case "lion": animals.add(new Lion(x, y)); break;
+            case "leopard": animals.add(new Leopard(x, y)); break;
+            case "zebra": animals.add(new Zebra(x, y)); break;
+            case "giraffe": animals.add(new Giraffe(x, y)); break;
+            case "baobab": plants.add(new Baobab(x, y)); break;
+            case "palmtree": plants.add(new PalmTree(x, y)); break;
+            case "pancium": plants.add(new Pancium(x, y)); break;
+            case "water": waters.add(new Water(x, y)); updateWrongCoordinates(); break;
+            case "ranger": rangers.add(new Ranger(x, y)); timers.add(new RangerTimer(rangers.get(rangers.size() - 1))); break;
+            case "jeep": jeeps.add(new Jeep(EntityCreate.entryX, EntityCreate.entryY)); timers.add(new JeepTimer(jeeps.get(jeeps.size() - 1))); break;
         }
+
+        coin -= price;
         shopping = null;
     }
 
     public void sellSomething(int id) {
         ToolBarCardLayout.Instance.showCard("selling");
 
-        String message = getEntityById(id).getClass().getSimpleName().toLowerCase();
-        int price = (int) Prices.getPriceByEnum(Prices.getPricesByString(message));
+        Entity entity = getEntityById(id);
+        int price = (int) Prices.getPriceByEnum(Prices.getPricesByString(entity.getClass().getSimpleName().toLowerCase()));
 
         coin += price;
         removeEntityById(id);
-        System.out.println("deleted");
     }
 
     public void setSellingMode(boolean mode) {
@@ -186,142 +140,73 @@ public class Safari {
     }
 
     public Entity getEntityById(int id) {
-        List<Entity> allentities = getAllEntities();
-        for (Entity e : allentities) {
-            if (e.id == id) {
-                return e;
-            }
-        }
-        return null;
+        return getAllEntities().stream()
+                .filter(e -> e.id == id)
+                .findFirst()
+                .orElse(null);
     }
 
     public void removeEntityById(int id) {
-        Entity actual = getEntityById(id);
-        String message = actual.getClass().getSimpleName().toLowerCase();
-        switch (message) {
-            case "giraffe":
-                giraffes.remove((Giraffe)actual);
+        Entity entity = getEntityById(id);
+        if (entity == null) return;
+
+        if (entity instanceof Animal) {
+            animals.remove(entity);
+        } else if (entity instanceof Plant) {
+            plants.remove(entity);
+        } else if (entity instanceof Water) {
+            waters.remove(entity);
+            updateWrongCoordinates();
+        } else if (entity instanceof Ranger) {
+            rangers.remove(entity);
+        } else if (entity instanceof Jeep) {
+            deleteTimer(entity);
+            jeeps.remove(entity);
+        } /*else if (entity instanceof Poacher) {
+            poachers.remove(entity);
+        }*/
+    }
+
+    private void deleteTimer(Entity entity) {
+        for (BasicTimer timer : timers) {
+            if (timer.getEntityID() == entity.id) {
+                timer.stop();
                 break;
-            case "leopard":
-                leopards.remove((Leopard)actual);
-                break;
-            case "lion":
-                lions.remove((Lion)actual);
-                break;
-            case "zebra":
-                zebras.remove((Zebra)actual);
-                break;
-            case "palmtree":
-                palmTrees.remove((PalmTree)actual);
-                break;
-            case "baobab":
-                baobabs.remove((Baobab)actual);
-                break;
-            case "pancium":
-                panciums.remove((Pancium)actual);
-                break;
-            case "water":
-                waters.remove((Water)actual);
-                updateWrongCoordinates();
-                break;
+            }
         }
+        updateRunningTimers();
+    }
+
+    private void updateRunningTimers() {
+        timers.removeIf(timer -> !timer.isRunning());
     }
 
     public List<Entity> getAllEntities() {
         List<Entity> allEntities = new ArrayList<>();
-
-        allEntities.addAll(giraffes);
-        allEntities.addAll(zebras);
-        allEntities.addAll(leopards);
-        allEntities.addAll(lions);
-        allEntities.addAll(palmTrees);
-        allEntities.addAll(baobabs);
-        allEntities.addAll(panciums);
+        allEntities.addAll(animals);
+        allEntities.addAll(plants);
         allEntities.addAll(waters);
         allEntities.addAll(rangers);
         allEntities.addAll(jeeps);
-
         return allEntities;
     }
 
     public List<Entity> getAlmostAllEntitiesForSell() {
-        List<Entity> entities = new ArrayList<>();
-
-        entities.addAll(giraffes);
-        entities.addAll(zebras);
-        entities.addAll(leopards);
-        entities.addAll(lions);
-        entities.addAll(palmTrees);
-        entities.addAll(baobabs);
-        entities.addAll(panciums);
-        entities.addAll(waters);
-
-        return entities;
+        return animals.stream()
+                .filter(e -> e instanceof Animal)
+                .collect(Collectors.toList());
     }
 
     public List<Entity> getAllEntitiesWithSorted() {
-        List<Entity> allEntities = new ArrayList<>();
-
-        allEntities.addAll(giraffes);
-        allEntities.addAll(zebras);
-        allEntities.addAll(leopards);
-        allEntities.addAll(lions);
-        allEntities.addAll(palmTrees);
-        allEntities.addAll(baobabs);
-        allEntities.addAll(panciums);
-        allEntities.addAll(waters);
-        allEntities.addAll(rangers);
-        allEntities.addAll(jeeps);
-
-
-        allEntities.sort(Comparator.comparingInt(entity -> entity.getY()+entity.getHeight()));
-
+        List<Entity> allEntities = new ArrayList<>(getAllEntities());
+        allEntities.sort(Comparator.comparingInt(e -> e.getY() + e.getHeight()));
         return allEntities;
     }
 
     public List<Entity> getAnimalsPoachers() {
-        List<Entity> entities = new ArrayList<>();
-
-        entities.addAll(giraffes);
-        entities.addAll(zebras);
-        entities.addAll(leopards);
-        entities.addAll(lions);
+        List<Entity> entities = new ArrayList<>(animals);
         entities.addAll(jeeps);
-        //entities.addAll(poachers);
-
         return entities;
-    }
-
-    public List<Lion> getLions() {
-        return lions;
-    }
-
-    public List<Leopard> getLeopards() {
-        return leopards;
-    }
-
-    public List<Zebra> getZebras() {
-        return zebras;
-    }
-
-    public List<Giraffe> getGiraffes() {
-        return giraffes;
-    }
-
-    public List<PalmTree> getPalmTrees() {
-        return palmTrees;
-    }
-
-    public List<Baobab> getBaobabs() {
-        return baobabs;
-    }
-
-    public List<Pancium> getPanciums() {
-        return panciums;
-    }
-
-    public List<Water> getWaters() {
-        return waters;
     }
 
     public List<Ranger> getRangers() {
@@ -357,12 +242,9 @@ public class Safari {
     }
 
     public int getTempPathsPrice() {
-        int sum = 0;
-        for (Path path : tempPaths) {
-            sum += path.getPixelCount();
-        }
-        sum = (int) (sum * Prices.getPriceByEnum(Prices.ROAD));
-        return sum;
+        return tempPaths.stream()
+                .mapToInt(path -> path.getPixelCount())
+                .sum() * (int) Prices.getPriceByEnum(Prices.ROAD);
     }
 
     public void addAPathToPaths(Path path) {
@@ -370,12 +252,11 @@ public class Safari {
     }
 
     public void saveARoad(int x, int y) {
-        Path path = tempPaths.getLast();
+        Path path = tempPaths.get(tempPaths.size() - 1);
         path.setEndX(x);
         path.setEndY(y);
         path.addANewRoad();
         path.endCoorinateCopyToStartCoordinate();
-        System.out.println("Mentve");
     }
 
     public void addAJeep() {
@@ -397,16 +278,12 @@ public class Safari {
     }
 
     public void updateWrongCoordinates() {
-        List<Coordinate> coordinates = new ArrayList<>();
-        for(Water water: waters) {
-            coordinates.addAll(getAnEntityCoordinates(water));
-        }
-        wrongCoordinates = coordinates;
+        wrongCoordinates.clear();
+        waters.forEach(water -> wrongCoordinates.addAll(getEntityCoordinates(water)));
     }
 
-    private List<Coordinate> getAnEntityCoordinates(Entity entity) {
+    private List<Coordinate> getEntityCoordinates(Entity entity) {
         List<Coordinate> coordinates = new ArrayList<>();
-
         int startX = entity.getX();
         int startY = entity.getY();
         int endX = startX + entity.getWidth();
@@ -420,5 +297,4 @@ public class Safari {
 
         return coordinates;
     }
-
 }
