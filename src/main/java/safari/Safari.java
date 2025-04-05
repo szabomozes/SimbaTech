@@ -52,6 +52,7 @@ public class Safari {
     private List<Jeep> jeeps = new ArrayList<>();
     private boolean selectedRanger = false;
     private List<BasicTimer> timers = new ArrayList<>();
+    private List<Coordinate> wrongCoordinates = new ArrayList<>();
 
     private Safari() {
         dateTimer = new DateTimer();
@@ -91,8 +92,8 @@ public class Safari {
         paths.clear();
         tempPaths.clear();
         jeeps.clear();
-
         timers.clear();
+        wrongCoordinates.clear();
 
         entry = EntityCreate.getEntry();
         exit = EntityCreate.getExit();
@@ -221,9 +222,6 @@ public class Safari {
             case "water":
                 waters.remove((Water)actual);
                 break;
-            case "ranger":
-                rangers.remove((Ranger)actual);
-                break;
         }
     }
 
@@ -242,6 +240,21 @@ public class Safari {
         allEntities.addAll(jeeps);
 
         return allEntities;
+    }
+
+    public List<Entity> getAlmostAllEntitiesForSell() {
+        List<Entity> entities = new ArrayList<>();
+
+        entities.addAll(giraffes);
+        entities.addAll(zebras);
+        entities.addAll(leopards);
+        entities.addAll(lions);
+        entities.addAll(palmTrees);
+        entities.addAll(baobabs);
+        entities.addAll(panciums);
+        entities.addAll(waters);
+
+        return entities;
     }
 
     public List<Entity> getAllEntitiesWithSorted() {
@@ -377,19 +390,16 @@ public class Safari {
         this.selectedRanger = selectedRanger;
     }
 
-    public final List<Coordinate> getWrongCoordinates() {
-        return getAnEntityListCoordinates(waters, baobabs);
+    public List<Coordinate> getWrongCoordinates() {
+        return wrongCoordinates;
     }
 
-    @SafeVarargs
-    private List<Coordinate> getAnEntityListCoordinates(List<? extends Entity>... entityLists) {
+    public void updateWrongCoordinates() {
         List<Coordinate> coordinates = new ArrayList<>();
-        for (List<? extends Entity> entities : entityLists) {
-            for (Entity entity : entities) {
-                coordinates.addAll(getAnEntityCoordinates(entity));
-            }
+        for(Water water: waters) {
+            coordinates.addAll(getAnEntityCoordinates(water));
         }
-        return coordinates;
+        wrongCoordinates = coordinates;
     }
 
     private List<Coordinate> getAnEntityCoordinates(Entity entity) {
@@ -408,4 +418,5 @@ public class Safari {
 
         return coordinates;
     }
+
 }

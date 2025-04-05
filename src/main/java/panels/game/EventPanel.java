@@ -61,10 +61,11 @@ public class EventPanel extends JPanel {
                             System.out.println("Hozzáadva a következő pozícióval: (" + lastX + ", " + lastY + ")");
                         }
                     } else if (Safari.Instance.getSellingMode()){
-                        List<Entity> allentities = Safari.Instance.getAllEntities();
+                        List<Entity> allentities = Safari.Instance.getAlmostAllEntitiesForSell();
                         for (Entity entity : allentities) {
                             if (entity.contains(lastX - offsetX, lastY - offsetY)) {
                                 Safari.Instance.sellSomething(entity.id);
+                                break;
                             }
                         }
                     } else {
