@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 public abstract class Entity {
 
     private static int idGenerator = 1;
+    private int hello;
 
     public final int id = idGenerator++;
     protected BufferedImage image;
