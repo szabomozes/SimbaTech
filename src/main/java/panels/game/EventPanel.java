@@ -180,7 +180,7 @@ public class EventPanel extends JPanel {
     public void huntEntity(Ranger ranger, Entity entity) {
         ranger.setTarget(entity);
         ranger.setNewPosition(false);
-        System.out.println("hunting on");
+        System.out.println("no hunting");
     }
 
     private void selectRangerIfNeeded(List<Ranger> rangers, int lastX, int lastY) {

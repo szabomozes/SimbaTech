@@ -56,7 +56,7 @@ public class Safari {
             dateTimer.stop();
         }
 
-        coin = 10000;
+        coin = 1000;
         date = 0;
         updateDate();
         difficultyEnum = diff;
@@ -111,10 +111,16 @@ public class Safari {
             case "giraffe": animals.add(new Giraffe(x, y)); break;
             case "baobab": plants.add(new Baobab(x, y)); break;
             case "palmtree": plants.add(new PalmTree(x, y)); break;
-            case "pancium": plants.add(new Pancium(x, y)); break;
+            case "pancium":
+                plants.add(new Pancium(x, y));
+                break;
             case "water": waters.add(new Water(x, y)); updateWrongCoordinates(); break;
-            case "ranger": rangers.add(new Ranger(x, y)); timers.add(new RangerTimer(rangers.getLast())); break;
-            case "jeep": jeeps.add(new Jeep(EntityCreate.entryX, EntityCreate.entryY)); timers.add(new JeepTimer(jeeps.getLast())); break;
+            case "ranger":
+                rangers.add(new Ranger(x, y));
+                timers.add(new RangerTimer(rangers.getLast())); break;
+            case "jeep":
+                jeeps.add(new Jeep(EntityCreate.entryX, EntityCreate.entryY));
+                timers.add(new JeepTimer(jeeps.getLast())); break;
         }
 
         coin -= price;
@@ -188,6 +194,7 @@ public class Safari {
         allEntities.addAll(waters);
         allEntities.addAll(rangers);
         allEntities.addAll(jeeps);
+        //allEntities.addAll(poachers);
         return allEntities;
     }
 
