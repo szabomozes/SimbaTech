@@ -5,6 +5,7 @@ import entity.mobile.animal.Giraffe;
 import entity.mobile.animal.Leopard;
 import entity.mobile.animal.Lion;
 import entity.mobile.animal.Zebra;
+import entity.mobile.person.Poacher;
 import entity.mobile.person.Ranger;
 import entity.notmobile.Water;
 import entity.notmobile.plant.Baobab;
@@ -16,6 +17,7 @@ import panels.game.toolbar.ToolBarCardLayout;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 
 public class Safari {
     public static Safari Instance = new Safari();
@@ -34,6 +36,7 @@ public class Safari {
     private List<Pancium> panciums = new ArrayList<>();
     private List<Water> waters = new ArrayList<>();
     private List<Ranger> rangers = new ArrayList<>();
+    private List<Poacher> poachers = new ArrayList<>();
     private boolean selling = false;
 
 
@@ -67,6 +70,7 @@ public class Safari {
         panciums.clear();
         waters.clear();
         rangers.clear();
+        poachers.clear();
 
         dateTimer = new DateTimer();
         dateTimer.start();
@@ -182,6 +186,19 @@ public class Safari {
         }
         removeEntityById(id);
         System.out.println("deleted");
+    }
+
+    public void placePoachers(int num) {
+        Random rand = new Random();
+        int x, y;
+        for (int i = 0; i < num; i++) {
+            //???
+            x = rand.nextInt(800);
+            y = rand.nextInt(800);
+            Poacher poacher = new Poacher(x, y);
+            poacher.move();
+            poachers.add(poacher);
+        }
     }
 
     public void setSellingMode(boolean mode) {
