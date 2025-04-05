@@ -63,7 +63,7 @@ public enum SpeedEnum {
                 return 5_000_000;
             }
             default -> {
-                return 20_000_000;
+                return 5_000_000;
             }
         }
     }
@@ -77,7 +77,7 @@ public enum SpeedEnum {
                 return 42;
             }
             default -> {
-                return 5;
+                return 1;
             }
         }
     }

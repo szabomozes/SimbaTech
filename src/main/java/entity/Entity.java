@@ -11,6 +11,7 @@ public abstract class Entity {
     protected BufferedImage image;
     protected int x, y;
     protected int width, height;
+    private boolean alive = true;
 
     public Entity(int x, int y, BufferedImage image) {
         width = image.getWidth();
@@ -52,5 +53,13 @@ public abstract class Entity {
 
     public int getHeight() {
         return height;
+    }
+
+    public boolean isAlive() {
+        return alive;
+    }
+
+    public void setAlive(boolean alive) {
+        this.alive = alive;
     }
 }

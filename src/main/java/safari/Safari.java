@@ -113,8 +113,8 @@ public class Safari {
             case "palmtree": plants.add(new PalmTree(x, y)); break;
             case "pancium": plants.add(new Pancium(x, y)); break;
             case "water": waters.add(new Water(x, y)); updateWrongCoordinates(); break;
-            case "ranger": rangers.add(new Ranger(x, y)); timers.add(new RangerTimer(rangers.get(rangers.size() - 1))); break;
-            case "jeep": jeeps.add(new Jeep(EntityCreate.entryX, EntityCreate.entryY)); timers.add(new JeepTimer(jeeps.get(jeeps.size() - 1))); break;
+            case "ranger": rangers.add(new Ranger(x, y)); timers.add(new RangerTimer(rangers.getLast())); break;
+            case "jeep": jeeps.add(new Jeep(EntityCreate.entryX, EntityCreate.entryY)); timers.add(new JeepTimer(jeeps.getLast())); break;
         }
 
         coin -= price;

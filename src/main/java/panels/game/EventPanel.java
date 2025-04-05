@@ -147,27 +147,40 @@ public class EventPanel extends JPanel {
             rangers.stream()
                     .filter(ranger -> ranger.isSelected() && !ranger.contains(lastX - offsetX, lastY - offsetY))
                     .findFirst()
-                    .ifPresent(ranger -> moveRangerToNewPosition(lastX, lastY, ranger));
+                    .ifPresent(ranger -> MoveOrHunt(lastX, lastY, ranger));
+
         } else {
             selectRangerIfNeeded(rangers, lastX, lastY);
         }
     }
 
-    private void moveRangerToNewPosition(int lastX, int lastY, Ranger ranger) {
-        Entity entity = Safari.Instance.getAnimalsPoachers().stream()
-                .filter(poacher -> poacher.contains(lastX - offsetX, lastY - offsetY))
+    public void MoveOrHunt(int lastX, int lastY, Ranger ranger) {
+        // Ellenőrizzük, hogy egy Entity-re kattintottunk-e
+        Safari.Instance.getAnimalsPoachers().stream()
+                .filter(entity -> entity.contains(lastX - offsetX, lastY - offsetY))
                 .findFirst()
-                .orElse(null);
+                .ifPresent(entity -> {
+                    huntEntity(ranger, entity);
+                });
 
-        if (entity == null) {
-            ranger.setNewPosition(true);
-            ranger.setTarget(null);
-            ranger.setNewPositionX(lastX - offsetX - Resources.Instance.ranger.getWidth() / 2);
-            ranger.setNewPositionY(lastY - offsetY - Resources.Instance.ranger.getHeight() / 2);
-        } else {
-            ranger.setTarget(entity);
-            ranger.setNewPosition(false);
+        if (!ranger.isTarget()) {
+            moveRangerToNewPosition(lastX, lastY, ranger);
         }
+    }
+
+    private void moveRangerToNewPosition(int lastX, int lastY, Ranger ranger) {
+        ranger.setNewPosition(true);
+        ranger.setTarget(null);
+        ranger.setMovingToTarget(false);
+        System.out.println("no hunting");
+        ranger.setNewPositionX(lastX - offsetX - Resources.Instance.ranger.getWidth() / 2);
+        ranger.setNewPositionY(lastY - offsetY - Resources.Instance.ranger.getHeight() / 2);
+    }
+
+    public void huntEntity(Ranger ranger, Entity entity) {
+        ranger.setTarget(entity);
+        ranger.setNewPosition(false);
+        System.out.println("hunting on");
     }
 
     private void selectRangerIfNeeded(List<Ranger> rangers, int lastX, int lastY) {

@@ -1,5 +1,6 @@
 package timer;
 
+import entity.Entity;
 import entity.mobile.person.Ranger;
 import map.Coordinate;
 import panels.CardPanel;
@@ -36,14 +37,47 @@ public class RangerTimer extends BasicTimer {
     }
 
     private void handleRangerMovement() {
-        if (ranger.isTarget()) {
-            // TODO: célpont kovetése
-        } else if (ranger.isNewPosition()) {
+        if (ranger.isTarget() && !ranger.isMovingToTarget()) {
+            ranger.setMovingToTarget(true);
+        } else if (ranger.isMovingToTarget()) {
+            interactionWithTarget();
+        }
+        else if (ranger.isNewPosition()) {
             startMovingToNewPosition();
         } else if (ranger.isMovingNewPosition()) {
             moveToNewPosition();
         }
     }
+
+    private void interactionWithTarget() {
+        Entity entity = ranger.getTarget();
+        if (calculateDistance(ranger.getX(), ranger.getY(), entity.getX(), entity.getY()) <= Ranger.rifleRangeByPixel) {
+            shooting(entity);
+        } else {
+            moveToTarget();
+        }
+    }
+
+    private void shooting(Entity entity) {
+        ranger.setTarget(null);
+        ranger.setMovingToTarget(false);
+        int id = entity.id;
+        Safari.Instance.removeEntityById(id);
+    }
+
+    private void moveToTarget() {
+        Entity entity = ranger.getTarget();
+
+        int[] step = calculateStep(entity.getX(), entity.getY());
+        int[][] directions = generatePossibleDirections(step);
+
+        int[] bestDirection = findBestDirection(directions, entity.getX(), entity.getY());
+        if (bestDirection != null) {
+            updateRangerPosition(bestDirection[0], bestDirection[1]);
+        }
+    }
+
+
 
     private void startMovingToNewPosition() {
         ranger.setNewPosition(false);
@@ -51,27 +85,27 @@ public class RangerTimer extends BasicTimer {
     }
 
     private void moveToNewPosition() {
-        if (hasReachedNewPosition()) {
+        if (hasReachedNewPosition(ranger.getNewPositionX(), ranger.getNewPositionY())) {
             ranger.setMovingNewPosition(false);
             return;
         }
 
-        int[] step = calculateStep();
+        int[] step = calculateStep(ranger.getNewPositionX(), ranger.getNewPositionY());
         int[][] directions = generatePossibleDirections(step);
 
-        int[] bestDirection = findBestDirection(directions);
+        int[] bestDirection = findBestDirection(directions, ranger.getNewPositionX(), ranger.getNewPositionY());
         if (bestDirection != null) {
             updateRangerPosition(bestDirection[0], bestDirection[1]);
         }
     }
 
-    private boolean hasReachedNewPosition() {
-        return ranger.getX() == ranger.getNewPositionX() && ranger.getY() == ranger.getNewPositionY();
+    private boolean hasReachedNewPosition(int goalX, int goalY) {
+        return ranger.getX() == goalX && ranger.getY() == goalY;
     }
 
-    private int[] calculateStep() {
-        int tempx = Math.min(Math.abs(ranger.getX() - ranger.getNewPositionX()), Speed.Instance.speedEnum.getRangerSteps());
-        int tempy = Math.min(Math.abs(ranger.getY() - ranger.getNewPositionY()), Speed.Instance.speedEnum.getRangerSteps());
+    private int[] calculateStep(int goalX, int goalY) {
+        int tempx = Math.min(Math.abs(ranger.getX() - goalX), Speed.Instance.speedEnum.getRangerSteps());
+        int tempy = Math.min(Math.abs(ranger.getY() - goalY), Speed.Instance.speedEnum.getRangerSteps());
         return new int[] {tempx, tempy};
     }
 
@@ -82,7 +116,7 @@ public class RangerTimer extends BasicTimer {
         };
     }
 
-    private int[] findBestDirection(int[][] directions) {
+    private int[] findBestDirection(int[][] directions, int goalX, int goalY) {
         int bestX = -1, bestY = -1;
 
         for (int[] dir : directions) {
@@ -90,8 +124,8 @@ public class RangerTimer extends BasicTimer {
             int newY = ranger.getY() + dir[1];
 
             if (isValidPosition(newX, newY)) {
-                int newDistance = calculateDistance(newX, newY);
-                if (bestX == -1 || newDistance < calculateDistance(bestX, bestY)) {
+                double newDistance = calculateDistance(newX, newY, goalX, goalY);
+                if (bestX == -1 || newDistance < calculateDistance(bestX, bestY, goalX, goalY)) {
                     bestX = newX;
                     bestY = newY;
                 }
@@ -112,8 +146,8 @@ public class RangerTimer extends BasicTimer {
         return Arrays.stream(coords).noneMatch(c -> Safari.Instance.getWrongCoordinates().contains(c));
     }
 
-    private int calculateDistance(int x, int y) {
-        return Math.abs(x - ranger.getNewPositionX()) + Math.abs(y - ranger.getNewPositionY());
+    private double calculateDistance(int x, int y, int goalX, int goalY) {
+        return Math.sqrt(Math.pow(x - goalX, 2) + Math.pow(y - goalY, 2));
     }
 
     private void updateRangerPosition(int bestX, int bestY) {

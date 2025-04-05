@@ -5,13 +5,14 @@ import entity.Entity;
 
 public class Ranger extends Person{
     private Entity target = null;
-    private int targetX = 0;
-    private int targetY = 0;
+    private boolean isMovingToTarget = false;
     private boolean newPosition = false;
     private boolean isMovingNewPosition = false;
     private int newPositionX = 0;
     private int newPositionY = 0;
     private boolean selected = false;
+    public final static int visualRangeByPixel = 600;
+    public final static int rifleRangeByPixel = 300;
 
     public Ranger(int x, int y) {
         super(x, y, Resources.Instance.ranger);
@@ -25,20 +26,8 @@ public class Ranger extends Person{
         this.target = target;
     }
 
-    public int getTargetX() {
-        return targetX;
-    }
-
-    public void setTargetX(int targetX) {
-        this.targetX = targetX;
-    }
-
-    public int getTargetY() {
-        return targetY;
-    }
-
-    public void setTargetY(int targetY) {
-        this.targetY = targetY;
+    public Entity getTarget() {
+        return target;
     }
 
     public boolean isSelected() {
@@ -79,5 +68,13 @@ public class Ranger extends Person{
 
     public void setMovingNewPosition(boolean movingNewPosition) {
         isMovingNewPosition = movingNewPosition;
+    }
+
+    public boolean isMovingToTarget() {
+        return isMovingToTarget;
+    }
+
+    public void setMovingToTarget(boolean movingToTarget) {
+        isMovingToTarget = movingToTarget;
     }
 }
