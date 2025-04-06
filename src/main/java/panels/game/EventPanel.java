@@ -170,7 +170,7 @@ public class EventPanel extends JPanel {
 
     private void moveRangerToNewPosition(int lastX, int lastY, Ranger ranger) {
         ranger.setNewPosition(true);
-        ranger.setTarget(null);
+        ranger.setTarget(false);
         ranger.setMovingToTarget(false);
         System.out.println("no hunting");
         ranger.setNewPositionX(lastX - offsetX - Resources.Instance.ranger.getWidth() / 2);
@@ -178,8 +178,10 @@ public class EventPanel extends JPanel {
     }
 
     public void huntEntity(Ranger ranger, Entity entity) {
-        ranger.setTarget(entity);
+        ranger.setTargetEntity(entity);
+        ranger.setTarget(true);
         ranger.setNewPosition(false);
+        ranger.setMovingNewPosition(false);
         System.out.println("no hunting");
     }
 

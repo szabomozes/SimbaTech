@@ -4,7 +4,8 @@ import core.Resources;
 import entity.Entity;
 
 public class Ranger extends Person{
-    private Entity target = null;
+    private Entity targetEntity = null;
+    private boolean target = false;
     private boolean isMovingToTarget = false;
     private boolean newPosition = false;
     private boolean isMovingNewPosition = false;
@@ -19,15 +20,19 @@ public class Ranger extends Person{
     }
 
     public boolean isTarget() {
-        return target != null;
+        return target;
     }
 
-    public void setTarget(Entity target) {
+    public void setTarget(boolean target) {
         this.target = target;
     }
 
-    public Entity getTarget() {
-        return target;
+    public void setTargetEntity(Entity target) {
+        this.targetEntity = target;
+    }
+
+    public Entity getTargetEntity() {
+        return targetEntity;
     }
 
     public boolean isSelected() {

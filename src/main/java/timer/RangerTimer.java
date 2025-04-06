@@ -37,8 +37,9 @@ public class RangerTimer extends BasicTimer {
     }
 
     private void handleRangerMovement() {
-        if (ranger.isTarget() && !ranger.isMovingToTarget()) {
+        if (ranger.isTarget()) {
             ranger.setMovingToTarget(true);
+            ranger.setTarget(false);
         } else if (ranger.isMovingToTarget()) {
             interactionWithTarget();
         }
@@ -50,7 +51,7 @@ public class RangerTimer extends BasicTimer {
     }
 
     private void interactionWithTarget() {
-        Entity entity = ranger.getTarget();
+        Entity entity = ranger.getTargetEntity();
         if (calculateDistance(ranger.getX(), ranger.getY(), entity.getX(), entity.getY()) <= Ranger.rifleRangeByPixel) {
             shooting(entity);
         } else {
@@ -59,14 +60,14 @@ public class RangerTimer extends BasicTimer {
     }
 
     private void shooting(Entity entity) {
-        ranger.setTarget(null);
+        ranger.setTargetEntity(null);
         ranger.setMovingToTarget(false);
         int id = entity.id;
         Safari.Instance.removeEntityById(id);
     }
 
     private void moveToTarget() {
-        Entity entity = ranger.getTarget();
+        Entity entity = ranger.getTargetEntity();
 
         int[] step = calculateStep(entity.getX(), entity.getY());
         int[][] directions = generatePossibleDirections(step);
