@@ -27,6 +27,7 @@ install:
   stage: install
   script:
     - mvn install
+    - cp target/MavenProject-1.0-SNAPSHOT.jar .
   artifacts:
     paths:
-      - target/*.jar
+      - "*.jar"
