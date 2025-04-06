@@ -27,7 +27,7 @@ install:
   stage: install
   script:
     - mvn install
-    - cp target/MavenProject-1.0-SNAPSHOT.jar .
+    - cp target/SimbaTech.jar .
   artifacts:
     paths:
-      - "*.jar"
+      - SimbaTech.jar
