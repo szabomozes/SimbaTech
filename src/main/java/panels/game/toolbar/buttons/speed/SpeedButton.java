@@ -12,14 +12,12 @@ import java.awt.image.BufferedImage;
 
 public class SpeedButton extends JButton {
 
-    private SpeedEnum speedEnum = SpeedEnum.SNAIL;
 
-    public static SpeedButton Instance = new SpeedButton();
 
     private final int x = 30;
     private final int y = 45;
 
-    private SpeedButton() {
+    public SpeedButton() {
 
         setBorderPainted(false);
         setContentAreaFilled(false);
@@ -39,7 +37,7 @@ public class SpeedButton extends JButton {
                 ImageIcon icon = new ImageIcon(getBufferedImageBySpeedEnum());
                 setIcon(icon);
                 System.out.println(Speed.Instance.speedEnum.toString());
-                System.out.println(Speed.Instance.speedEnum.getDateTick());
+                System.out.println(Speed.Instance.speedEnum.getDateSec());
             }
         });
     }

@@ -3,21 +3,25 @@ package safari;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.Instant;
+import java.time.Duration;
 
 public class DateTimer extends Timer {
 
-    private int tick = 0;
+    private Instant lastUpdate;
 
     public DateTimer() {
         super(1000, null);
+        lastUpdate = Instant.now();
         addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                tick++;
-                System.out.println(tick);
-                if (tick >= Speed.Instance.speedEnum.getDateTick()){
+                Instant now = Instant.now();
+                Duration elapsed = Duration.between(lastUpdate, now);
+
+                if (elapsed.getSeconds() >= Speed.Instance.speedEnum.getDateSec()) {
                     Safari.Instance.updateDate();
-                    tick = 0;
+                    lastUpdate = now;
                 }
             }
         });
@@ -25,8 +29,7 @@ public class DateTimer extends Timer {
 
     public void stopTimer() {
         stop();  // Swing Timer beépített stop() metódusa
-        tick = 0; // Reseteljük a számlálót, ha újraindulna
+        lastUpdate = Instant.now(); // Reseteljük az időzítőt
     }
-
 
 }

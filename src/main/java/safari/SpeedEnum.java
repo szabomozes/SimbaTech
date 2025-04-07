@@ -11,16 +11,73 @@ public enum SpeedEnum {
         return values[(ordinal + 1) % values.length];
     }
 
-    public int getDateTick() {
+
+    public int getDateSec() {
         switch (this) {
             case HIPPOPOTAMUS -> {
-                return 10; // 60MP -> 1P = 1 nap
+                return 50;
             }
             case EAGLE -> {
-                return 1; // 10MP -> 0,17P = 1 nap
+                return 5;
             }
             default -> {
-                return 60; // 600MP -> 10P = 1 nap
+                return 300;
+            }
+        }
+    }
+
+    public int getJeepNanoSec() {
+        switch (this) {
+            case HIPPOPOTAMUS -> {
+                return 10_000_000;
+            }
+            case EAGLE -> {
+                return 5_000_000;
+            }
+            default -> {
+                return 20_000_000;
+            }
+        }
+    }
+
+    public int getJeepSteps() {
+        switch (this) {
+            case HIPPOPOTAMUS -> {
+                return 20;
+            }
+            case EAGLE -> {
+                return 42;
+            }
+            default -> {
+                return 1;
+            }
+        }
+    }
+
+    public double getRangerNanoSec() {
+        switch (this) {
+            case HIPPOPOTAMUS -> {
+                return 10_000_000;
+            }
+            case EAGLE -> {
+                return 5_000_000;
+            }
+            default -> {
+                return 5_000_000;
+            }
+        }
+    }
+
+    public int getRangerSteps() {
+        switch (this) {
+            case HIPPOPOTAMUS -> {
+                return 20;
+            }
+            case EAGLE -> {
+                return 42;
+            }
+            default -> {
+                return 1;
             }
         }
     }

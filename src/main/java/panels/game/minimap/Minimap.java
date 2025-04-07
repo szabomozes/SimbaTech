@@ -11,6 +11,12 @@ import entity.notmobile.Water;
 import entity.notmobile.plant.Baobab;
 import entity.notmobile.plant.PalmTree;
 import entity.notmobile.plant.Pancium;
+import entity.Entity;
+import entity.notmobile.Entry;
+import entity.notmobile.Exit;
+import map.EntityCreate;
+import road.Path;
+import road.Road;
 import safari.Safari;
 import panels.game.EventPanel;
 
@@ -20,6 +26,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 public class Minimap extends JPanel {
     private BufferedImage backgroundImage = Resources.Instance.minimap;
@@ -62,49 +69,79 @@ public class Minimap extends JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
+
         super.paintComponent(g);
 
-        g.drawImage(backgroundImage, 0, 0, this);
+        Graphics2D g2d = (Graphics2D) g; // Graphics2D, hogy tudjunk Stroke-ot állítani
 
-        g.setColor(Color.BLACK);
-        g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
 
         int parentWidth = Resources.Instance.map.getWidth();
         int parentHeight = Resources.Instance.map.getHeight();
         int width = getWidth();
         int height = getHeight();
 
-        g.setColor(Color.RED);
-        for (Lion lion : Safari.Instance.getLions()) {
-            int x = (int) (width * ((double) lion.getX() / parentWidth));
-            int y = (int) (height * ((double) lion.getY() / parentHeight));
-            g.fillOval(x, y, 5, 5);
+        // Háttér
+        g.drawImage(backgroundImage, 0, 0, this);
+
+
+        // Path
+        g2d.setColor(Color.BLACK);
+        float roadStrokeWidth = 1.0f;
+        g2d.setStroke(new BasicStroke(roadStrokeWidth, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+
+        List<Path> paths = Safari.Instance.getPaths();
+        for (Path path : paths) {
+            List<Road> roads = path.getRoads();
+            for (Road road : roads) {
+                int startX = (int) (width * ((double) road.startX / parentWidth));
+                int startY = (int) (height * ((double) road.startY / parentHeight));
+                int endX = (int) (width * ((double) road.endX / parentWidth));
+                int endY = (int) (height * ((double) road.endY / parentHeight));
+
+                g2d.drawLine(startX, startY, endX, endY);
+            }
         }
-        for (Leopard leopard : Safari.Instance.getLeopards()) {
-            int x = (int) (width * ((double) leopard.getX() / parentWidth));
-            int y = (int) (height * ((double) leopard.getY() / parentHeight));
-            g.fillOval(x, y, 5, 5);
+        // TempPath
+        g2d.setColor(Color.GRAY);
+        g2d.setStroke(new BasicStroke(roadStrokeWidth, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+
+        List<Path> tempPath = Safari.Instance.getTempPaths();
+        for (Path path : tempPath) {
+            List<Road> roads = path.getRoads();
+            for (Road road : roads) {
+                int startX = (int) (width * ((double) road.startX / parentWidth));
+                int startY = (int) (height * ((double) road.startY / parentHeight));
+                int endX = (int) (width * ((double) road.endX / parentWidth));
+                int endY = (int) (height * ((double) road.endY / parentHeight));
+
+                g2d.drawLine(startX, startY, endX, endY);
+            }
         }
-        for (Zebra zebra : Safari.Instance.getZebras()) {
-            int x = (int) (width * ((double) zebra.getX() / parentWidth));
-            int y = (int) (height * ((double) zebra.getY() / parentHeight));
-            g.fillOval(x, y, 5, 5);
-        }
-        for (Giraffe giraffe : Safari.Instance.getGiraffes()) {
-            int x = (int) (width * ((double) giraffe.getX() / parentWidth));
-            int y = (int) (height * ((double) giraffe.getY() / parentHeight));
-            g.fillOval(x, y, 5, 5);
-        }
-        g.setColor(Color.GREEN);
-        for (PalmTree palmTree : Safari.Instance.getPalmTrees()) {
-            int x = (int) (width * ((double) palmTree.getX() / parentWidth));
-            int y = (int) (height * ((double) palmTree.getY() / parentHeight));
-            g.fillOval(x, y, 5, 5);
-        }
-        for (Pancium pancium : Safari.Instance.getPanciums()) {
-            int x = (int) (width * ((double) pancium.getX() / parentWidth));
-            int y = (int) (height * ((double) pancium.getY() / parentHeight));
-            g.fillOval(x, y, 5, 5);
+
+        //Entry and Exit
+        g2d.setColor(Color.BLUE);
+        Entry entry = Safari.Instance.getEntry();
+        Exit exit = Safari.Instance.getExit();
+        g2d.fillRect((int) (width * ((double) entry.getX() / parentWidth)), (int) (height * ((double) entry.getY() / parentHeight)),10, 10);
+        g2d.fillRect((int) (width * ((double) exit.getX() / parentWidth)),(int) (height * ((double) exit.getY() / parentHeight)),10, 10);
+
+
+        // Entity
+        List<Entity> entities = Safari.Instance.getAllEntities();
+        for (Entity entity : entities) {
+            String className = entity.getClass().getSimpleName();
+            switch (className) {
+                case "Lion", "Leopard", "Zebra", "Giraffe" -> g2d.setColor(Color.RED);
+                case "PalmTree", "Pancium", "Baobab" -> g2d.setColor(Color.GREEN);
+                case "Water" -> g2d.setColor(Color.CYAN);
+                case "Ranger" -> g2d.setColor(Color.YELLOW);
+                case "Jeep" -> g2d.setColor(Color.MAGENTA);
+            }
+            int x = (int) (width * ((double) (entity.getX()) / parentWidth));
+            int y = (int) (height * ((double) (entity.getY()) / parentHeight));
+            int tempWidth = (int) (width * ((double) (entity.getWidth()) / parentWidth));
+            int tempHeight = (int) (height * ((double) (entity.getHeight()) / parentHeight));
+            g2d.fillRect(x, y, tempWidth, tempHeight);
         }
         for (Baobab baobab : Safari.Instance.getBaobabs()) {
             int x = (int) (width * ((double) baobab.getX() / parentWidth));
@@ -130,9 +167,14 @@ public class Minimap extends JPanel {
             g.fillOval(x, y, 5, 5);
         }
 
+        // Keret
+        g2d.setColor(Color.BLACK);
+        g2d.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
+
+        // Nézet keret
         int offsetX = ((EventPanel) getParent()).getOffsetX();
         int offsetY = ((EventPanel) getParent()).getOffsetY();
-        g.setColor(Color.RED);
+        g2d.setColor(Color.RED);
         int startX = (int) (width * ((double) (offsetX * -1) / parentWidth));
         int startY = (int) (height * ((double) (offsetY * -1) / parentHeight));
         int endX = (int) (width * ((double) (offsetX * -1 + getParent().getWidth()) / parentWidth));
@@ -141,6 +183,20 @@ public class Minimap extends JPanel {
         int rectWidth = endX - startX - 1;
         int rectHeight = endY - startY - 1;
 
-        g.drawRect(startX, startY, rectWidth, rectHeight);;
+        g2d.drawRect(startX, startY, rectWidth, rectHeight);
+
+        // Stroke visszaállítása az alapértelmezettre
+        g2d.setStroke(new BasicStroke());
+
+
+
+
+
+
+
+
+
+
+
     }
 }

@@ -1,8 +1,11 @@
 package panels.game.toolbar.buttons.shop;
 
 import core.Resources;
+import road.Path;
+import map.EntityCreate;
 import panels.CardPanel;
 import panels.game.toolbar.ToolBarCardLayout;
+import safari.Safari;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -30,6 +33,8 @@ public class RoadTableButton extends JButton {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("raod-table");
                 ToolBarCardLayout.Instance.showCard("buildRoad");
+                Safari.Instance.setRoadBuilding(true);
+                Safari.Instance.getTempPaths().add(new Path(EntityCreate.entryX, EntityCreate.entryY));
             }
         });
     }

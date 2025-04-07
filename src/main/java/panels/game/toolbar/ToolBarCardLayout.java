@@ -1,5 +1,7 @@
 package panels.game.toolbar;
 
+import panels.game.toolbar.buttons.ToolBarSelectedRangerPanel;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -14,6 +16,7 @@ public class ToolBarCardLayout extends JPanel {
         add(new BuyingToolBar(), "buying");
         add(new SellingToolBar(), "selling");
         add(new ToolBarFeedBackPanel(), "void");
+        add(new ToolBarSelectedRangerPanel(), "selectedRanger");
         setPreferredSize(new Dimension(0, 150));
 
 
