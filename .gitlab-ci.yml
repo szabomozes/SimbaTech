@@ -1,0 +1,33 @@
+image: maven:latest
+
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
+
+cache:
+  key: maven-build
+  paths:
+    - .m2/repository
+
+stages:
+  - build
+  - test
+  - install
+
+build:
+  stage: build
+  script:
+    - mvn compile
+
+test:
+  stage: test
+  script:
+    - mvn test
+
+install:
+  stage: install
+  script:
+    - mvn install
+    - cp target/SimbaTech.jar .
+  artifacts:
+    paths:
+      - SimbaTech.jar
