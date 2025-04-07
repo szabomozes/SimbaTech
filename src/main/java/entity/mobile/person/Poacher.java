@@ -3,17 +3,17 @@ package entity.mobile.person;
 import core.Resources;
 import entity.mobile.animal.Animal;
 import safari.Speed;
-
-import java.awt.*;
 import java.util.Random;
 
 public class Poacher extends Person {
     private double targetX, targetY;
     private double currentX, currentY;
-    private double speed;  // majd Speed lesz
+    //private Speed speed = Speed.Instance;
+    private double speed;
+    public final static int rifleRange = 300;
 
     public Poacher(int x, int y) {
-        super(x, y, Resources.Instance.ranger);
+        super(x, y, Resources.Instance.poacher);
         this.currentX = x;
         this.currentY = y;
         this.targetX = x;
@@ -38,8 +38,8 @@ public class Poacher extends Person {
         // Ha már elérte a célpontot, új célt sorsolunk
         if (Math.abs(currentX - targetX) < 1 && Math.abs(currentY - targetY) < 1) {
             Random rand = new Random();
-            targetX = rand.nextInt(800);
-            targetY = rand.nextInt(800);
+            targetX = rand.nextInt(Resources.Instance.map.getWidth());
+            targetY = rand.nextInt(Resources.Instance.map.getHeight());
         }
 
         // Kiszámoljuk az irányt

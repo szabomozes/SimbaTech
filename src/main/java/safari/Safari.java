@@ -1,5 +1,6 @@
 package safari;
 
+import core.Resources;
 import entity.Entity;
 import entity.mobile.animal.Giraffe;
 import entity.mobile.animal.Leopard;
@@ -37,6 +38,7 @@ public class Safari {
     private List<Water> waters = new ArrayList<>();
     private List<Ranger> rangers = new ArrayList<>();
     private List<Poacher> poachers = new ArrayList<>();
+    private List<Poacher> jeeps = new ArrayList<>();
     private boolean selling = false;
 
 
@@ -192,15 +194,37 @@ public class Safari {
         Random rand = new Random();
         int x, y;
         for (int i = 0; i < num; i++) {
-            //???
-            x = rand.nextInt(800);
-            y = rand.nextInt(800);
+            x = rand.nextInt(Resources.Instance.map.getWidth());
+            y = rand.nextInt(Resources.Instance.map.getHeight());
             Poacher poacher = new Poacher(x, y);
             poacher.move();
             poachers.add(poacher);
             System.out.println("poacher out");
             poacher.reveal();
         }
+    }
+
+    // !!!!!!!!
+    public void poacherVisibility(Poacher p) {
+        List<Entity> allentities = getAllEntities();
+        for (Entity e : allentities) {
+            String kind = typeOfEntity(e);
+            if (kind == "ranger" || kind == "jeep") {
+                int x = e.getX();
+                int y = e.getY();
+                //int width = e.getClass();
+                if (p.getX() - Poacher.rifleRange > e.getX() //||
+                ) p.reveal();
+            }
+            break;
+        }
+    }
+
+    public List<Entity> rangersAndJeeps() {
+        List<Entity> entities = new ArrayList<Entity>();
+        entities.addAll(rangers);
+        entities.addAll(jeeps);
+        return entities;
     }
 
     public void setSellingMode(boolean mode) {
@@ -251,6 +275,9 @@ public class Safari {
             case "ranger":
                 rangers.remove((Ranger)actual);
                 break;
+            case "poacher":
+                poachers.remove((Poacher)actual);
+                break;
         }
     }
 
@@ -264,7 +291,7 @@ public class Safari {
         else if (e instanceof Pancium) return "pancium";
         else if (e instanceof Water) return "water";
         else if (e instanceof Ranger) return "ranger";
-        // else if (e instanceof Jeep) return "giraffe";
+        // else if (e instanceof Jeep) return "jeep";
         return "error";
     }
 
@@ -280,6 +307,7 @@ public class Safari {
         allEntities.addAll(panciums);
         allEntities.addAll(waters);
         allEntities.addAll(rangers);
+        allEntities.addAll(poachers);
 
 
         allEntities.sort(Comparator.comparingInt(entity -> entity.getY()));
@@ -321,5 +349,9 @@ public class Safari {
 
     public List<Ranger> getRangers() {
         return rangers;
+    }
+
+    public List<Poacher> getPoachers() {
+        return poachers;
     }
 }

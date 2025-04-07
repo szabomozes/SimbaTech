@@ -5,6 +5,7 @@ import entity.mobile.animal.Giraffe;
 import entity.mobile.animal.Leopard;
 import entity.mobile.animal.Lion;
 import entity.mobile.animal.Zebra;
+import entity.mobile.person.Poacher;
 import entity.mobile.person.Ranger;
 import entity.notmobile.Water;
 import entity.notmobile.plant.Baobab;
@@ -120,6 +121,12 @@ public class Minimap extends JPanel {
         for (Ranger ranger : Safari.Instance.getRangers()) {
             int x = (int) (width * ((double) ranger.getX() / parentWidth));
             int y = (int) (height * ((double) ranger.getY() / parentHeight));
+            g.fillOval(x, y, 5, 5);
+        }
+        g.setColor(new Color(255, 95, 31));
+        for (Poacher poacher : Safari.Instance.getPoachers()) {
+            int x = (int) (width * ((double) poacher.getX() / parentWidth));
+            int y = (int) (height * ((double) poacher.getY() / parentHeight));
             g.fillOval(x, y, 5, 5);
         }
 
