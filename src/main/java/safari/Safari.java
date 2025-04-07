@@ -3,9 +3,7 @@ package safari;
 import entity.Entity;
 import entity.mobile.Jeep;
 import map.Coordinate;
-import timer.BasicTimer;
-import timer.JeepTimer;
-import timer.RangerTimer;
+import timer.EntitiesExecutor;
 import road.Path;
 import entity.mobile.animal.*;
 import entity.mobile.person.Ranger;
@@ -38,8 +36,7 @@ public class Safari {
     private boolean selling = false;
     private List<Jeep> jeeps = new ArrayList<>();
     private boolean selectedRanger = false;
-    private List<BasicTimer> timers = new ArrayList<>();
-    private List<Coordinate> wrongCoordinates = new ArrayList<>();
+    private EntitiesExecutor entitiesExecutor = EntitiesExecutor.Instance;
 
     private Safari() {
         dateTimer = new DateTimer();
@@ -48,13 +45,15 @@ public class Safari {
 
     public void shutDown() {
         dateTimer.stopTimer();
-        timers.forEach(BasicTimer::stop);
+        entitiesExecutor.stop();
     }
 
     public void reset(DifficultyEnum diff) {
         if (dateTimer != null) {
             dateTimer.stop();
         }
+
+        entitiesExecutor.reset();
 
         coin = 1000;
         date = 0;
@@ -83,8 +82,6 @@ public class Safari {
         paths.clear();
         tempPaths.clear();
         jeeps.clear();
-        timers.clear();
-        wrongCoordinates.clear();
     }
 
     public void updateDate() {
@@ -105,22 +102,40 @@ public class Safari {
         int price = (int) Prices.getPriceByEnum(Prices.getPricesByString(shopping));
 
         switch (shopping) {
-            case "lion": animals.add(new Lion(x, y)); break;
-            case "leopard": animals.add(new Leopard(x, y)); break;
-            case "zebra": animals.add(new Zebra(x, y)); break;
-            case "giraffe": animals.add(new Giraffe(x, y)); break;
-            case "baobab": plants.add(new Baobab(x, y)); break;
-            case "palmtree": plants.add(new PalmTree(x, y)); break;
+            case "lion":
+                animals.add(new Lion(x, y));
+                break;
+            case "leopard":
+                animals.add(new Leopard(x, y));
+                break;
+            case "zebra":
+                animals.add(new Zebra(x, y));
+                break;
+            case "giraffe":
+                animals.add(new Giraffe(x, y));
+                break;
+            case "baobab":
+                plants.add(new Baobab(x, y));
+                break;
+            case "palmtree":
+                plants.add(new PalmTree(x, y));
+                break;
             case "pancium":
                 plants.add(new Pancium(x, y));
                 break;
-            case "water": waters.add(new Water(x, y)); updateWrongCoordinates(); break;
+            case "water":
+                waters.add(new Water(x, y));
+                break;
             case "ranger":
-                rangers.add(new Ranger(x, y));
-                timers.add(new RangerTimer(rangers.getLast())); break;
+                Ranger ranger = new Ranger(x, y);
+                rangers.add(ranger);
+                entitiesExecutor.addScheduleAtFixedRate(ranger::handleRangerMovement);
+                break;
             case "jeep":
-                jeeps.add(new Jeep(EntityCreate.entryX, EntityCreate.entryY));
-                timers.add(new JeepTimer(jeeps.getLast())); break;
+                Jeep jeep = new Jeep(EntityCreate.entryX, EntityCreate.entryY);
+                jeeps.add(jeep);
+                entitiesExecutor.addScheduleAtFixedRate(jeep::handleJeepMovement);
+                break;
         }
 
         coin -= price;
@@ -162,29 +177,14 @@ public class Safari {
             plants.remove(entity);
         } else if (entity instanceof Water) {
             waters.remove(entity);
-            updateWrongCoordinates();
         } else if (entity instanceof Ranger) {
             rangers.remove(entity);
         } else if (entity instanceof Jeep) {
-            deleteTimer(entity);
+            // TODO: deleteTimer(entity);
             jeeps.remove(entity);
         } /*else if (entity instanceof Poacher) {
             poachers.remove(entity);
         }*/
-    }
-
-    private void deleteTimer(Entity entity) {
-        for (BasicTimer timer : timers) {
-            if (timer.getEntityID() == entity.id) {
-                timer.stop();
-                break;
-            }
-        }
-        updateRunningTimers();
-    }
-
-    private void updateRunningTimers() {
-        timers.removeIf(timer -> !timer.isRunning());
     }
 
     public List<Entity> getAllEntities() {
@@ -266,12 +266,6 @@ public class Safari {
         path.endCoorinateCopyToStartCoordinate();
     }
 
-    public void addAJeep() {
-        Jeep jeep = new Jeep(EntityCreate.entryX, EntityCreate.entryY);
-        jeeps.add(jeep);
-        timers.add(new JeepTimer(jeep));
-    }
-
     public boolean isSelectedRanger() {
         return selectedRanger;
     }
@@ -280,14 +274,6 @@ public class Safari {
         this.selectedRanger = selectedRanger;
     }
 
-    public List<Coordinate> getWrongCoordinates() {
-        return wrongCoordinates;
-    }
-
-    public void updateWrongCoordinates() {
-        wrongCoordinates.clear();
-        waters.forEach(water -> wrongCoordinates.addAll(getEntityCoordinates(water)));
-    }
 
     private List<Coordinate> getEntityCoordinates(Entity entity) {
         List<Coordinate> coordinates = new ArrayList<>();
@@ -303,5 +289,9 @@ public class Safari {
         }
 
         return coordinates;
+    }
+
+    public List<Water> getWaters() {
+        return waters;
     }
 }

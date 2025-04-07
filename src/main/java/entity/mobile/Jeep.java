@@ -2,11 +2,16 @@ package entity.mobile;
 
 import core.Resources;
 import map.Coordinate;
+import safari.Prices;
+import safari.Safari;
+import safari.Speed;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Jeep extends MobileEntity{
+    private Random rnd = new Random();
     private boolean isAvaliable = true;
     private boolean forward = true;
     private int passenger = 0;
@@ -74,4 +79,56 @@ public class Jeep extends MobileEntity{
     public void setPath(List<Coordinate> path) {
         this.path = path;
     }
+
+
+    public void handleJeepMovement() {
+        if (isAvaliable) {
+            initializeJeep();
+        } else if (forward) {
+            moveJeepForward();
+        } else if (!forward && passenger > 0) {
+            collectPassengerPayment();
+        } else if (!forward && passenger == 0) {
+            moveJeepBackward();
+        }
+    }
+
+    private void initializeJeep() {
+        isAvaliable = false;
+        passenger = rnd.nextInt(4) + 1;
+        selectedPathIndex = rnd.nextInt(Safari.Instance.getPaths().size());
+        forward = true;
+        pathIndex = 0;
+        path = Safari.Instance.getPaths().get(selectedPathIndex).getPathCoordinations();
+        MaxPathIndex = path.size();
+    }
+
+    private void moveJeepForward() {
+        pathIndex += Speed.Instance.speedEnum.getJeepSteps();
+        if (pathIndex >= MaxPathIndex) {
+            pathIndex = MaxPathIndex - 1;
+            forward = false;
+        }
+        updateJeepPosition();
+    }
+
+    private void collectPassengerPayment() {
+        Safari.Instance.coin += (int) (Prices.getPriceByEnum(Prices.PASSENGER) * passenger);
+        passenger = 0;
+    }
+
+    private void moveJeepBackward() {
+        pathIndex -= Speed.Instance.speedEnum.getJeepSteps();
+        if (pathIndex < 0) {
+            pathIndex = 0;
+            isAvaliable = true;
+        }
+        updateJeepPosition();
+    }
+
+    private void updateJeepPosition() {
+        setX(path.get(pathIndex).x - getWidth() / 2);
+        setY(path.get(pathIndex).y - getHeight() / 2);
+    }
+
 }

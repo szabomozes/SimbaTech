@@ -1,6 +1,7 @@
 package panels.game.toolbar.buttons.shop;
 
 import core.Resources;
+import map.EntityCreate;
 import panels.feedback.MessageFeedBackPanel;
 import panels.game.EventPanel;
 import panels.game.toolbar.ToolBarCardLayout;
@@ -33,7 +34,8 @@ public class JeepButton extends JButton {
                 int limit = (int) Prices.getPriceByEnum(Prices.JEEP);
                 if (Safari.Instance.coin >= limit) {
                     Safari.Instance.coin -= limit;
-                    Safari.Instance.addAJeep();
+                    Safari.Instance.shopping = "jeep";
+                    Safari.Instance.placeSomething(EntityCreate.entryX, EntityCreate.entryY);
                 } else {
                     ToolBarCardLayout.Instance.showCard("void");
                     ((EventPanel) getParent().getParent().getParent().getComponent(0)).setFeedback(new MessageFeedBackPanel("Nincs elegendő pénzed!", "toolbar"));
