@@ -14,6 +14,7 @@ import panels.game.Calendar;
 import panels.game.toolbar.ToolBarCardLayout;
 
 import java.util.*;
+import java.util.concurrent.ScheduledFuture;
 import java.util.stream.Collectors;
 
 public class Safari {
@@ -112,7 +113,10 @@ public class Safari {
                 animals.add(new Zebra(x, y));
                 break;
             case "giraffe":
-                animals.add(new Giraffe(x, y));
+                Giraffe giraffe = new Giraffe(x, y);
+                animals.add(giraffe);
+                ScheduledFuture<?> giraffeTask = entitiesExecutor.addScheduleAtFixedRate(giraffe::handleGiraffeMovement);
+                giraffe.setTask(giraffeTask);
                 break;
             case "baobab":
                 plants.add(new Baobab(x, y));
@@ -129,12 +133,14 @@ public class Safari {
             case "ranger":
                 Ranger ranger = new Ranger(x, y);
                 rangers.add(ranger);
-                entitiesExecutor.addScheduleAtFixedRate(ranger::handleRangerMovement);
+                ScheduledFuture<?> rangerTask = entitiesExecutor.addScheduleAtFixedRate(ranger::handleRangerMovement);
+                ranger.setTask(rangerTask);
                 break;
             case "jeep":
                 Jeep jeep = new Jeep(EntityCreate.entryX, EntityCreate.entryY);
                 jeeps.add(jeep);
-                entitiesExecutor.addScheduleAtFixedRate(jeep::handleJeepMovement);
+                ScheduledFuture<?> jeepTask = entitiesExecutor.addScheduleAtFixedRate(jeep::handleJeepMovement);
+                jeep.setTask(jeepTask);
                 break;
         }
 
@@ -147,7 +153,7 @@ public class Safari {
 
         Entity entity = getEntityById(id);
         int price = (int) Prices.getPriceByEnum(Prices.getPricesByString(entity.getClass().getSimpleName().toLowerCase()));
-
+        entity.setAlive(false);
         coin += price;
         removeEntityById(id);
     }

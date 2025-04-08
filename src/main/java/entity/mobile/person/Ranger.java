@@ -91,15 +91,22 @@ public class Ranger extends Person{
 
 
     public void handleRangerMovement() {
-        if (target) {
-            isMovingToTarget = true;
-            target = false;
-        } else if (isMovingToTarget) {
-            interactionWithTarget();
-        } else if (newPosition) {
-            startMovingToNewPosition();
-        } else if (isMovingNewPosition) {
-            moveToNewPosition();
+        if (alive) {
+            if (target) {
+                isMovingToTarget = true;
+                target = false;
+            } else if (isMovingToTarget) {
+                interactionWithTarget();
+            } else if (newPosition) {
+                startMovingToNewPosition();
+            } else if (isMovingNewPosition) {
+                moveToNewPosition();
+            }
+        } else {
+            Safari.Instance.removeEntityById(id);
+            if (task != null && !task.isCancelled()) {
+                task.cancel(false);
+            }
         }
     }
 
