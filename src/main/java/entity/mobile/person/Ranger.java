@@ -123,7 +123,7 @@ public class Ranger extends Person{
     private void shooting(Entity entity) {
         targetEntity = null;
         isMovingToTarget = false;
-        Safari.Instance.removeEntityById(entity.id);
+        entity.setAlive(false);
     }
 
     private void moveToTarget() {

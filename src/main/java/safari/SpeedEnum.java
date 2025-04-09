@@ -54,16 +54,30 @@ public enum SpeedEnum {
         }
     }
 
+    public int getGiraffeSteps() {
+        switch (this) {
+            case HIPPOPOTAMUS -> {
+                return 20;
+            }
+            case EAGLE -> {
+                return 50;
+            }
+            default -> {
+                return 1;
+            }
+        }
+    }
+
     public double getGiraffeThirst() {
         switch (this) {
             case HIPPOPOTAMUS -> {
-                return 0.5;
+                return 0.1;
             }
             case EAGLE -> {
-                return 1;
+                return 0.5;
             }
             default -> {
-                return 0.1;
+                return 0.05;
             }
         }
     }
@@ -71,13 +85,139 @@ public enum SpeedEnum {
     public double getGiraffeHunger() {
         switch (this) {
             case HIPPOPOTAMUS -> {
-                return 0.5;
+                return 0.1;
             }
             case EAGLE -> {
-                return 1;
+                return 0.5;
             }
             default -> {
+                return 0.05;
+            }
+        }
+    }
+
+    public int getZebraSteps() {
+        switch (this) {
+            case HIPPOPOTAMUS -> {
+                return 20;
+            }
+            case EAGLE -> {
+                return 50;
+            }
+            default -> {
+                return 1;
+            }
+        }
+    }
+
+    public double getZebraThirst() {
+        switch (this) {
+            case HIPPOPOTAMUS -> {
                 return 0.1;
+            }
+            case EAGLE -> {
+                return 0.5;
+            }
+            default -> {
+                return 0.05;
+            }
+        }
+    }
+
+    public double getZebraHunger() {
+        switch (this) {
+            case HIPPOPOTAMUS -> {
+                return 0.1;
+            }
+            case EAGLE -> {
+                return 0.5;
+            }
+            default -> {
+                return 0.05;
+            }
+        }
+    }
+
+    public int getLionSteps() {
+        switch (this) {
+            case HIPPOPOTAMUS -> {
+                return 20;
+            }
+            case EAGLE -> {
+                return 50;
+            }
+            default -> {
+                return 1;
+            }
+        }
+    }
+
+    public double getLionThirst() {
+        switch (this) {
+            case HIPPOPOTAMUS -> {
+                return 0.1;
+            }
+            case EAGLE -> {
+                return 0.5;
+            }
+            default -> {
+                return 0.05;
+            }
+        }
+    }
+
+    public double getLionHunger() {
+        switch (this) {
+            case HIPPOPOTAMUS -> {
+                return 0.1;
+            }
+            case EAGLE -> {
+                return 0.5;
+            }
+            default -> {
+                return 0.05;
+            }
+        }
+    }
+
+    public int getLeopardSteps() {
+        switch (this) {
+            case HIPPOPOTAMUS -> {
+                return 20;
+            }
+            case EAGLE -> {
+                return 50;
+            }
+            default -> {
+                return 1;
+            }
+        }
+    }
+
+    public double getLeopardThirst() {
+        switch (this) {
+            case HIPPOPOTAMUS -> {
+                return 0.1;
+            }
+            case EAGLE -> {
+                return 0.5;
+            }
+            default -> {
+                return 0.05;
+            }
+        }
+    }
+
+    public double getLeopardHunger() {
+        switch (this) {
+            case HIPPOPOTAMUS -> {
+                return 0.1;
+            }
+            case EAGLE -> {
+                return 0.5;
+            }
+            default -> {
+                return 0.05;
             }
         }
     }

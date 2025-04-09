@@ -104,13 +104,22 @@ public class Safari {
 
         switch (shopping) {
             case "lion":
-                animals.add(new Lion(x, y));
+                Lion lion = new Lion(x, y);
+                animals.add(lion);
+                ScheduledFuture<?> lionTask = entitiesExecutor.addScheduleAtFixedRate(lion::handleLionMovement);
+                lion.setTask(lionTask);
                 break;
             case "leopard":
-                animals.add(new Leopard(x, y));
+                Leopard leopard = new Leopard(x, y);
+                animals.add(leopard);
+                //ScheduledFuture<?> leopardTask = entitiesExecutor.addScheduleAtFixedRate(leopard::handleLeopardMovement);
+                //leopard.setTask(leopardTask);
                 break;
             case "zebra":
-                animals.add(new Zebra(x, y));
+                Zebra zebra = new Zebra(x, y);
+                animals.add(zebra);
+                ScheduledFuture<?> zebraTask = entitiesExecutor.addScheduleAtFixedRate(zebra::handleZebraMovement);
+                zebra.setTask(zebraTask);
                 break;
             case "giraffe":
                 Giraffe giraffe = new Giraffe(x, y);
@@ -299,5 +308,30 @@ public class Safari {
 
     public List<Water> getWaters() {
         return waters;
+    }
+
+    public List<Water> getWatersByInteger(List<Integer> watersID) {
+        return this.waters.stream()
+                .filter(water -> watersID.contains(water.id))
+                .collect(Collectors.toList());
+    }
+
+    public List<Plant> getPlants() {
+        return plants.stream()
+                .map(entity -> ((Plant) entity))
+                .collect(Collectors.toList());
+    }
+
+    public List<Plant> getPlantsByInteger(List<Integer> plantsID) {
+        return this.plants.stream()
+                .filter(plant -> plantsID.contains(plant.id))
+                .map(entity -> ((Plant)entity))
+                .collect(Collectors.toList());
+    }
+    public List<Animal> getHerbivorous() {
+        return this.animals.stream()
+                .filter(animal -> animal instanceof Giraffe || animal instanceof Zebra)
+                .map(animal -> ((Animal)animal))
+                .collect(Collectors.toList());
     }
 }
