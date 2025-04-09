@@ -1,5 +1,6 @@
 package safari;
 
+import core.Resources;
 import entity.Entity;
 import entity.mobile.Jeep;
 import map.Coordinate;
@@ -112,8 +113,8 @@ public class Safari {
             case "leopard":
                 Leopard leopard = new Leopard(x, y);
                 animals.add(leopard);
-                //ScheduledFuture<?> leopardTask = entitiesExecutor.addScheduleAtFixedRate(leopard::handleLeopardMovement);
-                //leopard.setTask(leopardTask);
+                ScheduledFuture<?> leopardTask = entitiesExecutor.addScheduleAtFixedRate(leopard::handleLeopardMovement);
+                leopard.setTask(leopardTask);
                 break;
             case "zebra":
                 Zebra zebra = new Zebra(x, y);
@@ -333,5 +334,23 @@ public class Safari {
                 .filter(animal -> animal instanceof Giraffe || animal instanceof Zebra)
                 .map(animal -> ((Animal)animal))
                 .collect(Collectors.toList());
+    }
+
+    public Coordinate avgCoordinateOf(Class<? extends Entity> animalClass) {
+        DoubleSummaryStatistics xStats = animals.stream()
+                .filter(animalClass::isInstance)
+                .mapToDouble(Entity::getX)
+                .summaryStatistics();
+
+        DoubleSummaryStatistics yStats = animals.stream()
+                .filter(animalClass::isInstance)
+                .mapToDouble(Entity::getY)
+                .summaryStatistics();
+
+        if (xStats.getCount() == 0) {
+            return new Coordinate(Resources.Instance.map.getWidth() / 2, Resources.Instance.map.getHeight() / 2);
+        }
+
+        return new Coordinate((int) xStats.getAverage(), (int) yStats.getAverage());
     }
 }

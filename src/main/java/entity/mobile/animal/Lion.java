@@ -9,25 +9,18 @@ import safari.Safari;
 import safari.Speed;
 import timer.EntitiesExecutor;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
-import java.util.concurrent.ScheduledFuture;
 
 
 public class Lion extends Animal {
-
-    private ScheduledFuture<List<Coordinate>> scheduledFutureCoordinatesForDrink = null;
-    private List<Coordinate> coordinatesForDrink = new ArrayList<>();
-    private String drinkOrEat;
-
     public Lion(int x, int y) {
         super(x, y, Resources.Instance.lionBody);
     }
+
     public void handleLionMovement() {
         if (isAlive()) {
-            updateThirstAndHunger();
+            updateThirstAndHunger(Speed.Instance.speedEnum.getLionThirst(), Speed.Instance.speedEnum.getLionHunger());
             if (thirst <= thirstLimit) {
                 handleThirst();
                 movingForEat = false;
@@ -56,7 +49,7 @@ public class Lion extends Animal {
             }
 
             if (movingForDrink) {
-                moveToDrink();
+                moveToDrink(Speed.Instance.speedEnum.getLionSteps());
             } else if (movingForEat) {
                 moveToEat();
             } else {
@@ -75,48 +68,6 @@ public class Lion extends Animal {
                 task.cancel(false);
             }
 
-        }
-    }
-
-    private void updateThirstAndHunger() {
-        thirst = (Math.max(thirst - Speed.Instance.speedEnum.getLionThirst(), 0));
-        hunger = (Math.max(hunger - Speed.Instance.speedEnum.getLionHunger(), 0));
-    }
-
-    private void handleThirst() {
-        if (scheduledFutureCoordinatesForDrink == null && !movingForDrink) {
-            Water closestWater = searchClosestWater();
-
-            if (closestWater == null) {
-                closestWater = getClosestWater(Safari.Instance.getWaters());
-                if (closestWater != null) {
-                    watersID.add(closestWater.id);
-                }
-            }
-            if (closestWater != null) {
-                int waterX = closestWater.getX();
-                int waterY = closestWater.getY();
-                int waterWidth = closestWater.getWidth();
-                int waterHeight = closestWater.getHeight();
-                scheduledFutureCoordinatesForDrink = EntitiesExecutor.Instance.addSchedule(() -> PathFinder.ASearch(x, y, width, height, waterX, waterY, waterWidth, waterHeight));
-            }
-        }
-    }
-
-    private void moveToDrink() {
-        if (coordinatesForDrink.isEmpty()) {
-            movingForDrink = false;
-            thirst = 100;
-            System.out.println("Stop drinking");
-        } else {
-            int limit = Math.min(coordinatesForDrink.size(), Speed.Instance.speedEnum.getGiraffeSteps()) - 1;
-            for (int i = 0; i < limit; i++) {
-                coordinatesForDrink.removeLast();
-            }
-
-            Coordinate coordinate = coordinatesForDrink.removeLast();
-            x = coordinate.x;
-            y = coordinate.y;
         }
     }
 
@@ -183,8 +134,4 @@ public class Lion extends Animal {
         }
     }
 
-    private boolean overlaps(int aStart, int aEnd, int bStart, int bEnd) {
-        int margin = 5; // Ekkora távolságon belül már átfedésnek számít
-        return aStart < bEnd + margin && bStart < aEnd + margin;
-    }
 }
