@@ -357,4 +357,57 @@ public class Safari {
     public int getDate() {
         return date;
     }
+
+    public void bornAnimals() {
+
+        int lions = (int) animals.stream()
+                .filter(a -> a instanceof Lion)
+                .count();
+        createIteration(Lion.class, lions / 10, avgCoordinateOf(Lion.class));
+        int leopards = (int) animals.stream()
+                .filter(a -> a instanceof Leopard)
+                .count();
+        createIteration(Leopard.class, leopards / 10, avgCoordinateOf(Leopard.class));
+        int zebras = (int) animals.stream()
+                .filter(a -> a instanceof Zebra)
+                .count();
+        createIteration(Zebra.class, zebras / 10, avgCoordinateOf(Zebra.class));
+        int giraffes = (int) animals.stream()
+                .filter(a -> a instanceof Giraffe)
+                .count();
+        createIteration(Giraffe.class, giraffes / 10, avgCoordinateOf(Giraffe.class));
+    }
+
+    public void createIteration(Class<? extends Entity> entityClass, int i, Coordinate coordinate) {
+        for (int j = 0; j < i; j++) {
+            createAnEntityForFree(entityClass, coordinate.x, coordinate.y);
+        }
+    }
+
+    public void createAnEntityForFree(Class<? extends Entity> entityClass, int x, int y) {
+        if (entityClass == Lion.class) {
+            Lion lion = new Lion(x, y);
+            animals.add(lion);
+            ScheduledFuture<?> lionTask = entitiesExecutor.addScheduleAtFixedRate(lion::handleLionMovement);
+            lion.setTask(lionTask);
+        } else if (entityClass == Leopard.class) {
+            Leopard leopard = new Leopard(x, y);
+            animals.add(leopard);
+            ScheduledFuture<?> leopardTask = entitiesExecutor.addScheduleAtFixedRate(leopard::handleLeopardMovement);
+            leopard.setTask(leopardTask);
+        } else if (entityClass == Zebra.class) {
+            Zebra zebra = new Zebra(x, y);
+            animals.add(zebra);
+            ScheduledFuture<?> zebraTask = entitiesExecutor.addScheduleAtFixedRate(zebra::handleZebraMovement);
+            zebra.setTask(zebraTask);
+        } else if (entityClass == Giraffe.class) {
+            Giraffe giraffe = new Giraffe(x, y);
+            animals.add(giraffe);
+            ScheduledFuture<?> giraffeTask = entitiesExecutor.addScheduleAtFixedRate(giraffe::handleGiraffeMovement);
+            giraffe.setTask(giraffeTask);
+        }
+        // TODO: még több entity ha kell
+
+    }
+
 }

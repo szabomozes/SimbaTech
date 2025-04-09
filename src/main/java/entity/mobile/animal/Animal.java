@@ -6,9 +6,7 @@ import entity.notmobile.Water;
 import entity.notmobile.plant.Plant;
 import map.Coordinate;
 import pathFinder.PathFinder;
-import safari.DateTimer;
 import safari.Safari;
-import safari.Speed;
 import timer.EntitiesExecutor;
 
 import java.awt.image.BufferedImage;
@@ -215,7 +213,6 @@ public abstract class Animal extends MobileEntity {
         this.hunger -= hunger + (Safari.Instance.getDate() - bornDate);
         if (this.thirst < 0) this.thirst = 0;
         if (this.hunger < 0) this.hunger = 0;
-        System.out.println(this.hunger);
     }
 
     protected boolean overlapsWaterArea(int futureX, int futureY) {

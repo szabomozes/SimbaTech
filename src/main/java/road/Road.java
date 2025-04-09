@@ -1,6 +1,7 @@
 package road;
 
 
+import core.Resources;
 import map.Coordinate;
 
 import java.awt.*;
@@ -16,6 +17,18 @@ public class Road {
     private List<Coordinate> mid;
 
     public Road(int startX, int startY, int endX, int endY) {
+        int minX = 0;
+        int maxX = Resources.Instance.map.getWidth();
+        int minY = 0;
+        int maxY = Resources.Instance.map.getHeight();
+        startX = Math.max(minX, startX);
+        startX = Math.min(maxX, startX);
+        startY = Math.max(minY, startY);
+        startY = Math.min(maxY, startY);
+        endX = Math.max(minX, endX);
+        endX = Math.min(maxX, endX);
+        endY = Math.max(minY, endY);
+        endY = Math.min(maxY, endY);
         this.startX = startX;
         this.startY = startY;
         this.endX = endX;
@@ -28,6 +41,11 @@ public class Road {
         int dx = endX - startX;
         int dy = endY - startY;
         int steps = Math.max(Math.abs(dx), Math.abs(dy));
+
+        if (steps == 0) {
+            points.add(new Coordinate(startX, startY));
+            return points;
+        }
 
         for (int i = 0; i <= steps; i++) {
             int x = startX + i * dx / steps;
