@@ -22,6 +22,10 @@ public class Zebra extends Animal {
     public void handleZebraMovement() {
         if (isAlive()) {
             updateThirstAndHunger(Speed.Instance.speedEnum.getZebraThirst(), Speed.Instance.speedEnum.getZebraHunger());
+            if (hunger == 0 || thirst == 0) {
+                alive = false;
+                return;
+            }
             if (thirst <= thirstLimit) {
                 handleThirst();
                 movingForEat = false;
@@ -64,11 +68,14 @@ public class Zebra extends Animal {
             if (movingForDrink) {
                 moveToDrink(Speed.Instance.speedEnum.getZebraSteps());
             } else if (movingForEat) {
-                moveToEatherbivorous(Speed.Instance.speedEnum.getZebraSteps());
+                moveToEatHerbivorous(Speed.Instance.speedEnum.getZebraSteps());
             } else {
                 if (thirst <= thirstLimit2 && hunger <= hungerLimit2) {
-                    justMove(Speed.Instance.speedEnum.getZebraSteps());
-                    // TODO: csapatban mozogjon
+                    if (lessAvgRangeLimit()) {
+                        justMove(Speed.Instance.speedEnum.getZebraSteps());
+                    } else {
+                        moveToTheAvgRange(Speed.Instance.speedEnum.getZebraSteps());
+                    }
                 }
             }
 

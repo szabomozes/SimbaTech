@@ -6,6 +6,7 @@ import entity.notmobile.Water;
 import entity.notmobile.plant.Plant;
 import map.Coordinate;
 import pathFinder.PathFinder;
+import safari.DateTimer;
 import safari.Safari;
 import safari.Speed;
 import timer.EntitiesExecutor;
@@ -29,12 +30,15 @@ public abstract class Animal extends MobileEntity {
     protected List<Integer> watersID = new ArrayList<>();
     protected List<Integer> plantsID = new ArrayList<>();
     protected static final int visualRangeByPixel = 600;
+    protected static final int avgRangeLimitByPixel = 1000;
     protected Random rnd = new Random();
     protected Animal target;
     protected ScheduledFuture<List<Coordinate>> scheduledFutureCoordinatesForDrink = null;
     protected List<Coordinate> coordinatesForDrink = new ArrayList<>();
     protected ScheduledFuture<List<Coordinate>> scheduledFutureCoordinatesForEat = null;
     protected List<Coordinate> coordinatesForEat = new ArrayList<>();
+    private int bornDate = Safari.Instance.getDate();
+
     public Animal(int x, int y, BufferedImage image) {
         super(x, y, image);
     }
@@ -207,8 +211,11 @@ public abstract class Animal extends MobileEntity {
     }
 
     protected void updateThirstAndHunger(double thirst, double hunger) {
-        this.thirst = (Math.max(this.thirst - thirst, 0));
-        this.hunger = (Math.max(this.hunger - hunger, 0));
+        this.thirst -= thirst + (Safari.Instance.getDate() - bornDate);
+        this.hunger -= hunger + (Safari.Instance.getDate() - bornDate);
+        if (this.thirst < 0) this.thirst = 0;
+        if (this.hunger < 0) this.hunger = 0;
+        System.out.println(this.hunger);
     }
 
     protected boolean overlapsWaterArea(int futureX, int futureY) {
@@ -260,7 +267,7 @@ public abstract class Animal extends MobileEntity {
         scheduledFutureCoordinatesForDrink = null;
     }
 
-    protected void moveToEatherbivorous(int steps) {
+    protected void moveToEatHerbivorous(int steps) {
         if (coordinatesForEat.isEmpty()) {
             movingForEat = false;
             hunger = 100;
@@ -286,5 +293,98 @@ public abstract class Animal extends MobileEntity {
         this.y = Math.max(0, y);
         this.x = Math.min(Resources.Instance.map.getWidth() - width, this.x);
         this.y = Math.min(Resources.Instance.map.getHeight() - height, this.y);
+    }
+
+    protected boolean lessAvgRangeLimit() {
+        Coordinate avg = Safari.Instance.avgCoordinateOf(this.getClass());
+        return distanceTo(x, y, avg.x, avg.y) <= avgRangeLimitByPixel;
+    }
+
+    protected void moveToTheAvgRange(int steps) {
+        Coordinate avg = Safari.Instance.avgCoordinateOf(this.getClass());
+
+        int avgX = avg.x;
+        int avgY = avg.y;
+
+        int futureX = x;
+        int futureY = y;
+
+        if (avgX < x) {
+            futureX -= steps;
+        } else if (avgX > x) {
+            futureX += steps;
+        }
+
+        if (avgY < y) {
+            futureY -= steps;
+        } else if (avgY > y) {
+            futureY += steps;
+        }
+
+        if (!overlapsWaterArea(futureX, futureY)) {
+            setCoordinate(futureX, futureY);
+        }
+    }
+
+    protected void handleHungerCarnivorous() {
+        if (target == null || !target.isAlive()) {
+            target = getClosestHerbivorous();
+            if (target != null) {
+                movingForEat = true;
+            }
+        }
+    }
+
+    protected void moveToEatCarnivorous(int steps) {
+        if (target == null || !target.isAlive()) {
+            return;
+        }
+
+        System.out.println(hunger);
+        int targetX = target.getX();
+        int targetY = target.getY();
+        int targetWidth = target.getWidth();
+        int targetHeight = target.getHeight();
+
+        int directionX = 0;
+        int directionY = 0;
+
+        boolean overlapX = overlaps(x, x + width, targetX, targetX + targetWidth);
+        boolean overlapY = overlaps(y, y + height, targetY, targetY + targetHeight);
+
+        if (!overlapX) {
+            if (x + width < targetX) {
+                directionX = 1;
+            } else if (targetX + targetWidth < x) {
+                directionX = -1;
+            }
+        }
+
+        if (!overlapY) {
+            if (y + height < targetY) {
+                directionY = 1;
+            } else if (targetY + targetHeight < y) {
+                directionY = -1;
+            }
+        }
+
+        int futureX = x + directionX * steps;
+        int futureY = y + directionY * steps;
+
+        if (!overlapsWaterArea(futureX, futureY)) {
+            x = futureX;
+            y = futureY;
+
+            // Ellenőrizze újra az átfedést a mozgás után
+            boolean nowOverlapX = overlaps(x, x + width, targetX, targetX + targetWidth);
+            boolean nowOverlapY = overlaps(y, y + height, targetY, targetY + targetHeight);
+
+            if (nowOverlapX && nowOverlapY) {
+                target.setAlive(false);
+                target = null;
+                movingForEat = false;
+                hunger = 100;
+            }
+        }
     }
 }

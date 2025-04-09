@@ -1,5 +1,7 @@
 package entity;
 
+import core.Resources;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.concurrent.ScheduledFuture;
@@ -21,6 +23,10 @@ public abstract class Entity {
         this.image = image;
         this.x = x - width / 2;
         this.y = y - height / 2;
+        this.x = Math.max(0, this.x);
+        this.y = Math.max(0, this.y);
+        this.x = Math.min(Resources.Instance.map.getWidth(), this.x);
+        this.y = Math.min(Resources.Instance.map.getHeight(), this.y);
     }
 
     public boolean contains(int clickX, int clickY) {

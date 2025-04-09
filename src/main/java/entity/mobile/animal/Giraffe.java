@@ -23,6 +23,10 @@ public class Giraffe extends Animal {
     public void handleGiraffeMovement() {
         if (isAlive()) {
             updateThirstAndHunger(Speed.Instance.speedEnum.getGiraffeThirst(), Speed.Instance.speedEnum.getGiraffeHunger());
+            if (hunger == 0 || thirst == 0) {
+                alive = false;
+                return;
+            }
             if (thirst <= thirstLimit) {
                 handleThirst();
             } else if (hunger <= hungerLimit) {
@@ -62,11 +66,14 @@ public class Giraffe extends Animal {
             if (movingForDrink) {
                 moveToDrink(Speed.Instance.speedEnum.getGiraffeSteps());
             } else if (movingForEat) {
-                moveToEatherbivorous(Speed.Instance.speedEnum.getGiraffeSteps());
+                moveToEatHerbivorous(Speed.Instance.speedEnum.getGiraffeSteps());
             } else {
                 if (thirst <= thirstLimit2 && hunger <= hungerLimit2) {
-                    justMove(Speed.Instance.speedEnum.getZebraSteps());
-                    // TODO: csapatban mozogjon
+                    if (lessAvgRangeLimit()) {
+                        justMove(Speed.Instance.speedEnum.getZebraSteps());
+                    } else {
+                        moveToTheAvgRange(Speed.Instance.speedEnum.getGiraffeSteps());
+                    }
                 }
             }
 
@@ -81,12 +88,4 @@ public class Giraffe extends Animal {
 
         }
     }
-
-
-
-
-
-
-
-
 }

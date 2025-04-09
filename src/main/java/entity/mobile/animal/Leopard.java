@@ -21,12 +21,16 @@ public class Leopard extends Animal {
     public void handleLeopardMovement() {
         if (isAlive()) {
             updateThirstAndHunger(Speed.Instance.speedEnum.getLeopardThirst(), Speed.Instance.speedEnum.getLeopardHunger());
+            if (hunger == 0 || thirst == 0) {
+                alive = false;
+                return;
+            }
             if (thirst <= thirstLimit) {
                 handleThirst();
                 movingForEat = false;
                 target = null;
             } else if (hunger <= hungerLimit) {
-                handleHunger();
+                handleHungerCarnivorous();
                 movingForDrink = false;
                 scheduledFutureCoordinatesForDrink = null;
             } else {
@@ -51,11 +55,14 @@ public class Leopard extends Animal {
             if (movingForDrink) {
                 moveToDrink(Speed.Instance.speedEnum.getLeopardSteps());
             } else if (movingForEat) {
-                moveToEat();
+                moveToEatCarnivorous(Speed.Instance.speedEnum.getLeopardSteps());
             } else {
                 if (thirst <= thirstLimit2 && hunger <= hungerLimit2) {
-                    justMove(Speed.Instance.speedEnum.getLeopardSteps());
-                    // TODO: csapatban mozogjon
+                    if (lessAvgRangeLimit()) {
+                        justMove(Speed.Instance.speedEnum.getLeopardSteps());
+                    } else {
+                        moveToTheAvgRange(Speed.Instance.speedEnum.getLeopardSteps());
+                    }
                 }
             }
 
@@ -70,69 +77,4 @@ public class Leopard extends Animal {
 
         }
     }
-
-
-    private void handleHunger() {
-        if (target == null || !target.isAlive()) {
-            target = getClosestHerbivorous();
-            if (target != null) {
-                movingForEat = true;
-            }
-        }
-    }
-
-
-    private void moveToEat() {
-        if (target == null || !target.isAlive()) {
-            return;
-        }
-
-        int targetX = target.getX();
-        int targetY = target.getY();
-        int targetWidth = target.getWidth();
-        int targetHeight = target.getHeight();
-
-        int directionX = 0;
-        int directionY = 0;
-
-        boolean overlapX = overlaps(x, x + width, targetX, targetX + targetWidth);
-        boolean overlapY = overlaps(y, y + height, targetY, targetY + targetHeight);
-
-        if (!overlapX) {
-            if (x + width < targetX) {
-                directionX = 1;
-            } else if (targetX + targetWidth < x) {
-                directionX = -1;
-            }
-        }
-
-        if (!overlapY) {
-            if (y + height < targetY) {
-                directionY = 1;
-            } else if (targetY + targetHeight < y) {
-                directionY = -1;
-            }
-        }
-
-        int step = Speed.Instance.speedEnum.getLeopardSteps();
-        int futureX = x + directionX * step;
-        int futureY = y + directionY * step;
-
-        if (!overlapsWaterArea(futureX, futureY)) {
-            x = futureX;
-            y = futureY;
-
-            // Ellenőrizze újra az átfedést a mozgás után
-            boolean nowOverlapX = overlaps(x, x + width, targetX, targetX + targetWidth);
-            boolean nowOverlapY = overlaps(y, y + height, targetY, targetY + targetHeight);
-
-            if (nowOverlapX && nowOverlapY) {
-                target.setAlive(false);
-                target = null;
-                movingForEat = false;
-                hunger = 100;
-            }
-        }
-    }
-
 }

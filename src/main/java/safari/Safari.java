@@ -353,4 +353,8 @@ public class Safari {
 
         return new Coordinate((int) xStats.getAverage(), (int) yStats.getAverage());
     }
+
+    public int getDate() {
+        return date;
+    }
 }
