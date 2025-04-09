@@ -2,7 +2,9 @@ package safari;
 
 import entity.Entity;
 import entity.mobile.Jeep;
+import map.AnimalCreate;
 import map.Coordinate;
+import map.PlantCreate;
 import timer.EntitiesExecutor;
 import road.Path;
 import entity.mobile.animal.*;
@@ -60,6 +62,7 @@ public class Safari {
         date = 0;
         updateDate();
         difficultyEnum = diff;
+        System.out.println("Difficulty: " + difficultyEnum);
         shopping = null;
         roadBuilding = false;
         selling = false;
@@ -69,7 +72,25 @@ public class Safari {
 
         entry = EntityCreate.getEntry();
         exit = EntityCreate.getExit();
-        animals.addAll(EntityCreate.getLions());
+
+        animals.addAll(AnimalCreate.getLions(difficultyEnum));
+        animals.addAll(AnimalCreate.getLeopards(difficultyEnum));
+
+        animals.addAll(AnimalCreate.getGiraffes(difficultyEnum));
+        animals.addAll(AnimalCreate.getZebras(difficultyEnum));
+
+        rangers.addAll(EntityCreate.getRangers(difficultyEnum));
+        for (Ranger ranger : rangers) {
+            rangerJoinDates.put(ranger, date);
+            entitiesExecutor.addScheduleAtFixedRate(ranger::handleRangerMovement);
+        }
+
+        plants.addAll(PlantCreate.getBaobabs(difficultyEnum));
+        plants.addAll(PlantCreate.getPalmTrees(difficultyEnum));
+        plants.addAll(PlantCreate.getPanciums(difficultyEnum));
+
+        waters.addAll(EntityCreate.getWaters(difficultyEnum));
+
 
         dateTimer = new DateTimer();
         dateTimer.start();

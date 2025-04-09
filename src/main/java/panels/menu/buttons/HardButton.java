@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 public class HardButton extends StartButton {
     public HardButton() {
         super("Nehéz");
-        message = DifficultyEnum.MEDIUM;
+        message = DifficultyEnum.HARD;
 
         this.addActionListener(new ActionListener() {
             @Override
