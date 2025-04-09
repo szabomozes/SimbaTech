@@ -37,6 +37,7 @@ public class Safari {
     private List<Jeep> jeeps = new ArrayList<>();
     private boolean selectedRanger = false;
     private EntitiesExecutor entitiesExecutor = EntitiesExecutor.Instance;
+    private Map<Ranger, Integer> rangerJoinDates = new HashMap<>();
 
     private Safari() {
         dateTimer = new DateTimer();
@@ -82,13 +83,18 @@ public class Safari {
         paths.clear();
         tempPaths.clear();
         jeeps.clear();
+        rangerJoinDates.clear();
     }
 
     public void updateDate() {
         date++;
         System.out.println("Date event triggered: " + date);
         Calendar.Instance.setDate(date);
+
+        //havi fizetés
+        RangerPayment.Instance.payRangersByServiceTime();
     }
+
 
     public void buySomething(String message) {
         int price = (int) Prices.getPriceByEnum(Prices.getPricesByString(message));
@@ -129,6 +135,7 @@ public class Safari {
             case "ranger":
                 Ranger ranger = new Ranger(x, y);
                 rangers.add(ranger);
+                rangerJoinDates.put(ranger, date);
                 entitiesExecutor.addScheduleAtFixedRate(ranger::handleRangerMovement);
                 break;
             case "jeep":
@@ -179,6 +186,7 @@ public class Safari {
             waters.remove(entity);
         } else if (entity instanceof Ranger) {
             rangers.remove(entity);
+            rangerJoinDates.remove(entity);
         } else if (entity instanceof Jeep) {
             // TODO: deleteTimer(entity);
             jeeps.remove(entity);
@@ -293,5 +301,13 @@ public class Safari {
 
     public List<Water> getWaters() {
         return waters;
+    }
+
+    public Map<Ranger, Integer> getRangerJoinDates() {
+        return rangerJoinDates;
+    }
+
+    public int getDate() {
+        return date;
     }
 }

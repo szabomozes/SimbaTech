@@ -4,6 +4,7 @@ import core.Resources;
 import entity.Entity;
 import entity.notmobile.Water;
 import map.Coordinate;
+import safari.RangerPayment;
 import safari.Safari;
 import safari.Speed;
 
@@ -116,6 +117,7 @@ public class Ranger extends Person{
     private void shooting(Entity entity) {
         targetEntity = null;
         isMovingToTarget = false;
+        RangerPayment.Instance.payForKilledEntity(entity);
         Safari.Instance.removeEntityById(entity.id);
     }
 
