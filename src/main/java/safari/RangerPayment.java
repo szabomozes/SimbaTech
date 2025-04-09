@@ -33,7 +33,9 @@ public class RangerPayment {
         }
 
         Safari.Instance.coin -= totalCost;
-        System.out.println("Havi fizetés " + paidRangers + " vadőrnek (szolgálati idő alapján): -" + totalCost + " coin. Új egyenleg: " + Safari.Instance.coin);
+        if(paidRangers > 0) {
+            System.out.println("Havi fizetés " + paidRangers + " vadőrnek (szolgálati idő alapján): -" + totalCost + " coin. Új egyenleg: " + Safari.Instance.coin);
+        }
     }
 
     public void payForKilledEntity(Entity entity) {
@@ -44,7 +46,7 @@ public class RangerPayment {
         } else if (entity instanceof Leopard) {
             payment = LEOPARD;
         } else {
-            System.out.println("Ez az entitás nem támogatott ragadozó: " + entity.getClass().getSimpleName());
+            System.out.println("Ez az entitás nem támogatott kilövésre: " + entity.getClass().getSimpleName());
             return;
         }
         Safari.Instance.coin += payment;

@@ -2,6 +2,8 @@ package entity.mobile.person;
 
 import core.Resources;
 import entity.Entity;
+import entity.mobile.animal.Leopard;
+import entity.mobile.animal.Lion;
 import entity.notmobile.Water;
 import map.Coordinate;
 import safari.RangerPayment;
@@ -108,7 +110,9 @@ public class Ranger extends Person{
         if (targetEntity == null) return;
 
         if (calculateDistance(getX(), getY(), targetEntity.getX(), targetEntity.getY()) <= rifleRangeByPixel) {
-            shooting(targetEntity);
+            if(targetEntity instanceof Lion ||targetEntity instanceof Leopard) {
+                shooting(targetEntity);
+            }
         } else {
             moveToTarget();
         }
