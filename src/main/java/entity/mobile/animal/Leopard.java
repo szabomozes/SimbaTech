@@ -21,10 +21,6 @@ public class Leopard extends Animal {
     public void handleLeopardMovement() {
         if (isAlive()) {
             updateThirstAndHunger(Speed.Instance.speedEnum.getLeopardThirst(), Speed.Instance.speedEnum.getLeopardHunger());
-            if (hunger == 0 || thirst == 0) {
-                alive = false;
-                return;
-            }
             if (thirst <= thirstLimit) {
                 handleThirst();
                 movingForEat = false;

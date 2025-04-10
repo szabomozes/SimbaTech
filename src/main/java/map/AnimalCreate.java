@@ -6,6 +6,7 @@ import entity.mobile.animal.Leopard;
 import entity.mobile.animal.Lion;
 import entity.mobile.animal.Zebra;
 import safari.DifficultyEnum;
+import safari.Safari;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,6 +72,10 @@ public class AnimalCreate {
     }
 
     public static List<Zebra> getZebras(DifficultyEnum difficulty) {
+        Safari.Instance.createAnEntityForFree(Zebra.class, 200, 200);
+
+
+
         int maxWidth = Resources.Instance.map.getWidth() - Resources.Instance.zebraBody.getWidth() / 2;
         int maxHeight = Resources.Instance.map.getHeight() - Resources.Instance.zebraBody.getHeight() / 2;
         List<Zebra> zebras = new ArrayList<>();

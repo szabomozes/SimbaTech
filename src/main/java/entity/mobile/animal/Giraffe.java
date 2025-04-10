@@ -23,10 +23,6 @@ public class Giraffe extends Animal {
     public void handleGiraffeMovement() {
         if (isAlive()) {
             updateThirstAndHunger(Speed.Instance.speedEnum.getGiraffeThirst(), Speed.Instance.speedEnum.getGiraffeHunger());
-            if (hunger == 0 || thirst == 0) {
-                alive = false;
-                return;
-            }
             if (thirst <= thirstLimit) {
                 handleThirst();
             } else if (hunger <= hungerLimit) {

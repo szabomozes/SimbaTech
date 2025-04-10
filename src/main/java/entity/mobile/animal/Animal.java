@@ -213,6 +213,10 @@ public abstract class Animal extends MobileEntity {
         this.hunger -= hunger + (Safari.Instance.getDate() - bornDate);
         if (this.thirst < 0) this.thirst = 0;
         if (this.hunger < 0) this.hunger = 0;
+        if (hunger == 0 || thirst == 0) {
+            alive = false;
+            return;
+        }
     }
 
     protected boolean overlapsWaterArea(int futureX, int futureY) {

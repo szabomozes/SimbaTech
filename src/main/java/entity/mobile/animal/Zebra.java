@@ -22,10 +22,6 @@ public class Zebra extends Animal {
     public void handleZebraMovement() {
         if (isAlive()) {
             updateThirstAndHunger(Speed.Instance.speedEnum.getZebraThirst(), Speed.Instance.speedEnum.getZebraHunger());
-            if (hunger == 0 || thirst == 0) {
-                alive = false;
-                return;
-            }
             if (thirst <= thirstLimit) {
                 handleThirst();
                 movingForEat = false;

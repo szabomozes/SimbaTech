@@ -21,10 +21,6 @@ public class Lion extends Animal {
     public void handleLionMovement() {
         if (isAlive()) {
             updateThirstAndHunger(Speed.Instance.speedEnum.getLionThirst(), Speed.Instance.speedEnum.getLionHunger());
-            if (hunger == 0 || thirst == 0) {
-                alive = false;
-                return;
-            }
             if (thirst <= thirstLimit) {
                 handleThirst();
                 movingForEat = false;

@@ -127,6 +127,9 @@ public class Safari {
         System.out.println("Date event triggered: " + date);
         Calendar.Instance.setDate(date);
         payment();
+        if (date > 10) {
+            bornDay();
+        }
 
 
     }
@@ -142,6 +145,11 @@ public class Safari {
                 shutDown();
             }
         }
+    }
+
+    private void bornDay() {
+        // TODO: honaponta
+        bornAnimals();
     }
 
 
