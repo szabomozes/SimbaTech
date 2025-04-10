@@ -195,7 +195,7 @@ public class EventPanel extends JPanel {
                 .ifPresent(ranger -> {
                     ranger.setSelected(true);
                     Safari.Instance.setSelectedRanger(true);
-                    ToolBarCardLayout.Instance.showCard("selectedRanger");
+                    ToolBarCardLayout.Instance.showCard("void");
                 });
     }
 

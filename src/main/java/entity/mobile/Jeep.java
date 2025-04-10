@@ -94,6 +94,7 @@ public class Jeep extends MobileEntity{
     }
 
     private void initializeJeep() {
+        image = Resources.Instance.jeep;
         isAvaliable = false;
         passenger = rnd.nextInt(4) + 1;
         selectedPathIndex = rnd.nextInt(Safari.Instance.getPaths().size());
@@ -113,6 +114,7 @@ public class Jeep extends MobileEntity{
     }
 
     private void collectPassengerPayment() {
+        image = Resources.Instance.jeep_back;
         Safari.Instance.coin += (int) (Prices.getPriceByEnum(Prices.PASSENGER) * passenger);
         Safari.Instance.addPassengers(passenger);
         System.out.println("visitors: " + Safari.Instance.getPassengers());

@@ -12,7 +12,8 @@ public class SellingToolBar extends JPanel {
 
     public SellingToolBar() {
         setLayout(new GridBagLayout());
-        setBackground(Color.BLACK);
+        setBackground(Color.DARK_GRAY);
+        setBorder(BorderFactory.createMatteBorder(2, 0, 0, 0, Color.BLACK));
 
         text = new JLabel("Eladás mód", SwingConstants.LEFT);
         text.setFont(Resources.Instance.menu_font.deriveFont(35f));

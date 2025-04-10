@@ -105,7 +105,7 @@ public enum SpeedEnum {
                 return 50;
             }
             default -> {
-                return 1;
+                return 2;
             }
         }
     }

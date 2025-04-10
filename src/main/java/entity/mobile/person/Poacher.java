@@ -11,7 +11,7 @@ import java.util.Random;
 public class Poacher extends Person {
     private double targetX, targetY;
     private double currentX, currentY;
-    public final static int rifleRange = 300;
+    public final static int rifleRange = 200;
     private boolean isVisible;
     private int movingRange = 400;
 

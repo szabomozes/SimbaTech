@@ -52,7 +52,7 @@ public class Resources {
     public BufferedImage water;
     public BufferedImage ranger;
     public BufferedImage poacher;
-    public BufferedImage jeep;
+    public BufferedImage jeep, jeep_back;
     public BufferedImage entry;
     public BufferedImage exit;
 
@@ -172,7 +172,13 @@ public class Resources {
         }
         try {
             jeep = ImageIO.read(new File("src/main/res/icons/game-panel/jeep.png"));
-            jeep = resizeImage(jeep, 100);
+            jeep = resizeImage(jeep, 80);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            jeep_back = ImageIO.read(new File("src/main/res/icons/game-panel/jeep_back.png"));
+            jeep_back = resizeImage(jeep_back, 80);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

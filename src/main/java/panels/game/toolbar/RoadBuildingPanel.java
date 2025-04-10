@@ -22,7 +22,8 @@ public class RoadBuildingPanel extends JPanel {
         text = new JLabel("Építés mód", SwingConstants.CENTER);
 
         setLayout(null);
-        setBackground(Color.BLACK);
+        setBackground(Color.DARK_GRAY);
+        setBorder(BorderFactory.createMatteBorder(2, 0, 0, 0, Color.BLACK));
 
         // Szöveg címke létrehozása
         text.setFont(Resources.Instance.menu_font.deriveFont(35f));

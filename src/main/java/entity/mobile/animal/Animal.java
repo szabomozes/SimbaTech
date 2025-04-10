@@ -17,12 +17,12 @@ import java.util.concurrent.ScheduledFuture;
 
 public abstract class Animal extends MobileEntity {
     protected int age;
-    protected double hunger = 100;
-    protected double thirst = 100;
-    public static final double hungerLimit = 30;
-    public static final double thirstLimit = 30;
-    public static final double hungerLimit2 = 70;
-    public static final double thirstLimit2 = 70;
+    protected double hunger = 200;
+    protected double thirst = 200;
+    public static final double hungerLimit = 100;
+    public static final double thirstLimit = 100;
+    public static final double hungerLimit2 = 170;
+    public static final double thirstLimit2 = 170;
     protected boolean movingForDrink = false;
     protected boolean movingForEat = false;
     protected List<Integer> watersID = new ArrayList<>();
@@ -195,7 +195,7 @@ public abstract class Animal extends MobileEntity {
     protected void moveToDrink(int steps) {
         if (coordinatesForDrink.isEmpty()) {
             movingForDrink = false;
-            thirst = 100;
+            thirst = 200;
             System.out.println("Stop drinking");
         } else {
             int limit = Math.min(coordinatesForDrink.size(), steps) - 1;
@@ -271,7 +271,7 @@ public abstract class Animal extends MobileEntity {
     protected void moveToEatHerbivorous(int steps) {
         if (coordinatesForEat.isEmpty()) {
             movingForEat = false;
-            hunger = 100;
+            hunger = 200;
             System.out.println("Stop eating");
         } else {
             int limit = Math.min(coordinatesForEat.size(), steps) - 1;
@@ -384,7 +384,7 @@ public abstract class Animal extends MobileEntity {
                 target.setAlive(false);
                 target = null;
                 movingForEat = false;
-                hunger = 100;
+                hunger = 200;
             }
         }
     }

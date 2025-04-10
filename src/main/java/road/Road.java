@@ -69,7 +69,7 @@ public class Road {
         Graphics2D g2d = (Graphics2D) g;
         Stroke originalStroke = g2d.getStroke();
 
-        g2d.setStroke(new BasicStroke(10, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+        g2d.setStroke(new BasicStroke(70, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
         g2d.drawLine(startX + offsetX, startY + offsetY, endX + offsetX, endY + offsetY);
 
         g2d.setStroke(originalStroke);
