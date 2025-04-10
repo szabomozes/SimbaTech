@@ -15,7 +15,7 @@ import java.util.Random;
 public class AnimalCreate {
     private static final Random rnd = new Random();
 
-    public static List<Lion> getLions(DifficultyEnum difficulty) {
+    public static void getLions(DifficultyEnum difficulty) {
         int maxWidth = Resources.Instance.map.getWidth() - Resources.Instance.lionBody.getWidth() / 2;
         int maxHeight = Resources.Instance.map.getHeight() - Resources.Instance.lionBody.getHeight() / 2;
         List<Lion> lions = new ArrayList<>();
@@ -34,16 +34,12 @@ public class AnimalCreate {
         );
 
         for (int i = 0; i < lionCount; i++) {
-            lions.add(new Lion(
-                    rnd.nextInt(Resources.Instance.lionBody.getWidth() / 2, maxWidth),
-                    rnd.nextInt(Resources.Instance.lionBody.getHeight() / 2, maxHeight)
-            ));
+            Safari.Instance.createAnEntityForFree(Lion.class, rnd.nextInt(Resources.Instance.zebraBody.getWidth() / 2, maxWidth), rnd.nextInt(Resources.Instance.zebraBody.getHeight() / 2, maxHeight));
         }
 
-        return lions;
     }
 
-    public static List<Leopard> getLeopards(DifficultyEnum difficulty) {
+    public static void getLeopards(DifficultyEnum difficulty) {
         int maxWidth = Resources.Instance.map.getWidth() - Resources.Instance.leopardBody.getWidth() / 2;
         int maxHeight = Resources.Instance.map.getHeight() - Resources.Instance.leopardBody.getHeight() / 2;
         List<Leopard> leopards = new ArrayList<>();
@@ -62,18 +58,13 @@ public class AnimalCreate {
         );
 
         for (int i = 0; i < leopardCount; i++) {
-            leopards.add(new Leopard(
-                    rnd.nextInt(Resources.Instance.leopardBody.getWidth() / 2, maxWidth),
-                    rnd.nextInt(Resources.Instance.leopardBody.getHeight() / 2, maxHeight)
-            ));
+            Safari.Instance.createAnEntityForFree(Leopard.class, rnd.nextInt(Resources.Instance.zebraBody.getWidth() / 2, maxWidth), rnd.nextInt(Resources.Instance.zebraBody.getHeight() / 2, maxHeight));
         }
 
-        return leopards;
+
     }
 
-    public static List<Zebra> getZebras(DifficultyEnum difficulty) {
-        Safari.Instance.createAnEntityForFree(Zebra.class, 200, 200);
-
+    public static void getZebras(DifficultyEnum difficulty) {
 
 
         int maxWidth = Resources.Instance.map.getWidth() - Resources.Instance.zebraBody.getWidth() / 2;
@@ -93,17 +84,15 @@ public class AnimalCreate {
                 }
         );
 
+
         for (int i = 0; i < zebraCount; i++) {
-            zebras.add(new Zebra(
-                    rnd.nextInt(Resources.Instance.zebraBody.getWidth() / 2, maxWidth),
-                    rnd.nextInt(Resources.Instance.zebraBody.getHeight() / 2, maxHeight)
-            ));
+            Safari.Instance.createAnEntityForFree(Zebra.class, rnd.nextInt(Resources.Instance.zebraBody.getWidth() / 2, maxWidth), rnd.nextInt(Resources.Instance.zebraBody.getHeight() / 2, maxHeight));
         }
 
-        return zebras;
+
     }
 
-    public static List<Giraffe> getGiraffes(DifficultyEnum difficulty) {
+    public static void getGiraffes(DifficultyEnum difficulty) {
         int maxWidth = Resources.Instance.map.getWidth() - Resources.Instance.giraffeBody.getWidth() / 2;
         int maxHeight = Resources.Instance.map.getHeight() - Resources.Instance.giraffeBody.getHeight() / 2;
         List<Giraffe> giraffes = new ArrayList<>();
@@ -121,13 +110,11 @@ public class AnimalCreate {
                 }
         );
 
+
         for (int i = 0; i < giraffeCount; i++) {
-            giraffes.add(new Giraffe(
-                    rnd.nextInt(Resources.Instance.giraffeBody.getWidth() / 2, maxWidth),
-                    rnd.nextInt(Resources.Instance.giraffeBody.getHeight() / 2, maxHeight)
-            ));
+            Safari.Instance.createAnEntityForFree(Giraffe.class, rnd.nextInt(Resources.Instance.zebraBody.getWidth() / 2, maxWidth), rnd.nextInt(Resources.Instance.zebraBody.getHeight() / 2, maxHeight));
+
         }
 
-        return giraffes;
     }
 }

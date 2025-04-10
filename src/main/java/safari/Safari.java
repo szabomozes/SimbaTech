@@ -82,11 +82,12 @@ public class Safari {
         entry = EntityCreate.getEntry();
         exit = EntityCreate.getExit();
 
-        animals.addAll(AnimalCreate.getLions(difficultyEnum));
-        animals.addAll(AnimalCreate.getLeopards(difficultyEnum));
 
-        animals.addAll(AnimalCreate.getGiraffes(difficultyEnum));
-        animals.addAll(AnimalCreate.getZebras(difficultyEnum));
+        AnimalCreate.getLions(difficultyEnum);
+        AnimalCreate.getLeopards(difficultyEnum);
+
+        AnimalCreate.getGiraffes(difficultyEnum);
+        AnimalCreate.getZebras(difficultyEnum);
 
         rangers.addAll(EntityCreate.getRangers(difficultyEnum));
         for (Ranger ranger : rangers) {
