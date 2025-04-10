@@ -82,7 +82,6 @@ public class Safari {
         entry = EntityCreate.getEntry();
         exit = EntityCreate.getExit();
 
-
         AnimalCreate.getLions(difficultyEnum);
         AnimalCreate.getLeopards(difficultyEnum);
 
@@ -232,8 +231,10 @@ public class Safari {
             y = rand.nextInt(Resources.Instance.map.getHeight());
             Poacher poacher = new Poacher(x, y);
             poachers.add(poacher);
-            entitiesExecutor.addScheduleAtFixedRate(poacher::poacherVisibility);
-            entitiesExecutor.addScheduleAtFixedRate(poacher::move);
+            ScheduledFuture<?> poacehrTaskVisibility = entitiesExecutor.addScheduleAtFixedRate(poacher::poacherVisibility);
+            ScheduledFuture<?> poacehrTaskMove = entitiesExecutor.addScheduleAtFixedRate(poacher::move);
+            poacher.setTask(poacehrTaskVisibility);
+            poacher.setTask2(poacehrTaskMove);
             System.out.println("poacher out");
         }
     }
@@ -284,11 +285,10 @@ public class Safari {
             rangers.remove(entity);
             rangerJoinDates.remove(entity);
         } else if (entity instanceof Jeep) {
-            // TODO: deleteTimer(entity);
             jeeps.remove(entity);
-        } /*else if (entity instanceof Poacher) {
+        } else if (entity instanceof Poacher) {
             poachers.remove(entity);
-        }*/
+        }
     }
 
     public List<Entity> getAllEntities() {
@@ -316,7 +316,7 @@ public class Safari {
 
     public List<Entity> getAnimalsPoachers() {
         List<Entity> entities = new ArrayList<>(animals);
-        entities.addAll(jeeps);
+        entities.addAll(poachers);
         return entities;
     }
 

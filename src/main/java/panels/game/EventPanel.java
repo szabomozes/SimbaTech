@@ -163,6 +163,7 @@ public class EventPanel extends JPanel {
                 .filter(entity -> entity.contains(lastX - offsetX, lastY - offsetY))
                 .findFirst()
                 .ifPresent(entity -> {
+                    System.out.println("benne");
                     huntEntity(ranger, entity);
                 });
 

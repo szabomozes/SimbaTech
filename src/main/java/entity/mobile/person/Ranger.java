@@ -117,7 +117,7 @@ public class Ranger extends Person{
         if (targetEntity == null) return;
 
         if (calculateDistance(getX(), getY(), targetEntity.getX(), targetEntity.getY()) <= rifleRangeByPixel) {
-            if(targetEntity instanceof Lion ||targetEntity instanceof Leopard) {
+            if(targetEntity instanceof Lion || targetEntity instanceof Leopard || targetEntity instanceof Poacher) {
                 shooting(targetEntity);
             }
         } else {

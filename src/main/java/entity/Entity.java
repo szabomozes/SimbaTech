@@ -17,6 +17,7 @@ public abstract class Entity {
     protected int width, height;
     protected boolean alive = true;
     protected ScheduledFuture<?> task = null;
+    protected ScheduledFuture<?> task2 = null;
 
     public Entity(int x, int y, BufferedImage image) {
         width = image.getWidth();
@@ -78,5 +79,9 @@ public abstract class Entity {
 
     public void setTask(ScheduledFuture<?> task) {
         this.task = task;
+    }
+
+    public void setTask2(ScheduledFuture<?> task2) {
+        this.task2 = task2;
     }
 }
