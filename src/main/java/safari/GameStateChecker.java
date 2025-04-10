@@ -95,5 +95,25 @@ public class GameStateChecker {
         this.coinThreshold = 2000;
     }
 
+    public int getVisitorThreshold() {
+        return visitorThreshold;
+    }
+
+    public int getHerbivoreThreshold() {
+        return herbivoreThreshold;
+    }
+
+    public int getPredatorThreshold() {
+        return predatorThreshold;
+    }
+
+    public int getCoinThreshold() {
+        return coinThreshold;
+    }
+
+
+
+
+
 
 }

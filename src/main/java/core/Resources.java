@@ -56,6 +56,7 @@ public class Resources {
     public BufferedImage entry;
     public BufferedImage exit;
     public BufferedImage mainlogo;
+    public BufferedImage info;
 
     private Resources() {}
 
@@ -89,6 +90,13 @@ public class Resources {
         }
         try {
             mainlogo = ImageIO.read(new File("src/main/res/icons/menu/logo/head.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            info = ImageIO.read(new File("src/main/res/icons/game-panel/info.png"));
+            info = resizeImage(info, 50);
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

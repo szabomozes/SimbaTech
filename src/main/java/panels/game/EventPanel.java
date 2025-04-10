@@ -43,6 +43,7 @@ public class EventPanel extends JPanel {
         add(Calendar.Instance);
         add(minimap);
         add(new FeedBackTriggerButton());
+        add(GameStateTriggerButton.Instance);
     }
 
     private void addEventListeners() {
@@ -289,6 +290,7 @@ public class EventPanel extends JPanel {
             feedback.updatePosition();
         }
         Calendar.Instance.updatePosition();
+        GameStateTriggerButton.Instance.updatePosition();
         limitOffsets();
     }
 }

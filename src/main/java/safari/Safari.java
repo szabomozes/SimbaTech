@@ -501,6 +501,10 @@ public class Safari {
         // TODO: még több entity ha kell
 
     }
+    // Getter a gameStateChecker-hez
+    public GameStateChecker getGameStateChecker() {
+        return gameStateChecker;
+    }
 
 
     public List<Entity> getAnimals() {
