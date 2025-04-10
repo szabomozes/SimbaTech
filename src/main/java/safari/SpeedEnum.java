@@ -194,6 +194,20 @@ public enum SpeedEnum {
         }
     }
 
+    public double getPoacherSteps() {
+        switch (this) {
+            case HIPPOPOTAMUS -> {
+                return 1.5;
+            }
+            case EAGLE -> {
+                return 2.0;
+            }
+            default -> {
+                return 1.0;
+            }
+        }
+    }
+
     public double getLeopardThirst() {
         switch (this) {
             case HIPPOPOTAMUS -> {

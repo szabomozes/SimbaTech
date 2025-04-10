@@ -126,6 +126,7 @@ public class Minimap extends JPanel {
                 case "Water" -> g2d.setColor(Color.CYAN);
                 case "Ranger" -> g2d.setColor(Color.YELLOW);
                 case "Jeep" -> g2d.setColor(Color.MAGENTA);
+                case "Poacher" -> g2d.setColor(new Color(57, 255, 20));
             }
             int x = (int) (width * ((double) (entity.getX()) / parentWidth));
             int y = (int) (height * ((double) (entity.getY()) / parentHeight));
@@ -154,16 +155,5 @@ public class Minimap extends JPanel {
 
         // Stroke visszaállítása az alapértelmezettre
         g2d.setStroke(new BasicStroke());
-
-
-
-
-
-
-
-
-
-
-
     }
 }

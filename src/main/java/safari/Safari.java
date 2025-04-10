@@ -3,6 +3,7 @@ package safari;
 import core.Resources;
 import entity.Entity;
 import entity.mobile.Jeep;
+import entity.mobile.person.Poacher;
 import map.AnimalCreate;
 import map.Coordinate;
 import map.PlantCreate;
@@ -39,6 +40,7 @@ public class Safari {
     private List<Path> tempPaths = new ArrayList<>();
     private boolean selling = false;
     private List<Jeep> jeeps = new ArrayList<>();
+    private List<Poacher> poachers = new ArrayList<>();
     private boolean selectedRanger = false;
     private EntitiesExecutor entitiesExecutor = EntitiesExecutor.Instance;
     private Map<Ranger, Integer> rangerJoinDates = new HashMap<>();
@@ -111,6 +113,7 @@ public class Safari {
         paths.clear();
         tempPaths.clear();
         jeeps.clear();
+        poachers.clear();
         rangerJoinDates.clear();
     }
 
@@ -220,6 +223,27 @@ public class Safari {
         shopping = null;
     }
 
+    public void placePoachers(int num) {
+        Random rand = new Random();
+        int x, y;
+        for (int i = 0; i < num; i++) {
+            x = rand.nextInt(Resources.Instance.map.getWidth());
+            y = rand.nextInt(Resources.Instance.map.getHeight());
+            Poacher poacher = new Poacher(x, y);
+            poachers.add(poacher);
+            entitiesExecutor.addScheduleAtFixedRate(poacher::poacherVisibility);
+            entitiesExecutor.addScheduleAtFixedRate(poacher::move);
+            System.out.println("poacher out");
+        }
+    }
+
+    public List<Entity> rangersAndJeeps() {
+        List<Entity> entities = new ArrayList<Entity>();
+        entities.addAll(rangers);
+        entities.addAll(jeeps);
+        return entities;
+    }
+
     public void sellSomething(int id) {
         ToolBarCardLayout.Instance.showCard("selling");
 
@@ -273,7 +297,7 @@ public class Safari {
         allEntities.addAll(waters);
         allEntities.addAll(rangers);
         allEntities.addAll(jeeps);
-        //allEntities.addAll(poachers);
+        allEntities.addAll(poachers);
         return allEntities;
     }
 
@@ -477,4 +501,8 @@ public class Safari {
 
     }
 
+
+    public List<Entity> getAnimals() {
+        return animals;
+    }
 }

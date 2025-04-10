@@ -9,3 +9,5 @@ public abstract class Person extends MobileEntity {
         super(x, y, image);
     }
 }
+
+
