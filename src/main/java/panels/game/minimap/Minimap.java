@@ -1,16 +1,6 @@
 package panels.game.minimap;
 
 import core.Resources;
-import entity.mobile.animal.Giraffe;
-import entity.mobile.animal.Leopard;
-import entity.mobile.animal.Lion;
-import entity.mobile.animal.Zebra;
-import entity.mobile.person.Poacher;
-import entity.mobile.person.Ranger;
-import entity.notmobile.Water;
-import entity.notmobile.plant.Baobab;
-import entity.notmobile.plant.PalmTree;
-import entity.notmobile.plant.Pancium;
 import entity.Entity;
 import entity.notmobile.Entry;
 import entity.notmobile.Exit;
@@ -136,35 +126,13 @@ public class Minimap extends JPanel {
                 case "Water" -> g2d.setColor(Color.CYAN);
                 case "Ranger" -> g2d.setColor(Color.YELLOW);
                 case "Jeep" -> g2d.setColor(Color.MAGENTA);
+                case "Poacher" -> g2d.setColor(new Color(57, 255, 20));
             }
             int x = (int) (width * ((double) (entity.getX()) / parentWidth));
             int y = (int) (height * ((double) (entity.getY()) / parentHeight));
             int tempWidth = (int) (width * ((double) (entity.getWidth()) / parentWidth));
             int tempHeight = (int) (height * ((double) (entity.getHeight()) / parentHeight));
             g2d.fillRect(x, y, tempWidth, tempHeight);
-        }
-        for (Baobab baobab : Safari.Instance.getBaobabs()) {
-            int x = (int) (width * ((double) baobab.getX() / parentWidth));
-            int y = (int) (height * ((double) baobab.getY() / parentHeight));
-            g.fillOval(x, y, 5, 5);
-        }
-        g.setColor(Color.CYAN);
-        for (Water water : Safari.Instance.getWaters()) {
-            int x = (int) (width * ((double) water.getX() / parentWidth));
-            int y = (int) (height * ((double) water.getY() / parentHeight));
-            g.fillOval(x, y, 5, 5);
-        }
-        g.setColor(Color.YELLOW);
-        for (Ranger ranger : Safari.Instance.getRangers()) {
-            int x = (int) (width * ((double) ranger.getX() / parentWidth));
-            int y = (int) (height * ((double) ranger.getY() / parentHeight));
-            g.fillOval(x, y, 5, 5);
-        }
-        g.setColor(new Color(255, 95, 31));
-        for (Poacher poacher : Safari.Instance.getPoachers()) {
-            int x = (int) (width * ((double) poacher.getX() / parentWidth));
-            int y = (int) (height * ((double) poacher.getY() / parentHeight));
-            g.fillOval(x, y, 5, 5);
         }
 
         // Keret
@@ -187,16 +155,5 @@ public class Minimap extends JPanel {
 
         // Stroke visszaállítása az alapértelmezettre
         g2d.setStroke(new BasicStroke());
-
-
-
-
-
-
-
-
-
-
-
     }
 }

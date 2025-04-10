@@ -194,7 +194,7 @@ public class Ranger extends Person{
         return !overlapsWaterArea(newX, newY, width, height);
     }
 
-    private static boolean overlapsWaterArea(int x, int y, int width, int height) {
+    protected static boolean overlapsWaterArea(int x, int y, int width, int height) {
         for (Water water : Safari.Instance.getWaters()) {
             int waterX = water.getX();
             int waterY = water.getY();

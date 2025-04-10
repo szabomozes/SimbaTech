@@ -2,6 +2,7 @@ package panels.game;
 
 import core.Resources;
 import entity.Entity;
+import entity.mobile.person.Poacher;
 import entity.mobile.person.Ranger;
 import road.Path;
 import map.EntityCreate;
@@ -28,10 +29,12 @@ public class EventPanel extends JPanel {
     private final CoinPanel coinPanel = new CoinPanel();
     private BasicFeedBackPanel feedback;
 
+
     public EventPanel() {
         setLayout(null);
         initializeComponents();
         addEventListeners();
+        Safari.Instance.placePoachers(3);
     }
 
     private void initializeComponents() {
@@ -256,9 +259,13 @@ public class EventPanel extends JPanel {
     private void drawEntities(Graphics g) {
         List<Entity> allEntities = Safari.Instance.getAllEntitiesWithSorted();
         for (Entity entity : allEntities) {
-            entity.draw(g, offsetX, offsetY);
-            if (entity instanceof Ranger && ((Ranger) entity).isSelected()) {
-                drawSelectedRanger(g, entity);
+            if (entity instanceof Poacher) {
+                if (((Poacher) entity).isVisible()) entity.draw(g, offsetX, offsetY);
+            } else {
+                entity.draw(g, offsetX, offsetY);
+                if (entity instanceof Ranger && ((Ranger) entity).isSelected()) {
+                    drawSelectedRanger(g, entity);
+                }
             }
         }
     }
