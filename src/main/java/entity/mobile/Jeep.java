@@ -114,6 +114,8 @@ public class Jeep extends MobileEntity{
 
     private void collectPassengerPayment() {
         Safari.Instance.coin += (int) (Prices.getPriceByEnum(Prices.PASSENGER) * passenger);
+        Safari.Instance.addPassengers(passenger);
+        System.out.println("visitors: " + Safari.Instance.getPassengers());
         passenger = 0;
     }
 

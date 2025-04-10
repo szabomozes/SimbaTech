@@ -41,10 +41,12 @@ public class Safari {
     private EntitiesExecutor entitiesExecutor = EntitiesExecutor.Instance;
     private Map<Ranger, Integer> rangerJoinDates = new HashMap<>();
     private GameStateChecker gameStateChecker;
+    private int passengers;
 
     private Safari() {
         dateTimer = new DateTimer();
         dateTimer.start();
+        passengers = 0;
     }
 
     public void shutDown() {
@@ -61,6 +63,7 @@ public class Safari {
 
         coin = 1000;
         date = 0;
+        passengers = 0;
         updateDate();
         difficultyEnum = diff;
         System.out.println("Difficulty: " + difficultyEnum);
@@ -109,6 +112,14 @@ public class Safari {
         rangerJoinDates.clear();
     }
 
+    public int getPassengers() {
+        return passengers;
+    }
+
+    public void addPassengers(int count) {
+        this.passengers += count;
+    }
+
     public void updateDate() {
         date++;
         System.out.println("Date event triggered: " + date);
@@ -120,7 +131,7 @@ public class Safari {
         if (gameStateChecker != null) {
             if (gameStateChecker.instantLose(coin, animals)) {
                 shutDown();
-            } else if (gameStateChecker.checkWin(difficultyEnum, date, animals, coin)) {
+            } else if (gameStateChecker.checkWin(difficultyEnum, date, animals, coin,passengers)) {
                 shutDown();
             }
         }

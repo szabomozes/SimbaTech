@@ -36,7 +36,7 @@ public class GameStateChecker {
         return false;
     }
 
-    public boolean checkWin(DifficultyEnum difficulty, int date, List<Entity> animals, int coin) {
+    public boolean checkWin(DifficultyEnum difficulty, int date, List<Entity> animals, int coin,int visitors) {
         int cycle = 0;
         switch (difficulty) {
             case EASY -> cycle = EASY * 30;
@@ -57,7 +57,7 @@ public class GameStateChecker {
         }
 
         if (date == cycle) {
-            if (herbivores.size() >= herbivoreThreshold && predators.size() >= predatorThreshold && coin >= coinThreshold) {
+            if (herbivores.size() >= herbivoreThreshold && predators.size() >= predatorThreshold && coin >= coinThreshold&&visitors >= visitorThreshold) {
                 System.out.println("Nyertél: Elérted a célokat!");
                 return true;
             } else {
