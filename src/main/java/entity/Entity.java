@@ -1,7 +1,10 @@
 package entity;
 
+import core.Resources;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.concurrent.ScheduledFuture;
 
 public abstract class Entity {
 
@@ -11,7 +14,8 @@ public abstract class Entity {
     protected BufferedImage image;
     protected int x, y;
     protected int width, height;
-    private boolean alive = true;
+    protected boolean alive = true;
+    protected ScheduledFuture<?> task = null;
 
     public Entity(int x, int y, BufferedImage image) {
         width = image.getWidth();
@@ -19,6 +23,10 @@ public abstract class Entity {
         this.image = image;
         this.x = x - width / 2;
         this.y = y - height / 2;
+        this.x = Math.max(0, this.x);
+        this.y = Math.max(0, this.y);
+        this.x = Math.min(Resources.Instance.map.getWidth(), this.x);
+        this.y = Math.min(Resources.Instance.map.getHeight(), this.y);
     }
 
     public boolean contains(int clickX, int clickY) {
@@ -61,5 +69,13 @@ public abstract class Entity {
 
     public void setAlive(boolean alive) {
         this.alive = alive;
+    }
+
+    public ScheduledFuture<?> getTask() {
+        return task;
+    }
+
+    public void setTask(ScheduledFuture<?> task) {
+        this.task = task;
     }
 }

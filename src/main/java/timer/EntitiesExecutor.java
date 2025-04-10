@@ -11,10 +11,14 @@ public class EntitiesExecutor {
     public static EntitiesExecutor Instance = new EntitiesExecutor();
 
     private ScheduledExecutorService executor;
+    private ScheduledExecutorService pathSearchExecutor;
 
     public void stop() {
         if (executor != null) {
             executor.shutdownNow(); // azonnal leállítja a futó és várakozó feladatokat is
+        }
+        if (pathSearchExecutor != null) {
+            pathSearchExecutor.shutdownNow();
         }
     }
 
@@ -22,6 +26,9 @@ public class EntitiesExecutor {
         if (executor == null || executor.isShutdown() || executor.isTerminated()) {
             executor = new ScheduledThreadPoolExecutor(4);
             addScheduleAtFixedRate(CardPanel.Instance::repaint);
+        }
+        if (pathSearchExecutor == null || pathSearchExecutor.isShutdown() || executor.isTerminated()) {
+            pathSearchExecutor = new ScheduledThreadPoolExecutor(2);
         }
     }
 
@@ -38,10 +45,19 @@ public class EntitiesExecutor {
         }
     }
 
+    // Egyszeri futtatás (opcionálisan késleltetve) Callable-lel
+    public <T> ScheduledFuture<T> addSchedule(Callable<T> task) {
+        if (isRunning()) {
+            return pathSearchExecutor.schedule(task, 1, TimeUnit.MILLISECONDS);
+        } else {
+            throw new IllegalStateException("Executor is not running.");
+        }
+    }
+
     // Ismétlődő futtatás
     public ScheduledFuture<?> addScheduleAtFixedRate(Runnable task) {
         if (isRunning()) {
-            return executor.scheduleAtFixedRate(task, 1, 10, TimeUnit.MILLISECONDS);
+            return executor.scheduleAtFixedRate(task, 1, 20, TimeUnit.MILLISECONDS);
         } else {
             throw new IllegalStateException("Executor is not running.");
         }
