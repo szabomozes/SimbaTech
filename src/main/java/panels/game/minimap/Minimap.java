@@ -109,7 +109,7 @@ public class Minimap extends JPanel {
         }
 
         //Entry and Exit
-        g2d.setColor(Color.BLUE);
+        g2d.setColor(new Color(101, 67, 33));
         Entry entry = Safari.Instance.getEntry();
         Exit exit = Safari.Instance.getExit();
         g2d.fillRect((int) (width * ((double) entry.getX() / parentWidth)), (int) (height * ((double) entry.getY() / parentHeight)),10, 10);
@@ -122,10 +122,10 @@ public class Minimap extends JPanel {
             String className = entity.getClass().getSimpleName();
             switch (className) {
                 case "Lion", "Leopard", "Zebra", "Giraffe" -> g2d.setColor(Color.RED);
-                case "PalmTree", "Pancium", "Baobab" -> g2d.setColor(Color.GREEN);
-                case "Water" -> g2d.setColor(Color.CYAN);
+                case "PalmTree", "Pancium", "Baobab" -> g2d.setColor(new Color(34, 139, 34));
+                case "Water" -> g2d.setColor(new Color(30, 60, 160));
                 case "Ranger" -> g2d.setColor(Color.YELLOW);
-                case "Jeep" -> g2d.setColor(Color.MAGENTA);
+                case "Jeep" -> g2d.setColor(Color.WHITE);
                 case "Poacher" -> g2d.setColor(new Color(57, 255, 20));
             }
             int x = (int) (width * ((double) (entity.getX()) / parentWidth));

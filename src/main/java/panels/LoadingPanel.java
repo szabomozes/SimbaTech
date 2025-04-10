@@ -66,7 +66,7 @@ public class LoadingPanel extends JPanel {
 
         // Fekete kontúr
         g2.setColor(Color.BLACK);
-        g2.setStroke(new BasicStroke(6));
+        g2.setStroke(new BasicStroke(10));
         g2.drawString(text, textX - 1, textY - 1);
         g2.drawString(text, textX - 1, textY + 1);
         g2.drawString(text, textX + 1, textY - 1);
