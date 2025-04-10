@@ -31,7 +31,7 @@ public class ToolBarPanel extends JPanel {
         add(roadTableButton);
         add(speedButton);
 
-        setBackground(Color.DARK_GRAY);
+        setBackground(new Color(40, 40, 40));
         setBorder(BorderFactory.createMatteBorder(2, 0, 0, 0, Color.BLACK));
 
     }

@@ -9,7 +9,6 @@ public class BuyingToolBar extends JPanel {
     public BuyingToolBar() {
         setLayout(new GridBagLayout());
 
-        setBackground(Color.DARK_GRAY);
 
         GridBagConstraints gbc = new GridBagConstraints();
 
@@ -21,7 +20,7 @@ public class BuyingToolBar extends JPanel {
 
         add(new BuyingSellingToolBarBin(), gbc);
 
-        setBackground(Color.DARK_GRAY);
+        setBackground(new Color(40, 40, 40));
         setBorder(BorderFactory.createMatteBorder(2, 0, 0, 0, Color.BLACK));
     }
 }

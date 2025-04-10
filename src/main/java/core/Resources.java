@@ -161,7 +161,7 @@ public class Resources {
         }
         try {
             water = ImageIO.read(new File("src/main/res/icons/game-panel/lake.png"));
-            water = resizeImage(water, 110);
+            water = resizeImage(water, 160);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

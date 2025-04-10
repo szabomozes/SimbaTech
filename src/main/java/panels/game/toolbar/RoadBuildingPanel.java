@@ -19,10 +19,10 @@ public class RoadBuildingPanel extends JPanel {
     public RoadBuildingPanel() {
         saveButton = new SaveButton();
         deleteButton = new DeleteButton();
-        text = new JLabel("Építés mód", SwingConstants.CENTER);
+        text = new OutlineLabel("Építés mód");
 
         setLayout(null);
-        setBackground(Color.DARK_GRAY);
+        setBackground(new Color(40, 40, 40));
         setBorder(BorderFactory.createMatteBorder(2, 0, 0, 0, Color.BLACK));
 
         // Szöveg címke létrehozása
