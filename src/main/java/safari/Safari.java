@@ -154,12 +154,10 @@ public class Safari {
             x = rand.nextInt(Resources.Instance.map.getWidth());
             y = rand.nextInt(Resources.Instance.map.getHeight());
             Poacher poacher = new Poacher(x, y);
-            poacher.move();
             poachers.add(poacher);
             entitiesExecutor.addScheduleAtFixedRate(poacher::poacherVisibility);
             entitiesExecutor.addScheduleAtFixedRate(poacher::move);
             System.out.println("poacher out");
-            //poacher.reveal();
         }
     }
 

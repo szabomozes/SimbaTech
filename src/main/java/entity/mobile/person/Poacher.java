@@ -72,9 +72,11 @@ public class Poacher extends Person {
         double maxY = Math.min(mapHeight, currentY + movingRange);
 
         do {
+            System.out.println("while");
             targetX = rand.nextDouble(maxX - minX) + minX;
             targetY = rand.nextDouble(maxY - minY) + minY;
         } while (Math.abs(targetX - currentX) < 1 && Math.abs(targetY - currentY) < 1);
+        System.out.println("________");
     }
 
     public void move() {

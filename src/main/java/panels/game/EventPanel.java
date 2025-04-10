@@ -34,7 +34,7 @@ public class EventPanel extends JPanel {
         setLayout(null);
         initializeComponents();
         addEventListeners();
-        Safari.Instance.placePoachers(3);
+        Safari.Instance.placePoachers(10);
     }
 
     private void initializeComponents() {
