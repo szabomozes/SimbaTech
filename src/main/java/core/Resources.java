@@ -55,6 +55,7 @@ public class Resources {
     public BufferedImage jeep, jeep_back;
     public BufferedImage entry;
     public BufferedImage exit;
+    public BufferedImage mainlogo;
 
     private Resources() {}
 
@@ -86,6 +87,12 @@ public class Resources {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        try {
+            mainlogo = ImageIO.read(new File("src/main/res/icons/menu/logo/head.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     private void mapCreate() {
