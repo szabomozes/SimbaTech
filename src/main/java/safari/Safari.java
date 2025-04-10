@@ -40,6 +40,7 @@ public class Safari {
     private boolean selectedRanger = false;
     private EntitiesExecutor entitiesExecutor = EntitiesExecutor.Instance;
     private Map<Ranger, Integer> rangerJoinDates = new HashMap<>();
+    private GameStateChecker gameStateChecker;
 
     private Safari() {
         dateTimer = new DateTimer();
@@ -63,6 +64,7 @@ public class Safari {
         updateDate();
         difficultyEnum = diff;
         System.out.println("Difficulty: " + difficultyEnum);
+        gameStateChecker = new GameStateChecker(difficultyEnum);
         shopping = null;
         roadBuilding = false;
         selling = false;
@@ -114,6 +116,16 @@ public class Safari {
 
         //havi fizetés
         RangerPayment.Instance.payRangersByServiceTime();
+
+        if (gameStateChecker != null) {
+            if (gameStateChecker.instantLose(coin, animals)) {
+                shutDown();
+            } else if (gameStateChecker.checkWin(difficultyEnum, date, animals, coin)) {
+                shutDown();
+            }
+        }
+
+
     }
 
 
