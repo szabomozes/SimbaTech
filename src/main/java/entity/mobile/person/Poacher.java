@@ -43,7 +43,6 @@ public class Poacher extends Person {
     }
 
     public void poacherVisibility() {
-        System.out.println("visibility");
         if (!alive) {
             Safari.Instance.removeEntityById(id);
             if (task != null && !task.isCancelled()) {
@@ -86,7 +85,6 @@ public class Poacher extends Person {
     }
 
     public void move() {
-        System.out.println("move");
         if (!alive) {
             Safari.Instance.removeEntityById(id);
             if (task != null && !task.isCancelled()) {
