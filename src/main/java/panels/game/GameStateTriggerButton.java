@@ -13,7 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 public class GameStateTriggerButton extends JButton {
 
-    public static GameStateTriggerButton Instance= new GameStateTriggerButton();
+    public static GameStateTriggerButton Instance = new GameStateTriggerButton();
     private boolean clicked = true;
 
     public GameStateTriggerButton() {
@@ -28,7 +28,7 @@ public class GameStateTriggerButton extends JButton {
         setContentAreaFilled(false);
         setBorderPainted(false);
 
-         setRolloverEnabled(false);
+        setRolloverEnabled(false);
         setFocusPainted(false);
 
         setHorizontalTextPosition(JButton.CENTER);
@@ -49,30 +49,30 @@ public class GameStateTriggerButton extends JButton {
                     }
 
                     if (parent != null) {
-                         int herbivoreCount = (int) Safari.Instance.getAnimals().stream()
+                        int herbivoreCount = (int) Safari.Instance.getAnimals().stream()
                                 .filter(a -> a instanceof Zebra || a instanceof Giraffe)
                                 .count();
 
-                         int carnivoreCount = (int) Safari.Instance.getAnimals().stream()
+                        int carnivoreCount = (int) Safari.Instance.getAnimals().stream()
                                 .filter(a -> a instanceof Lion || a instanceof Leopard)
                                 .count();
 
-                         int visitorCount = Safari.Instance.getPassengers();
+                        int visitorCount = Safari.Instance.getPassengers();
 
-                         int balance = Safari.Instance.coin;
+                        int balance = Safari.Instance.coin;
 
-                         GameStateChecker checker = Safari.Instance.getGameStateChecker();
+                        GameStateChecker checker = Safari.Instance.getGameStateChecker();
                         int herbivoreThreshold = checker.getHerbivoreThreshold();
                         int predatorThreshold = checker.getPredatorThreshold();
                         int visitorThreshold = checker.getVisitorThreshold();
                         int coinThreshold = checker.getCoinThreshold();
 
-                         String herbivoreColor = herbivoreCount >= herbivoreThreshold ? "green" : "red";
+                        String herbivoreColor = herbivoreCount >= herbivoreThreshold ? "green" : "red";
                         String carnivoreColor = carnivoreCount >= predatorThreshold ? "green" : "red";
                         String visitorColor = visitorCount >= visitorThreshold ? "green" : "red";
                         String balanceColor = balance >= coinThreshold ? "green" : "red";
 
-                         String gameStateText = String.format(
+                        String gameStateText = String.format(
                                 "<html>" +
                                         "<table>" +
                                         "<tr><td align='left'>növényevő:</td><td align='right'><font color='%s'>%d</font></td><td align='left'> | %d</td></tr>" +
@@ -87,7 +87,7 @@ public class GameStateTriggerButton extends JButton {
                                 balanceColor, balance, coinThreshold
                         );
 
-                         GameStatePanel gameStatePanel = new GameStatePanel(gameStateText, "toolbar");
+                        GameStatePanel gameStatePanel = new GameStatePanel(gameStateText, "toolbar");
                         ((EventPanel) parent).setFeedback(gameStatePanel);
                         parent.repaint();
                     }
@@ -97,10 +97,12 @@ public class GameStateTriggerButton extends JButton {
             }
         });
     }
+
     public void setClicked(boolean clicked) {
         this.clicked = clicked;
         setEnabled(clicked);
     }
+
     public void updatePosition() {
         setBounds(CardPanel.Instance.getWidth() - getWidth() - 70, 10, getWidth(), getHeight());
     }
