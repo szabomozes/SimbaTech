@@ -7,15 +7,15 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * The {@code Resources} class manages loading and storing various resources such as images, fonts, and other assets used in the application.
- * It provides a singleton instance {@link #Instance} for easy access to these resources.
+ * The {@code Resources} class is a singleton that manages and loads various game assets such as fonts,
+ * images, and icons. It provides access to all the resources used throughout the game by loading them
+ * from the file system and storing them in public fields.
  */
 public class Resources {
 
-    /** Singleton instance of the Resources class. */
+    /** The singleton instance of the {@code Resources} class. */
     public static final Resources Instance = new Resources();
 
-    // Fields for storing resources
     public Font menu_font;
     public BufferedImage menu_background;
     public BufferedImage menu_logo;
@@ -66,13 +66,14 @@ public class Resources {
     public BufferedImage info;
 
     /**
-     * Private constructor to prevent instantiation from outside the class.
-     * Use the singleton instance {@link #Instance} to access resources.
+     * Private constructor to prevent instantiation from other classes.
+     * This class follows the Singleton pattern.
      */
     private Resources() {}
 
     /**
-     * Loads all necessary resources including images, fonts, and other assets.
+     * Loads all the necessary resources for the game by calling the specific loading methods for each category
+     * such as menu resources, map creation resources, game-related resources, toolbar items, animals, and feedbacks.
      */
     public void load() {
         menu();
@@ -85,9 +86,11 @@ public class Resources {
     }
 
     /**
-     * Loads menu-related resources such as fonts and images.
+     * Loads resources related to the menu, including font, background, and logos.
+     * It also resizes the menu logo and info icon to specific sizes.
      */
     private void menu() {
+
         try {
             menu_font = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/res/font/Jersey10-Regular.ttf"));
         } catch (FontFormatException | IOException e) {
@@ -112,13 +115,15 @@ public class Resources {
         try {
             info = ImageIO.read(new File("src/main/res/icons/game-panel/info.png"));
             info = resizeImage(info, 50);
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
     }
 
     /**
-     * Loads map creation-related images such as ground and grass textures.
+     * Loads the resources required to create the map, such as ground and grass images.
      */
     private void mapCreate() {
         try {
@@ -139,7 +144,7 @@ public class Resources {
     }
 
     /**
-     * Loads the map image and creates a resized minimap.
+     * Loads the map resource and generates a minimap by resizing the original map image.
      */
     public void map() {
         try {
@@ -151,7 +156,7 @@ public class Resources {
     }
 
     /**
-     * Loads various game-related resources such as buttons and objects in the game.
+     * Loads the resources related to the game panel, including images for buttons, plants, vehicles, and other elements.
      */
     public void game() {
         try {
@@ -220,10 +225,11 @@ public class Resources {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
     }
 
     /**
-     * Loads feedback-related images such as win, lose, and bad feedback icons.
+     * Loads and resizes feedback images for different game outcomes (win, lose, bad).
      */
     private void feedBacks() {
         try {
@@ -247,7 +253,7 @@ public class Resources {
     }
 
     /**
-     * Loads toolbar-related images such as buttons for different objects, animals, and other items.
+     * Loads and resizes the images for toolbar buttons used in the game, such as animal faces, plants, objects, and other tools.
      */
     private void toolBar() {
         try {
@@ -256,11 +262,100 @@ public class Resources {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        // Similar image loading and resizing for other buttons like leopardButton, zebraButton, etc.
+        try {
+            leopardButton = ImageIO.read(new File("src/main/res/icons/toolkit/shop/animal/face/leopard-face.png"));
+            leopardButton = resizeImage(leopardButton, 60);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            zebraButton = ImageIO.read(new File("src/main/res/icons/toolkit/shop/animal/face/zebra-face.png"));
+            zebraButton = resizeImage(zebraButton, 60);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            giraffeButon = ImageIO.read(new File("src/main/res/icons/toolkit/shop/animal/face/giraffe-face.png"));
+            giraffeButon = resizeImage(giraffeButon, 60);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            baobabButton = ImageIO.read(new File("src/main/res/icons/toolkit/shop/plant/baobab.png"));
+            baobabButton = resizeImage(baobabButton, 60);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            palmTreeButton = ImageIO.read(new File("src/main/res/icons/toolkit/shop/plant/palm-tree.png"));
+            palmTreeButton = resizeImage(palmTreeButton, 60);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            panciumButton = ImageIO.read(new File("src/main/res/icons/toolkit/shop/plant/pancium.png"));
+            panciumButton = resizeImage(panciumButton, 60);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            waterButton = ImageIO.read(new File("src/main/res/icons/toolkit/shop/object/water.png"));
+            waterButton = resizeImage(waterButton, 60);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            jeepButton = ImageIO.read(new File("src/main/res/icons/toolkit/shop/object/jeep.png"));
+            jeepButton = resizeImage(jeepButton, 60);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            rangerButton = ImageIO.read(new File("src/main/res/icons/toolkit/shop/person/ranger.png"));
+            rangerButton = resizeImage(rangerButton, 60);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            speedEadle = ImageIO.read(new File("src/main/res/icons/toolkit/speed/eagle.png"));
+            speedEadle = resizeImage(speedEadle, 60);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            speedHippopotamus = ImageIO.read(new File("src/main/res/icons/toolkit/speed/hippopotamus.png"));
+            speedHippopotamus = resizeImage(speedHippopotamus, 60);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            speedSnail = ImageIO.read(new File("src/main/res/icons/toolkit/speed/snail.png"));
+            speedSnail = resizeImage(speedSnail, 60);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            sellButton = ImageIO.read(new File("src/main/res/icons/toolkit/shop/other/sell.png"));
+            sellButton = resizeImage(sellButton, 60);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            roadTableButton = ImageIO.read(new File("src/main/res/icons/toolkit/road/road-table.png"));
+            roadTableButton = resizeImage(roadTableButton, 60);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            binButton = ImageIO.read(new File("src/main/res/icons/toolkit/road/bin.png"));
+            binButton = resizeImage(binButton, 60);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
-     * Loads animal-related images, such as lion, leopard, zebra, etc., with resizing.
+     * Loads and resizes images of different animals (lion, leopard, zebra, giraffe) used in the game.
      */
     public void animals() {
         try {
@@ -269,11 +364,46 @@ public class Resources {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        // Similar image loading and resizing for other animals like leopardBody, zebraBody, etc.
+        try {
+            leopardBody = ImageIO.read(new File("src/main/res/icons/game-panel/animals/leopard.png"));
+            leopardBody = resizeImage(leopardBody, 70);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            zebraBody = ImageIO.read(new File("src/main/res/icons/game-panel/animals/zebra.png"));
+            zebraBody = resizeImage(zebraBody, 100);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            giraffeBody = ImageIO.read(new File("src/main/res/icons/game-panel/animals/giraffe.png"));
+            giraffeBody = resizeImage(giraffeBody, 140);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            saveButton = ImageIO.read(new File("src/main/res/icons/toolkit/road/build.png"));
+            saveButton = resizeImage(saveButton, 60);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            deleteButton = ImageIO.read(new File("src/main/res/icons/toolkit/road/bin.png"));
+            deleteButton = resizeImage(deleteButton, 60);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            hourglass = ImageIO.read(new File("src/main/res/icons/menu/load/hourglass.png"));
+            hourglass = resizeImage(hourglass, 200);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
-     * Loads person-related images such as ranger and poacher.
+     * Loads and resizes images of characters (ranger and poacher) used in the game.
      */
     private void persons() {
         try {
@@ -290,13 +420,6 @@ public class Resources {
         }
     }
 
-    /**
-     * Resizes a given image to the specified height while maintaining the aspect ratio.
-     *
-     * @param original the original {@link BufferedImage} to resize.
-     * @param height the desired height for the resized image.
-     * @return the resized {@link BufferedImage}.
-     */
     public static BufferedImage resizeImage(BufferedImage original, int height) {
         int newWidth = (int) ((double) original.getWidth() / original.getHeight() * height); // Arányos szélesség
         Image scaled = original.getScaledInstance(newWidth, height, Image.SCALE_SMOOTH);
@@ -306,4 +429,6 @@ public class Resources {
         g2d.dispose();
         return resized;
     }
+
+
 }

@@ -80,7 +80,8 @@ public class Zebra extends Animal {
             } else if (movingForEat) {
                 moveToEatHerbivorous(Speed.Instance.speedEnum.getZebraSteps());
             } else {
-                if (thirst <= thirstLimit2 && hunger <= hungerLimit2) {
+                if (thirst <= thirstLimit2 && hunger <= hungerLimit2 &&
+                        thirst > thirstLimit && hunger > hungerLimit) {
                     if (lessAvgRangeLimit()) {
                         justMove(Speed.Instance.speedEnum.getZebraSteps());
                     } else {

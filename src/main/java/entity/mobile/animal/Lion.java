@@ -68,7 +68,8 @@ public class Lion extends Animal {
             } else if (movingForEat) {
                 moveToEatCarnivorous(Speed.Instance.speedEnum.getLionSteps());
             } else {
-                if (thirst <= thirstLimit2 && hunger <= hungerLimit2) {
+                if (thirst <= thirstLimit2 && hunger <= hungerLimit2 &&
+                        thirst > thirstLimit && hunger > hungerLimit) {
                     if (lessAvgRangeLimit()) {
                         justMove(Speed.Instance.speedEnum.getLionSteps());
                     } else {

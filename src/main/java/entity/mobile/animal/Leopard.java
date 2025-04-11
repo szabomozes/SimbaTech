@@ -67,7 +67,8 @@ public class Leopard extends Animal {
             } else if (movingForEat) {
                 moveToEatCarnivorous(Speed.Instance.speedEnum.getLeopardSteps());
             } else {
-                if (thirst <= thirstLimit2 && hunger <= hungerLimit2) {
+                if (thirst <= thirstLimit2 && hunger <= hungerLimit2 &&
+                        thirst > thirstLimit && hunger > hungerLimit) {
                     if (lessAvgRangeLimit()) {
                         justMove(Speed.Instance.speedEnum.getLeopardSteps());
                     } else {
