@@ -7,14 +7,40 @@ import safari.Safari;
 
 import java.util.*;
 
+/**
+ * This class provides pathfinding functionality, including an A* search algorithm to find the shortest path
+ * from a start coordinate to a goal coordinate while avoiding obstacles such as water.
+ */
 public class PathFinder {
 
+    /**
+     * Heuristic function to estimate the distance between two coordinates.
+     * Uses the Chebyshev distance (maximum of horizontal and vertical distance).
+     *
+     * @param a the starting coordinate
+     * @param b the goal coordinate
+     * @return the heuristic value representing the estimated distance
+     */
     private static int heuristic(Coordinate a, Coordinate b) {
         int dx = Math.abs(a.x - b.x);
         int dy = Math.abs(a.y - b.y);
         return Math.max(dx, dy);
     }
 
+    /**
+     * Performs an A* search to find the shortest path from a starting coordinate to a goal area.
+     * The path avoids water areas and considers both horizontal, vertical, and diagonal movement.
+     *
+     * @param startX      the starting X coordinate
+     * @param startY      the starting Y coordinate
+     * @param startWidth  the width of the starting area
+     * @param startHeight the height of the starting area
+     * @param goalX       the goal X coordinate
+     * @param goalY       the goal Y coordinate
+     * @param goalWidth   the width of the goal area
+     * @param goalHeight  the height of the goal area
+     * @return a list of coordinates representing the shortest path from start to goal
+     */
     public static List<Coordinate> ASearch(int startX, int startY, int startWidth, int startHeight,
                                            int goalX, int goalY, int goalWidth, int goalHeight) {
         int maxWidth = Resources.Instance.map.getWidth();
@@ -97,6 +123,15 @@ public class PathFinder {
         return path;
     }
 
+    /**
+     * Checks if a given coordinate overlaps with any water area.
+     *
+     * @param x the X coordinate to check
+     * @param y the Y coordinate to check
+     * @param width the width of the area to check
+     * @param height the height of the area to check
+     * @return true if the area overlaps with any water, false otherwise
+     */
     private static boolean overlapsWaterArea(int x, int y, int width, int height) {
         for (Water water : Safari.Instance.getWaters()) {
             int waterX = water.getX();
@@ -112,6 +147,18 @@ public class PathFinder {
         return false;
     }
 
+    /**
+     * Determines if a given coordinate is next to the goal area.
+     *
+     * @param coord the coordinate to check
+     * @param goalX the goal X coordinate
+     * @param goalY the goal Y coordinate
+     * @param goalWidth the width of the goal area
+     * @param goalHeight the height of the goal area
+     * @param entityWidth the width of the entity
+     * @param entityHeight the height of the entity
+     * @return true if the coordinate is adjacent to the goal area, false otherwise
+     */
     private static boolean isNextToGoalArea(Coordinate coord, int goalX, int goalY, int goalWidth, int goalHeight,
                                             int entityWidth, int entityHeight) {
         int right = coord.x + entityWidth - 1;
@@ -127,5 +174,4 @@ public class PathFinder {
 
         return false;
     }
-
 }
