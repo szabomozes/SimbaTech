@@ -2,8 +2,11 @@ package panels.game;
 
 import core.Resources;
 import entity.Entity;
+import entity.mobile.animal.Leopard;
+import entity.mobile.animal.Lion;
 import entity.mobile.person.Poacher;
 import entity.mobile.person.Ranger;
+import entity.notmobile.Water;
 import road.Path;
 import map.EntityCreate;
 import safari.Safari;
@@ -110,14 +113,12 @@ public class EventPanel extends JPanel {
     }
 
     private void handleShopping(int lastX, int lastY) {
-        List<Entity> allEntities = Safari.Instance.getAllEntities();
-        boolean isPositionAvailable = true;
-        //boolean isPositionAvailable = allEntities.stream().noneMatch(entity -> entity.enviromentContains(lastX - offsetX, lastY - offsetY));
+        boolean isPositionAvailable = isEnoughSpace(lastX, lastY);
+        boolean isThereAnyFreePlaceForWater = isEnoughSpaceForWater(lastX, lastY);
 
-        if (isPositionAvailable) {
+        if (isPositionAvailable && isThereAnyFreePlaceForWater) {
             Safari.Instance.placeSomething(lastX - offsetX, lastY - offsetY);
             ToolBarCardLayout.Instance.showCard("toolbar");
-            System.out.println("Hozzáadva a következő pozícióval: (" + lastX + ", " + lastY + ")");
         }
     }
 
@@ -167,7 +168,6 @@ public class EventPanel extends JPanel {
                 .filter(entity -> entity.contains(lastX - offsetX, lastY - offsetY))
                 .findFirst()
                 .ifPresent(entity -> {
-                    System.out.println("benne");
                     huntEntity(ranger, entity);
                 });
 
@@ -180,7 +180,6 @@ public class EventPanel extends JPanel {
         ranger.setNewPosition(true);
         ranger.setTarget(false);
         ranger.setMovingToTarget(false);
-        System.out.println("no hunting");
         ranger.setNewPositionX(lastX - offsetX - Resources.Instance.ranger.getWidth() / 2);
         ranger.setNewPositionY(lastY - offsetY - Resources.Instance.ranger.getHeight() / 2);
     }
@@ -190,7 +189,6 @@ public class EventPanel extends JPanel {
         ranger.setTarget(true);
         ranger.setNewPosition(false);
         ranger.setMovingNewPosition(false);
-        System.out.println("no hunting");
     }
 
     private void selectRangerIfNeeded(List<Ranger> rangers, int lastX, int lastY) {
@@ -237,6 +235,89 @@ public class EventPanel extends JPanel {
         this.feedback = feedback;
         if (this.feedback != null) add(feedback);
         repaint();
+    }
+
+    private boolean isEnoughSpace(int clickX, int clickY) {
+        int middleX = clickX - offsetX;
+        int middleY = clickY - offsetY;
+        int differenceX = 0;
+        int differenceY = 0;
+
+        switch (Safari.Instance.shopping) {
+            case "lion":
+                differenceX = Resources.Instance.lionBody.getWidth() / 2;
+                differenceY = Resources.Instance.lionBody.getHeight() / 2;
+                break;
+            case "leopard":
+                differenceX = Resources.Instance.leopardBody.getWidth() / 2;
+                differenceY = Resources.Instance.leopardBody.getHeight() / 2;
+                break;
+            case "zebra":
+                differenceX = Resources.Instance.zebraBody.getWidth() / 2;
+                differenceY = Resources.Instance.zebraBody.getHeight() / 2;
+                break;
+            case "giraffe":
+                differenceX = Resources.Instance.giraffeBody.getWidth() / 2;
+                differenceY = Resources.Instance.giraffeBody.getHeight() / 2;
+                break;
+            case "water":
+                differenceX = Resources.Instance.water.getWidth() / 2;
+                differenceY = Resources.Instance.water.getHeight() / 2;
+                break;
+            case "ranger":
+                differenceX = Resources.Instance.ranger.getWidth() / 2;
+                differenceY = Resources.Instance.ranger.getHeight() / 2;
+                break;
+            case "baobab":
+                differenceX = Resources.Instance.baobab.getWidth() / 2;
+                differenceY = Resources.Instance.baobab.getHeight() / 2;
+                break;
+            case "pancium":
+                differenceX = Resources.Instance.pancium.getWidth() / 2;
+                differenceY = Resources.Instance.pancium.getHeight() / 2;
+                break;
+            case "palmtree":
+                differenceX = Resources.Instance.palmTree.getWidth() / 2;
+                differenceY = Resources.Instance.palmTree.getHeight() / 2;
+                break;
+        }
+
+        int x = middleX - differenceX;
+        int y = middleY - differenceY;
+        int width = differenceX * 2;
+        int height = differenceY * 2;
+
+        return !overlapsWaterArea(x, y, width, height, Safari.Instance.getWaters());
+    }
+
+    private boolean overlapsWaterArea(int x, int y, int width, int height, List<? extends Entity> entities) {
+        for (Entity entity : entities) {
+            int entityX = entity.getX();
+            int entityY = entity.getY();
+            int entityWidth = entity.getWidth();
+            int entityHeight = entity.getHeight();
+
+            if (x + width > entityX && x < entityX + entityWidth &&
+                    y + height > entityY && y < entityY + entityHeight) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isEnoughSpaceForWater(int clickX, int clickY) {
+        if (Safari.Instance.shopping.equals("water")) {
+            int middleX = clickX - offsetX;
+            int middleY = clickY - offsetY;
+            int differenceX = Resources.Instance.water.getWidth() / 2;
+            int differenceY = Resources.Instance.water.getHeight() / 2;
+            int x = middleX - differenceX;
+            int y = middleY - differenceY;
+            int width = differenceX * 2;
+            int height = differenceY * 2;
+            return !overlapsWaterArea(x, y, width, height, Safari.Instance.getAllEntities());
+        }
+        return true;
     }
 
     @Override
