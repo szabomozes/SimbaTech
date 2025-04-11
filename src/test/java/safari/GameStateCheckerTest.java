@@ -1,13 +1,15 @@
 package safari;
 
-import core.Resources;
 import entity.Entity;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.PrintStream;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.ByteArrayOutputStream;
@@ -19,12 +21,13 @@ class GameStateCheckerTest {
     private GameStateChecker checker;
     private final PrintStream originalOut = System.out;
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    private static BufferedImage buildImage;
 
     static class MockAnimal extends Entity {
         private final String type;
 
         MockAnimal(int x, int y, String type) {
-            super(x, y, Resources.Instance.jeep);
+            super(x, y, buildImage);
             this.type = type;
         }
 
@@ -33,11 +36,18 @@ class GameStateCheckerTest {
         }
     }
 
+    @BeforeAll
+    static void setUpAll() {
+        try {
+            buildImage = ImageIO.read(new File("src/main/res/icons/all/build.png"));
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to load build.png", e);
+        }
+    }
+
     @BeforeEach
     void setUp() {
         System.setOut(new PrintStream(outContent));
-        Resources.Instance.load();
-        checker = new GameStateChecker(DifficultyEnum.EASY);
     }
 
     @AfterEach
@@ -47,6 +57,7 @@ class GameStateCheckerTest {
 
     @Test
     void constructor_setsEasyThresholds() {
+        checker = new GameStateChecker(DifficultyEnum.EASY);
         assertEquals(50, checker.getVisitorThreshold(), "Visitor threshold should be 50 for EASY");
         assertEquals(10, checker.getHerbivoreThreshold(), "Herbivore threshold should be 10 for EASY");
         assertEquals(3, checker.getPredatorThreshold(), "Predator threshold should be 3 for EASY");
@@ -73,6 +84,7 @@ class GameStateCheckerTest {
 
     @Test
     void instantLose_returnsTrueWhenCoinsNegative() {
+        checker = new GameStateChecker(DifficultyEnum.EASY);
         List<Entity> animals = new ArrayList<>();
         animals.add(new MockAnimal(0, 0, "Herbivore"));
         assertTrue(checker.instantLose(-1, animals), "Should lose instantly with negative coins");
@@ -80,12 +92,14 @@ class GameStateCheckerTest {
 
     @Test
     void instantLose_returnsTrueWhenNoAnimals() {
+        checker = new GameStateChecker(DifficultyEnum.EASY);
         List<Entity> animals = new ArrayList<>();
         assertTrue(checker.instantLose(100, animals), "Should lose instantly with no animals");
     }
 
     @Test
     void instantLose_returnsFalseWhenNoLossCondition() {
+        checker = new GameStateChecker(DifficultyEnum.EASY);
         List<Entity> animals = new ArrayList<>();
         animals.add(new MockAnimal(0, 0, "Herbivore"));
         assertFalse(checker.instantLose(100, animals), "Should not lose with positive coins and animals");
@@ -93,6 +107,7 @@ class GameStateCheckerTest {
 
     @Test
     void checkWin_returnsFalseBeforeCycleEndEasy() {
+        checker = new GameStateChecker(DifficultyEnum.EASY);
         List<Entity> animals = new ArrayList<>();
         animals.add(new MockAnimal(0, 0, "Herbivore"));
         animals.add(new MockAnimal(0, 0, "Predator"));
@@ -103,6 +118,7 @@ class GameStateCheckerTest {
 
     @Test
     void checkWin_returnsTrueWhenAllThresholdsMetEasy() {
+        checker = new GameStateChecker(DifficultyEnum.EASY);
         List<Entity> animals = new ArrayList<>();
         for (int i = 0; i < 10; i++) animals.add(new MockAnimal(0, 0, "Herbivore"));
         for (int i = 0; i < 3; i++) animals.add(new MockAnimal(0, 0, "Predator"));
@@ -113,6 +129,7 @@ class GameStateCheckerTest {
 
     @Test
     void checkWin_returnsTrueWhenThresholdsNotMetEasy() {
+        checker = new GameStateChecker(DifficultyEnum.EASY);
         List<Entity> animals = new ArrayList<>();
         animals.add(new MockAnimal(0, 0, "Herbivore"));
         animals.add(new MockAnimal(0, 0, "Predator"));
@@ -185,38 +202,5 @@ class GameStateCheckerTest {
         int date = 360;
         assertTrue(checker.checkWin(DifficultyEnum.HARD, date, animals, 1000, 50),
                 "Should return true (loss) when HARD thresholds not met at cycle end");
-    }
-
-    @Test
-    void setEasy_setsCorrectThresholds() throws Exception {
-        Method method = GameStateChecker.class.getDeclaredMethod("setEasy");
-        method.setAccessible(true);
-        method.invoke(checker);
-        assertEquals(50, checker.getVisitorThreshold(), "Visitor threshold should be 50");
-        assertEquals(10, checker.getHerbivoreThreshold(), "Herbivore threshold should be 10");
-        assertEquals(3, checker.getPredatorThreshold(), "Predator threshold should be 3");
-        assertEquals(500, checker.getCoinThreshold(), "Coin threshold should be 500");
-    }
-
-    @Test
-    void setMedium_setsCorrectThresholds() throws Exception {
-        Method method = GameStateChecker.class.getDeclaredMethod("setMedium");
-        method.setAccessible(true);
-        method.invoke(checker);
-        assertEquals(80, checker.getVisitorThreshold(), "Visitor threshold should be 80");
-        assertEquals(20, checker.getHerbivoreThreshold(), "Herbivore threshold should be 20");
-        assertEquals(5, checker.getPredatorThreshold(), "Predator threshold should be 5");
-        assertEquals(1000, checker.getCoinThreshold(), "Coin threshold should be 1000");
-    }
-
-    @Test
-    void setHard_setsCorrectThresholds() throws Exception {
-        Method method = GameStateChecker.class.getDeclaredMethod("setHard");
-        method.setAccessible(true);
-        method.invoke(checker);
-        assertEquals(120, checker.getVisitorThreshold(), "Visitor threshold should be 120");
-        assertEquals(30, checker.getHerbivoreThreshold(), "Herbivore threshold should be 30");
-        assertEquals(8, checker.getPredatorThreshold(), "Predator threshold should be 8");
-        assertEquals(2000, checker.getCoinThreshold(), "Coin threshold should be 2000");
     }
 }
