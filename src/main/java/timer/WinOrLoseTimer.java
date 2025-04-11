@@ -19,7 +19,6 @@ public class WinOrLoseTimer extends Timer {
         addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("winOrLoseTimer running");
                 switch (Safari.Instance.getWinOrLose()) {
                     case "win":
                         eventPanel.setFeedback(new WinFeedBackPanel());

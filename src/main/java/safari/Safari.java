@@ -159,7 +159,7 @@ public class Safari {
         System.out.println("Date event triggered: " + date);
         Calendar.Instance.setDate(date);
         payment();
-        if (date > 10) {
+        if (date % 10 == 0) {
             bornDay();
         }
     }

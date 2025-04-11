@@ -22,35 +22,43 @@ public class Minimap extends JPanel {
     private BufferedImage backgroundImage = Resources.Instance.minimap;
 
     public Minimap() {
-        setSize(new Dimension(backgroundImage.getWidth(), backgroundImage.getHeight()));
+        setMinimapSize();
+        setupMouseClickHandler();
+        setupMouseDragHandler();
+    }
 
+    private void setMinimapSize() {
+        setSize(new Dimension(backgroundImage.getWidth(), backgroundImage.getHeight()));
+    }
+
+    private void setupMouseClickHandler() {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                int mouseX = e.getX();
-                int mouseY = e.getY();
-
-                double scaleX = (double) mouseX / getWidth();
-                double scaleY = (double) mouseY / getHeight();
-
-                ((EventPanel) getParent()).setOffsets(scaleX, scaleY);
-
-            }
-        });
-
-        addMouseMotionListener(new MouseMotionAdapter() {
-            @Override
-            public void mouseDragged(MouseEvent e) {
-                int mouseX = e.getX();
-                int mouseY = e.getY();
-
-                double scaleX = (double) mouseX / getWidth();
-                double scaleY = (double) mouseY / getHeight();
-
-                ((EventPanel) getParent()).setOffsets(scaleX, scaleY);
+                updateOffsetsFromMouseEvent(e);
             }
         });
     }
+
+    private void setupMouseDragHandler() {
+        addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                updateOffsetsFromMouseEvent(e);
+            }
+        });
+    }
+
+    private void updateOffsetsFromMouseEvent(MouseEvent e) {
+        int mouseX = e.getX();
+        int mouseY = e.getY();
+
+        double scaleX = (double) mouseX / getWidth();
+        double scaleY = (double) mouseY / getHeight();
+
+        ((EventPanel) getParent()).setOffsets(scaleX, scaleY);
+    }
+
 
     public void updateMinimapPosition(int height) {
         int yPosition = height - getHeight() - 10;

@@ -19,6 +19,7 @@ public class LogoutButton extends JButton {
         addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if (!Safari.Instance.getWinOrLose().equals("")) return;
                 Safari.Instance.shutDown();
                 CardPanel.Instance.showCard("menu");
             }

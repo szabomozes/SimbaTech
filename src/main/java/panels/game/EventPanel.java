@@ -49,7 +49,6 @@ public class EventPanel extends JPanel {
         add(coinPanel);
         add(Calendar.Instance);
         add(minimap);
-        add(new FeedBackTriggerButton());
         add(GameStateTriggerButton.Instance);
         winOrLoseTimer = new WinOrLoseTimer(this);
         winOrLoseTimer.start();
@@ -60,7 +59,6 @@ public class EventPanel extends JPanel {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                if (!Safari.Instance.getWinOrLose().equals("")) return;
                 lastX = e.getX();
                 lastY = e.getY();
                 handleMousePress(e);
@@ -68,7 +66,6 @@ public class EventPanel extends JPanel {
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                if (!Safari.Instance.getWinOrLose().equals("")) return;
                 handleMouseRelease(e);
             }
         });
@@ -76,14 +73,13 @@ public class EventPanel extends JPanel {
         addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                if (!Safari.Instance.getWinOrLose().equals("")) return;
                 handleMouseDrag(e);
             }
         });
     }
 
     private void handleMousePress(MouseEvent e) {
-        if (SwingUtilities.isRightMouseButton(e)) {
+        if (Safari.Instance.getWinOrLose().equals("") && SwingUtilities.isRightMouseButton(e)) {
             if (Safari.Instance.getRoadBuilding()) {
                 Safari.Instance.saveARoad(lastX - offsetX, lastY - offsetY);
             } else if (Safari.Instance.shopping != null) {
@@ -102,13 +98,13 @@ public class EventPanel extends JPanel {
     private void handleMouseRelease(MouseEvent e) {
         if (!SwingUtilities.isRightMouseButton(e)) {
             dragging = false;
-        } else {
+        } else if (Safari.Instance.getWinOrLose().equals("")) {
             handleExitClick(e);
         }
     }
 
     private void handleMouseDrag(MouseEvent e) {
-        if (SwingUtilities.isRightMouseButton(e) && Safari.Instance.getRoadBuilding()) {
+        if (Safari.Instance.getWinOrLose().equals("") && SwingUtilities.isRightMouseButton(e) && Safari.Instance.getRoadBuilding()) {
             Safari.Instance.saveARoad(e.getX() - offsetX, e.getY() - offsetY);
         } else if (dragging) {
             int dx = e.getX() - lastX;
