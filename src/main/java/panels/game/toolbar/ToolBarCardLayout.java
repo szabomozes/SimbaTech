@@ -8,7 +8,7 @@ import java.awt.*;
 public class ToolBarCardLayout extends JPanel {
 
     public static final ToolBarCardLayout Instance = new ToolBarCardLayout();
-
+    private String currentCardName = "toolbar";
     private ToolBarCardLayout() {
         super(new CardLayout());
         add(new ToolBarPanel(), "toolbar");
@@ -23,6 +23,18 @@ public class ToolBarCardLayout extends JPanel {
     }
 
     public void showCard(String name) {
+        if (!name.equals(currentCardName)) {
+        }
         ((CardLayout) getLayout()).show(this, name);
+        currentCardName = name;
+    }
+
+    public String getCurrentCardName() {
+        return currentCardName;
+    }
+
+    public void resetToToolbar() {
+        showCard("toolbar");
     }
 }
+

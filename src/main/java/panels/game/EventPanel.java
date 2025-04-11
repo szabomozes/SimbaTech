@@ -148,6 +148,7 @@ public class EventPanel extends JPanel {
                         ranger.setSelected(false);
                         Safari.Instance.setSelectedRanger(false);
                         ToolBarCardLayout.Instance.showCard("toolbar");
+                        GameStateTriggerButton.Instance.updateButtonState();
                     });
 
             rangers.stream()
@@ -200,6 +201,7 @@ public class EventPanel extends JPanel {
                     ranger.setSelected(true);
                     Safari.Instance.setSelectedRanger(true);
                     ToolBarCardLayout.Instance.showCard("void");
+                    GameStateTriggerButton.Instance.updateButtonState(); // Disable info button
                 });
     }
 

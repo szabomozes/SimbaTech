@@ -35,6 +35,7 @@ public class DeleteButton extends JButton {
                 cardLayout.show(ToolBarCardLayout.Instance, "toolbar");
                 Safari.Instance.clearTempPaths();
                 Safari.Instance.setRoadBuilding(false);
+                ToolBarCardLayout.Instance.resetToToolbar();
                 ((GameContainer) getParent().getParent().getParent()).repaint();
             }
         });

@@ -4,6 +4,7 @@ import core.Resources;
 import entity.mobile.animal.*;
 import panels.CardPanel;
 import panels.feedback.GameStatePanel;
+import panels.game.toolbar.ToolBarCardLayout;
 import safari.GameStateChecker;
 import safari.Safari;
 
@@ -11,6 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 public class GameStateTriggerButton extends JButton {
 
     public static GameStateTriggerButton Instance = new GameStateTriggerButton();
@@ -41,6 +43,9 @@ public class GameStateTriggerButton extends JButton {
         addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if (Safari.Instance.isSelectedRanger()) {
+                    return;
+                }
                 try {
                     setClicked(false);
                     Container parent = getParent();
@@ -87,7 +92,8 @@ public class GameStateTriggerButton extends JButton {
                                 balanceColor, balance, coinThreshold
                         );
 
-                        GameStatePanel gameStatePanel = new GameStatePanel(gameStateText, "toolbar");
+                        String currentMode = ToolBarCardLayout.Instance.getCurrentCardName();
+                        GameStatePanel gameStatePanel = new GameStatePanel(gameStateText, currentMode);
                         ((EventPanel) parent).setFeedback(gameStatePanel);
                         parent.repaint();
                     }
@@ -100,10 +106,16 @@ public class GameStateTriggerButton extends JButton {
 
     public void setClicked(boolean clicked) {
         this.clicked = clicked;
-        setEnabled(clicked);
+        setEnabled(clicked && !Safari.Instance.isSelectedRanger());
     }
 
     public void updatePosition() {
         setBounds(CardPanel.Instance.getWidth() - getWidth() - 70, 10, getWidth(), getHeight());
     }
+
+    public void updateButtonState() {
+        setEnabled(clicked && !Safari.Instance.isSelectedRanger());
+    }
+
+
 }
