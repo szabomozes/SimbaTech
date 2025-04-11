@@ -62,8 +62,11 @@ public class EntityCreate {
     }
 
     public static List<Water> getWaters(DifficultyEnum difficulty) {
-        int maxWidth = Resources.Instance.map.getWidth() - Resources.Instance.water.getWidth() / 2;
-        int maxHeight = Resources.Instance.map.getHeight() - Resources.Instance.water.getHeight() / 2;
+        int waterPadding = 1000;
+        int maxWidth = Resources.Instance.map.getWidth() - Resources.Instance.water.getWidth() / 2 - waterPadding;
+        int maxHeight = Resources.Instance.map.getHeight() - Resources.Instance.water.getHeight() / 2 - waterPadding;
+        int minWidth = Resources.Instance.water.getWidth() / 2 + waterPadding;
+        int minHeight = Resources.Instance.water.getHeight() / 2 + waterPadding;
         List<Water> waters = new ArrayList<>();
 
         int waterCount = rnd.nextInt(
@@ -81,8 +84,8 @@ public class EntityCreate {
 
         for (int i = 0; i < waterCount; i++) {
             waters.add(new Water(
-                    rnd.nextInt(Resources.Instance.water.getWidth() / 2, maxWidth),
-                    rnd.nextInt(Resources.Instance.water.getHeight() / 2, maxHeight)
+                    rnd.nextInt(minWidth, maxWidth),
+                    rnd.nextInt(minHeight, maxHeight)
             ));
         }
 
