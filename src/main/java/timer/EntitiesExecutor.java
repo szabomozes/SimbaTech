@@ -23,13 +23,9 @@ public class EntitiesExecutor {
     }
 
     public void reset() {
-        if (executor == null || executor.isShutdown() || executor.isTerminated()) {
-            executor = new ScheduledThreadPoolExecutor(4);
-            addScheduleAtFixedRate(CardPanel.Instance::repaint);
-        }
-        if (pathSearchExecutor == null || pathSearchExecutor.isShutdown() || executor.isTerminated()) {
-            pathSearchExecutor = new ScheduledThreadPoolExecutor(2);
-        }
+        executor = new ScheduledThreadPoolExecutor(4);
+        addScheduleAtFixedRate(CardPanel.Instance::repaint);
+        pathSearchExecutor = new ScheduledThreadPoolExecutor(2);
     }
 
     public boolean isRunning() {

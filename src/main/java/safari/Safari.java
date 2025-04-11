@@ -353,9 +353,9 @@ public class Safari {
     }
 
     public int getTempPathsPrice() {
-        return tempPaths.stream()
-                .mapToInt(path -> path.getPixelCount())
-                .sum() * (int) Prices.getPriceByEnum(Prices.ROAD);
+        return (int) (tempPaths.stream()
+                .mapToInt(Path::getPixelCount)
+                .sum() * Prices.getPriceByEnum(Prices.ROAD));
     }
 
     public void addAPathToPaths(Path path) {
