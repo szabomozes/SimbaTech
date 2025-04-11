@@ -6,7 +6,6 @@ import safari.Safari;
 import map.ImageMerger;
 import panels.CardPanel;
 import panels.game.toolbar.ToolBarCardLayout;
-import panels.game.toolbar.buttons.speed.SpeedButton;
 import safari.Speed;
 
 import javax.swing.*;
@@ -23,13 +22,10 @@ public class StartButton extends JButton {
     }
 
     protected void start() {
-        System.out.println("A " + message.toString() + " gomb meg lett nyomva!");
-        System.out.println("Pálya generálás alatt");
         CardPanel.Instance.setLoadingPanel();
         CardPanel.Instance.showCard("loading");
 
         new Thread(() -> {
-            System.out.println("Pálya generálása");
             generateGameBackgroundTest();
             Resources.Instance.map();
 
@@ -37,7 +33,6 @@ public class StartButton extends JButton {
                 Safari.Instance.reset(message);
                 Speed.Instance.reset();
                 ToolBarCardLayout.Instance.showCard("toolbar");
-                System.out.println("Pálya betöltve");
                 CardPanel.Instance.updateGamePanel();
                 CardPanel.Instance.showCard("game");
                 CardPanel.Instance.deleteLoadingPanel();

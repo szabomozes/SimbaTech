@@ -34,14 +34,12 @@ public class EventPanel extends JPanel {
     private final Minimap minimap = new Minimap();
     private final CoinPanel coinPanel = new CoinPanel();
     private BasicFeedBackPanel feedback;
-    private WinOrLoseTimer winOrLoseTimer;
 
 
     public EventPanel() {
         setLayout(null);
         initializeComponents();
         addEventListeners();
-        Safari.Instance.placePoachers(1);
     }
 
     private void initializeComponents() {
@@ -50,8 +48,8 @@ public class EventPanel extends JPanel {
         add(Calendar.Instance);
         add(minimap);
         add(GameStateTriggerButton.Instance);
-        winOrLoseTimer = new WinOrLoseTimer(this);
-        winOrLoseTimer.start();
+        WinOrLoseTimer.getInstance().setEventPanel(this);
+        WinOrLoseTimer.getInstance().startTimer();
     }
 
 

@@ -25,7 +25,6 @@ public class Create1 {
         }
         List<Coordinate> grass = randomCoordinates(rnd.nextInt(30, 50), clearArea, width - clearArea, clearArea, height - clearArea);
         grassGrownings(map, grass, width, height);
-        System.out.println("ASD");
         return map;
     }
 

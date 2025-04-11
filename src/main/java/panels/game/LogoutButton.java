@@ -3,6 +3,7 @@ package panels.game;
 import core.Resources;
 import safari.Safari;
 import panels.CardPanel;
+import timer.WinOrLoseTimer;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -20,6 +21,7 @@ public class LogoutButton extends JButton {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (!Safari.Instance.getWinOrLose().equals("")) return;
+                WinOrLoseTimer.getInstance().stopTimer();
                 Safari.Instance.shutDown();
                 CardPanel.Instance.showCard("menu");
             }

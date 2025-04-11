@@ -2,7 +2,6 @@ package panels.game.toolbar;
 
 import core.Resources;
 import panels.game.toolbar.buttons.BuyingSellingToolBarBin;
-import safari.Safari;
 
 import javax.swing.*;
 import java.awt.*;

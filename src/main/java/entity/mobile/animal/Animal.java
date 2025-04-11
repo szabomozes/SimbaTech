@@ -289,7 +289,6 @@ public abstract class Animal extends MobileEntity {
         if (coordinatesForDrink.isEmpty()) {
             movingForDrink = false;
             thirst = 200;
-            System.out.println("Stop drinking");
         } else {
             int limit = Math.min(coordinatesForDrink.size(), steps) - 1;
             for (int i = 0; i < limit; i++) {
@@ -390,7 +389,6 @@ public abstract class Animal extends MobileEntity {
         if (coordinatesForEat.isEmpty()) {
             movingForEat = false;
             hunger = 200;
-            System.out.println("Stop eating");
         } else {
             int limit = Math.min(coordinatesForEat.size(), steps) - 1;
             for (int i = 0; i < limit; i++) {

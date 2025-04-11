@@ -7,33 +7,53 @@ import safari.Safari;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.time.Instant;
 
 public class WinOrLoseTimer extends Timer {
+
+    private static WinOrLoseTimer instance;
     private EventPanel eventPanel;
 
-    public WinOrLoseTimer(EventPanel eventPanel) {
-        super(1000, null);
-        this.eventPanel = eventPanel;
-        addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                switch (Safari.Instance.getWinOrLose()) {
-                    case "win":
-                        eventPanel.setFeedback(new WinFeedBackPanel());
-                        stopTimer();
-                        break;
-                    case "lose":
-                        eventPanel.setFeedback(new LoseFeedBackPanel());
-                        stopTimer();
-                        break;
-                }
+    public static WinOrLoseTimer getInstance() {
+        if (instance == null) {
+            instance = new WinOrLoseTimer();
+        }
+        return instance;
+    }
+
+    private WinOrLoseTimer() {
+        super(500, null);
+        addActionListener(this::handleTimerAction);
+    }
+
+    private void handleTimerAction(ActionEvent e) {
+        if (eventPanel != null) {
+            String result = Safari.Instance.getWinOrLose();
+            switch (result) {
+                case "win":
+                    eventPanel.setFeedback(new WinFeedBackPanel());
+                    stopTimer();
+                    break;
+                case "lose":
+                    eventPanel.setFeedback(new LoseFeedBackPanel());
+                    stopTimer();
+                    break;
             }
-        });
+        }
+    }
+
+    public void setEventPanel(EventPanel eventPanel) {
+        this.eventPanel = eventPanel;
+    }
+
+    public void startTimer() {
+        if (!isRunning()) {
+            start();
+        }
     }
 
     public void stopTimer() {
-        stop();
+        if (isRunning()) {
+            stop();
+        }
     }
 }

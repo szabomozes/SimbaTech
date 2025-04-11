@@ -3,6 +3,7 @@ package panels.feedback;
 import core.Resources;
 import safari.Safari;
 import panels.CardPanel;
+import timer.WinOrLoseTimer;
 
 import javax.swing.*;
 
@@ -12,6 +13,7 @@ public class WinFeedBackPanel extends BasicFeedBackPanel{
         add(getButton(), gbc);
     }
     private JButton getButton() {
+        WinOrLoseTimer.getInstance().stopTimer();
         Safari.Instance.shutDown();
         JButton button = new JButton("Kilépés");
         button.setFocusPainted(false);

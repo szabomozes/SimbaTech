@@ -50,6 +50,7 @@ public class Safari {
     private GameStateChecker gameStateChecker;
     private int passengers;
     private String winOrLose = "";
+    private Random rnd = new Random();
 
     /**
      * Private constructor initializing the safari with a date timer and zero passengers.
@@ -156,11 +157,11 @@ public class Safari {
      */
     public void updateDate() {
         date++;
-        System.out.println("Date event triggered: " + date);
         Calendar.Instance.setDate(date);
         payment();
         if (date % 10 == 0) {
             bornDay();
+            placePoachers(rnd.nextInt(2));
         }
     }
 
@@ -283,7 +284,6 @@ public class Safari {
             ScheduledFuture<?> poacherTaskMove = entitiesExecutor.addScheduleAtFixedRate(poacher::move);
             poacher.setTask(poacherTaskVisibility);
             poacher.setTask2(poacherTaskMove);
-            System.out.println("poacher out");
         }
     }
 
@@ -382,7 +382,9 @@ public class Safari {
         allEntities.addAll(waters);
         allEntities.addAll(rangers);
         allEntities.addAll(jeeps);
-        allEntities.addAll(poachers);
+        if (!poachers.isEmpty()) {
+            allEntities.addAll(poachers);
+        }
         return allEntities;
     }
 
@@ -415,7 +417,9 @@ public class Safari {
      */
     public List<Entity> getAnimalsPoachers() {
         List<Entity> entities = new ArrayList<>(animals);
-        entities.addAll(poachers);
+        if (!poachers.isEmpty()) {
+            entities.addAll(poachers);
+        }
         return entities;
     }
 

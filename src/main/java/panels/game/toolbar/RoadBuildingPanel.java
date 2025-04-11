@@ -1,7 +1,6 @@
 package panels.game.toolbar;
 
 import core.Resources;
-import panels.game.toolbar.buttons.road.*;
 import panels.game.toolbar.buttons.road.DeleteButton;
 import panels.game.toolbar.buttons.road.SaveButton;
 

@@ -87,7 +87,6 @@ public class Giraffe extends Animal {
                 }
             }
         } else {
-            System.out.println("Halott");
             Safari.Instance.removeEntityById(id);
             if (task != null && !task.isCancelled()) {
                 task.cancel(false);

@@ -3,7 +3,6 @@ package panels.menu;
 import core.Resources;
 import panels.menu.buttons.ButtonsPanel;
 import panels.menu.icon.LogoLabel;
-import panels.menu.text.*;
 import panels.menu.text.SubtitleLabel;
 import panels.menu.text.TitleLabel;
 

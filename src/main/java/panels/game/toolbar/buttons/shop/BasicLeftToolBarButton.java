@@ -29,10 +29,8 @@ public abstract class BasicLeftToolBarButton extends JButton {
         addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println(message);
 
                 if (message.equals("sell")) {
-                    System.out.println("Most kattints a térképre az eladás helyének kiválasztásához!");
                     new SellingToolBar();
                     ToolBarCardLayout.Instance.showCard("selling");
                     Safari.Instance.setSellingMode(true);

@@ -40,7 +40,6 @@ public class SaveButton extends JButton {
                     ((EventPanel) getParent().getParent().getParent().getComponent(0)).setFeedback(new MessageFeedBackPanel("Zárd le az összes utat vásárlás előtt!", "buildRoad"));
                 } else {
                     int price = Safari.Instance.getTempPathsPrice();
-                    System.out.println(price + " $");
                     if (price <= Safari.Instance.coin) {
                         for (int i = 0; i < Safari.Instance.getTempPaths().size() - 1; i++) {
                             Safari.Instance.addAPathToPaths(Safari.Instance.getTempPaths().get(i));
