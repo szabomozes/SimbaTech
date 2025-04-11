@@ -362,12 +362,16 @@ public class Safari {
         paths.add(path);
     }
 
-    public void saveARoad(int x, int y) {
+    public boolean saveARoad(int x, int y) {
         Path path = tempPaths.get(tempPaths.size() - 1);
+
+        if (path.overlapsWaterArea(x, y)) return false;
+
         path.setEndX(x);
         path.setEndY(y);
         path.addANewRoad();
         path.endCoorinateCopyToStartCoordinate();
+        return true;
     }
 
     public boolean isSelectedRanger() {

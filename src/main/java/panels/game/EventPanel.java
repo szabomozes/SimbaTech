@@ -130,8 +130,10 @@ public class EventPanel extends JPanel {
 
     private void handleExitClick(MouseEvent e) {
         if (Safari.Instance.getExit().contains(e.getX() - offsetX, e.getY() - offsetY)) {
-            Safari.Instance.saveARoad(EntityCreate.exitX, EntityCreate.exitY);
-            Safari.Instance.getTempPaths().add(new Path(EntityCreate.entryX, EntityCreate.entryY));
+
+            if (Safari.Instance.saveARoad(EntityCreate.exitX, EntityCreate.exitY)){
+                Safari.Instance.getTempPaths().add(new Path(EntityCreate.entryX, EntityCreate.entryY));
+            }
         }
     }
 

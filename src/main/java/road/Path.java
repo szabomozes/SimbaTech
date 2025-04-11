@@ -1,6 +1,8 @@
 package road;
 
+import entity.notmobile.Water;
 import map.Coordinate;
+import safari.Safari;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +33,28 @@ public class Path {
 
     public void addANewRoad() {
         roads.add(new Road(startX, startY, endX, endY));
+    }
+
+    public boolean overlapsWaterArea(int newX, int newY) {
+        Road newRoad = new Road(startX, startY, newX, newY);
+        List<Coordinate> coordinates = newRoad.getMid();
+
+        for (Water water : Safari.Instance.getWaters()) {
+            int waterX = water.getX();
+            int waterY = water.getY();
+
+            for (Coordinate coord : coordinates) {
+                int x = coord.x;
+                int y = coord.y;
+
+                if (x >= waterX && x < waterX + water.getWidth() &&
+                        y >= waterY && y < waterY + water.getHeight()) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     public void endCoorinateCopyToStartCoordinate () {
