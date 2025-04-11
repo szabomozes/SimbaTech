@@ -13,13 +13,27 @@ import timer.EntitiesExecutor;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-
+/**
+ * Represents a Giraffe, a type of herbivorous animal in the safari simulation.
+ */
 public class Giraffe extends Animal {
 
+    /**
+     * Constructs a Giraffe at the specified coordinates with the default giraffe image.
+     *
+     * @param x The x-coordinate of the giraffe.
+     * @param y The y-coordinate of the giraffe.
+     */
     public Giraffe(int x, int y) {
         super(x, y, Resources.Instance.giraffeBody);
     }
 
+    /**
+     * Manages the giraffe's movement and behavior based on its thirst, hunger, and state.
+     * Updates thirst and hunger levels, handles movement toward water or food, and manages
+     * random or average range movement when not seeking resources. Removes the giraffe
+     * from the simulation if it is no longer alive.
+     */
     public void handleGiraffeMovement() {
         if (isAlive()) {
             updateThirstAndHunger(Speed.Instance.speedEnum.getGiraffeThirst(), Speed.Instance.speedEnum.getGiraffeHunger());
@@ -72,16 +86,12 @@ public class Giraffe extends Animal {
                     }
                 }
             }
-
-
-
         } else {
             System.out.println("Halott");
             Safari.Instance.removeEntityById(id);
             if (task != null && !task.isCancelled()) {
                 task.cancel(false);
             }
-
         }
     }
 }

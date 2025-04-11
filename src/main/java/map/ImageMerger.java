@@ -8,7 +8,18 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Utility class for merging map data into a single image file representing the safari terrain.
+ */
 public class ImageMerger {
+
+    /**
+     * Creates an image from a 2D map array by tiling ground and grass images based on map values.
+     *
+     * @param map  The 2D Integer array representing the map, where values indicate terrain type.
+     * @param cols The number of columns in the map.
+     * @param rows The number of rows in the map.
+     */
     public static void Create(Integer[][] map, int cols, int rows) {
         int tileSize = 5;
         int width = cols * tileSize;
@@ -35,6 +46,11 @@ public class ImageMerger {
         }
     }
 
+    /**
+     * Generates a new square map of the specified size and creates an image from it.
+     *
+     * @param size The width and height of the square map.
+     */
     public static void newMap(int size) {
         Create(Create1.getAMap(size, size), size, size);
     }

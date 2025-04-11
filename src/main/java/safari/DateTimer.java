@@ -6,10 +6,16 @@ import java.awt.event.ActionListener;
 import java.time.Instant;
 import java.time.Duration;
 
+/**
+ * A custom Timer class that updates the safari date based on elapsed time and a configurable speed setting.
+ */
 public class DateTimer extends Timer {
 
     private Instant lastUpdate;
 
+    /**
+     * Constructs a DateTimer with a 1-second interval, tracking elapsed time to update the safari date.
+     */
     public DateTimer() {
         super(1000, null);
         lastUpdate = Instant.now();
@@ -27,9 +33,11 @@ public class DateTimer extends Timer {
         });
     }
 
+    /**
+     * Stops the timer and resets the last update time to the current moment.
+     */
     public void stopTimer() {
-        stop();  // Swing Timer beépített stop() metódusa
-        lastUpdate = Instant.now(); // Reseteljük az időzítőt
+        stop();  // Swing Timer's built-in stop method
+        lastUpdate = Instant.now(); // Reset the timer
     }
-
 }

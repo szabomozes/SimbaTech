@@ -10,7 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Jeep extends MobileEntity{
+/**
+ * Represents a Jeep, a mobile entity in the safari simulation that transports passengers along predefined paths,
+ * collects payments, and returns to its starting point.
+ */
+public class Jeep extends MobileEntity {
     private Random rnd = new Random();
     private boolean isAvaliable = true;
     private boolean forward = true;
@@ -20,67 +24,147 @@ public class Jeep extends MobileEntity{
     private int MaxPathIndex = 0;
     private List<Coordinate> path = new ArrayList<>();
 
+    /**
+     * Constructs a Jeep at the specified coordinates with the default jeep image.
+     *
+     * @param x The x-coordinate of the jeep.
+     * @param y The y-coordinate of the jeep.
+     */
     public Jeep(int x, int y) {
         super(x, y, Resources.Instance.jeep);
     }
 
+    /**
+     * Gets the number of passengers in the jeep.
+     *
+     * @return The number of passengers.
+     */
     public int getPassenger() {
         return passenger;
     }
 
+    /**
+     * Sets the number of passengers in the jeep.
+     *
+     * @param passenger The number of passengers to set.
+     */
     public void setPassenger(int passenger) {
         this.passenger = passenger;
     }
 
+    /**
+     * Checks if the jeep is available to start a new trip.
+     *
+     * @return True if the jeep is available, false otherwise.
+     */
     public boolean isAvaliable() {
         return isAvaliable;
     }
 
+    /**
+     * Sets whether the jeep is available to start a new trip.
+     *
+     * @param avaliable True if the jeep is available, false otherwise.
+     */
     public void setAvaliable(boolean avaliable) {
         isAvaliable = avaliable;
     }
 
+    /**
+     * Gets the index of the selected path the jeep is following.
+     *
+     * @return The selected path index.
+     */
     public int getSelectedPathIndex() {
         return selectedPathIndex;
     }
 
+    /**
+     * Sets the index of the selected path for the jeep to follow.
+     *
+     * @param selectedPathIndex The path index to set.
+     */
     public void setSelectedPathIndex(int selectedPathIndex) {
         this.selectedPathIndex = selectedPathIndex;
     }
 
+    /**
+     * Checks if the jeep is moving forward along its path.
+     *
+     * @return True if moving forward, false otherwise.
+     */
     public boolean isForward() {
         return forward;
     }
 
+    /**
+     * Sets whether the jeep is moving forward along its path.
+     *
+     * @param forward True if moving forward, false otherwise.
+     */
     public void setForward(boolean forward) {
         this.forward = forward;
     }
 
+    /**
+     * Gets the current index in the path the jeep is following.
+     *
+     * @return The current path index.
+     */
     public int getPathIndex() {
         return pathIndex;
     }
 
+    /**
+     * Sets the current index in the path the jeep is following.
+     *
+     * @param pathIndex The path index to set.
+     */
     public void setPathIndex(int pathIndex) {
         this.pathIndex = pathIndex;
     }
 
+    /**
+     * Gets the maximum index of the path the jeep is following.
+     *
+     * @return The maximum path index.
+     */
     public int getMaxPathIndex() {
         return MaxPathIndex;
     }
 
+    /**
+     * Sets the maximum index of the path the jeep is following.
+     *
+     * @param maxPathIndex The maximum path index to set.
+     */
     public void setMaxPathIndex(int maxPathIndex) {
         MaxPathIndex = maxPathIndex;
     }
 
+    /**
+     * Gets the list of coordinates representing the path the jeep is following.
+     *
+     * @return The path coordinates.
+     */
     public List<Coordinate> getPath() {
         return path;
     }
 
+    /**
+     * Sets the list of coordinates representing the path the jeep will follow.
+     *
+     * @param path The path coordinates to set.
+     */
     public void setPath(List<Coordinate> path) {
         this.path = path;
     }
 
-
+    /**
+     * Manages the jeep's movement and behavior based on its state.
+     * Initializes the jeep if available, moves forward or backward along the path,
+     * and collects passenger payments when returning.
+     */
     public void handleJeepMovement() {
         if (isAvaliable) {
             initializeJeep();
@@ -93,6 +177,10 @@ public class Jeep extends MobileEntity{
         }
     }
 
+    /**
+     * Initializes the jeep for a new trip by setting a random number of passengers,
+     * selecting a random path, and preparing to move forward.
+     */
     private void initializeJeep() {
         image = Resources.Instance.jeep;
         isAvaliable = false;
@@ -104,6 +192,9 @@ public class Jeep extends MobileEntity{
         MaxPathIndex = path.size();
     }
 
+    /**
+     * Moves the jeep forward along its path, switching to backward when the end is reached.
+     */
     private void moveJeepForward() {
         pathIndex += Speed.Instance.speedEnum.getJeepSteps();
         if (pathIndex >= MaxPathIndex) {
@@ -113,6 +204,9 @@ public class Jeep extends MobileEntity{
         updateJeepPosition();
     }
 
+    /**
+     * Collects payment from passengers and updates safari records when the jeep begins its return trip.
+     */
     private void collectPassengerPayment() {
         image = Resources.Instance.jeep_back;
         Safari.Instance.coin += (int) (Prices.getPriceByEnum(Prices.PASSENGER) * passenger);
@@ -121,6 +215,9 @@ public class Jeep extends MobileEntity{
         passenger = 0;
     }
 
+    /**
+     * Moves the jeep backward along its path, becoming available again when it reaches the start.
+     */
     private void moveJeepBackward() {
         pathIndex -= Speed.Instance.speedEnum.getJeepSteps();
         if (pathIndex < 0) {
@@ -130,9 +227,11 @@ public class Jeep extends MobileEntity{
         updateJeepPosition();
     }
 
+    /**
+     * Updates the jeep's position based on the current path index, centering the jeep on the path coordinate.
+     */
     private void updateJeepPosition() {
         setX(path.get(pathIndex).x - getWidth() / 2);
         setY(path.get(pathIndex).y - getHeight() / 2);
     }
-
 }

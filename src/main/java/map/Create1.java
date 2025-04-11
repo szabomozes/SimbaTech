@@ -1,12 +1,21 @@
 package map;
 
-
 import java.util.*;
 
+/**
+ * Utility class for generating a map with grass growth patterns in the safari simulation.
+ */
 public class Create1 {
     static private final int clearArea = 0;
     static private final Random rnd = new Random();
 
+    /**
+     * Generates a 2D map array with grass grown in random patterns.
+     *
+     * @param width  The width of the map.
+     * @param height The height of the map.
+     * @return A 2D Integer array representing the map with grass values.
+     */
     static public Integer[][] getAMap(int width, int height) {
         Integer[][] map = new Integer[height][width];
         for (int i = 0; i < height; i++) {
@@ -14,12 +23,22 @@ public class Create1 {
                 map[i][j] = 0;
             }
         }
-        List<Coordinate> grass = randomCoordinates(rnd.nextInt(30, 50), clearArea, width-clearArea, clearArea, height-clearArea);
+        List<Coordinate> grass = randomCoordinates(rnd.nextInt(30, 50), clearArea, width - clearArea, clearArea, height - clearArea);
         grassGrownings(map, grass, width, height);
         System.out.println("ASD");
         return map;
     }
 
+    /**
+     * Generates a list of random coordinates for grass starting points, ensuring no duplicates along x or y axes.
+     *
+     * @param piece     The number of coordinates to generate.
+     * @param minWidth  The minimum x-coordinate value.
+     * @param maxWidth  The maximum x-coordinate value.
+     * @param minHeight The minimum y-coordinate value.
+     * @param maxHeight The maximum y-coordinate value.
+     * @return A list of unique Coordinate objects.
+     */
     static private List<Coordinate> randomCoordinates(int piece, int minWidth, int maxWidth, int minHeight, int maxHeight) {
         List<Coordinate> coordinates = new ArrayList<>();
         while (coordinates.size() < piece) {
@@ -35,6 +54,14 @@ public class Create1 {
         return coordinates;
     }
 
+    /**
+     * Simulates grass growth on the map starting from given coordinates, spreading randomly in four directions.
+     *
+     * @param map    The 2D map array to modify.
+     * @param grass  The list of starting coordinates for grass growth.
+     * @param width  The width of the map.
+     * @param height The height of the map.
+     */
     static private void grassGrownings(Integer[][] map, List<Coordinate> grass, int width, int height) {
         Set<Coordinate> visited = new HashSet<>();
 
@@ -44,7 +71,7 @@ public class Create1 {
                 List<Coordinate> queue = new ArrayList<>();
                 queue.add(c);
                 visited.add(c);
-// 100000000
+
                 while (!queue.isEmpty() && rnd.nextInt(100000000) >= endChance) {
                     int randomIndex = rnd.nextInt(queue.size());
                     Coordinate f = queue.remove(randomIndex);
@@ -52,10 +79,10 @@ public class Create1 {
                     map[f.y][f.x] = rnd.nextInt(2) + 2;
 
                     int[][] directions = {
-                            {0, -1}, // Fel
-                            {-1, 0}, // Balra
-                            {0, 1},  // Le
-                            {1, 0}   // Jobbra
+                            {0, -1}, // Up
+                            {-1, 0}, // Left
+                            {0, 1},  // Down
+                            {1, 0}   // Right
                     };
 
                     for (int[] d : directions) {
@@ -75,6 +102,4 @@ public class Create1 {
             }
         }
     }
-
-
 }

@@ -8,6 +8,10 @@ import safari.Speed;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Represents a Poacher, a type of person in the safari simulation that moves around,
+ * hides from rangers and jeeps, and attempts to kill animals within rifle range.
+ */
 public class Poacher extends Person {
     private double targetX, targetY;
     private double currentX, currentY;
@@ -15,8 +19,12 @@ public class Poacher extends Person {
     private boolean isVisible;
     private int movingRange = 400;
 
-    // TODO PoacherSteps beállítása
-
+    /**
+     * Constructs a Poacher at the specified coordinates with the default poacher image.
+     *
+     * @param x The x-coordinate of the poacher.
+     * @param y The y-coordinate of the poacher.
+     */
     public Poacher(int x, int y) {
         super(x, y, Resources.Instance.poacher);
         this.currentX = x;
@@ -26,22 +34,43 @@ public class Poacher extends Person {
         isVisible = false;
     }
 
+    /**
+     * Sets the visibility status of the poacher.
+     *
+     * @param visible True if the poacher is visible, false otherwise.
+     */
     public void setVisible(boolean visible) {
         isVisible = visible;
     }
 
+    /**
+     * Checks if the poacher is visible.
+     *
+     * @return True if the poacher is visible, false otherwise.
+     */
     public boolean isVisible() {
         return isVisible;
     }
 
+    /**
+     * Hides the poacher by setting visibility to false.
+     */
     public void hide() {
         setVisible(false);
     }
 
+    /**
+     * Reveals the poacher by setting visibility to true.
+     */
     public void reveal() {
         setVisible(true);
     }
 
+    /**
+     * Manages the poacher's visibility based on proximity to rangers and jeeps.
+     * If within range, the poacher becomes visible; otherwise, it hides.
+     * Removes the poacher from the simulation if it is no longer alive.
+     */
     public void poacherVisibility() {
         if (!alive) {
             Safari.Instance.removeEntityById(id);
@@ -68,6 +97,13 @@ public class Poacher extends Person {
         }
     }
 
+    /**
+     * Sets a new random target position for the poacher within its moving range,
+     * ensuring the target is within map boundaries and not too close to the current position.
+     *
+     * @param currentX The current x-coordinate of the poacher.
+     * @param currentY The current y-coordinate of the poacher.
+     */
     private void setTargetXAndY(double currentX, double currentY) {
         Random rand = new Random();
         double mapWidth = Resources.Instance.map.getWidth();
@@ -84,6 +120,12 @@ public class Poacher extends Person {
         } while (Math.abs(targetX - currentX) < 1 && Math.abs(targetY - currentY) < 1);
     }
 
+    /**
+     * Moves the poacher toward its target position, avoiding water areas.
+     * If the poacher reaches the target or cannot move without hitting water,
+     * it sets a new target or teleports. Also checks for animals to shoot.
+     * Removes the poacher from the simulation if it is no longer alive.
+     */
     public void move() {
         if (!alive) {
             Safari.Instance.removeEntityById(id);
@@ -119,6 +161,10 @@ public class Poacher extends Person {
         this.y = (int) currentY;
     }
 
+    /**
+     * Teleports the poacher to a random location on the map that does not overlap with water,
+     * and sets a new target position.
+     */
     private void teleport() {
         Random rand = new Random();
         do {
@@ -128,6 +174,9 @@ public class Poacher extends Person {
         setTargetXAndY(currentX, currentY);
     }
 
+    /**
+     * Searches for animals within rifle range and shoots the first one found.
+     */
     public void searchAnimalsToKill() {
         List<Entity> animals = Safari.Instance.getAnimals();
 
@@ -141,6 +190,11 @@ public class Poacher extends Person {
         }
     }
 
+    /**
+     * Kills the specified animal by setting its alive status to false.
+     *
+     * @param animal The animal to be shot.
+     */
     public void shoot(Entity animal) {
         animal.setAlive(false);
     }

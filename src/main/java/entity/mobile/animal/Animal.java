@@ -37,52 +37,112 @@ public abstract class Animal extends MobileEntity {
     protected List<Coordinate> coordinatesForEat = new ArrayList<>();
     private int bornDate = Safari.Instance.getDate();
 
+    /**
+     * Constructs an Animal with specified coordinates and image.
+     *
+     * @param x     The x-coordinate of the animal.
+     * @param y     The y-coordinate of the animal.
+     * @param image The image representing the animal.
+     */
     public Animal(int x, int y, BufferedImage image) {
         super(x, y, image);
     }
 
+    /**
+     * Gets the age of the animal.
+     *
+     * @return The age of the animal.
+     */
     public int getAge() {
         return age;
     }
 
+    /**
+     * Gets the hunger level of the animal.
+     *
+     * @return The hunger level of the animal.
+     */
     public double getHunger() {
         return hunger;
     }
 
+    /**
+     * Gets the thirst level of the animal.
+     *
+     * @return The thirst level of the animal.
+     */
     public double getThirst() {
         return thirst;
     }
 
+    /**
+     * Sets the age of the animal.
+     *
+     * @param age The age to set.
+     */
     public void setAge(int age) {
         this.age = age;
     }
 
+    /**
+     * Sets the hunger level of the animal.
+     *
+     * @param hunger The hunger level to set.
+     */
     public void setHunger(double hunger) {
         this.hunger = hunger;
     }
 
+    /**
+     * Sets the thirst level of the animal.
+     *
+     * @param thirst The thirst level to set.
+     */
     public void setThirst(double thirst) {
         this.thirst = thirst;
     }
 
+    /**
+     * Checks if the animal is moving to drink.
+     *
+     * @return True if the animal is moving to drink, false otherwise.
+     */
     public boolean isMovingForDrink() {
         return movingForDrink;
     }
 
+    /**
+     * Sets whether the animal is moving to drink.
+     *
+     * @param movingForDrink True if moving to drink, false otherwise.
+     */
     public void setMovingForDrink(boolean movingForDrink) {
         this.movingForDrink = movingForDrink;
     }
 
+    /**
+     * Checks if the animal is moving to eat.
+     *
+     * @return True if the animal is moving to eat, false otherwise.
+     */
     public boolean isMovingForEat() {
         return movingForEat;
     }
 
+    /**
+     * Sets whether the animal is moving to eat.
+     *
+     * @param movingForEat True if moving to eat, false otherwise.
+     */
     public void setMovingForEat(boolean movingForEat) {
         this.movingForEat = movingForEat;
     }
 
-    //
-
+    /**
+     * Searches for the closest water source within visual range.
+     *
+     * @return The closest Water object if found, null otherwise.
+     */
     protected Water searchClosestWater() {
         List<Water> waters = Safari.Instance.getWatersByInteger(watersID);
 
@@ -101,7 +161,12 @@ public abstract class Animal extends MobileEntity {
         return null;
     }
 
-
+    /**
+     * Gets the closest water source from a list of waters.
+     *
+     * @param waters The list of Water objects to search from.
+     * @return The closest Water object, or null if the list is empty.
+     */
     protected Water getClosestWater(List<Water> waters) {
         Water closestWater = null;
         double minDistance = 0;
@@ -115,16 +180,27 @@ public abstract class Animal extends MobileEntity {
         return closestWater;
     }
 
-
+    /**
+     * Calculates the Euclidean distance between two points.
+     *
+     * @param entity1X The x-coordinate of the first entity.
+     * @param entity1Y The y-coordinate of the first entity.
+     * @param entity2X The x-coordinate of the second entity.
+     * @param entity2Y The y-coordinate of the second entity.
+     * @return The distance between the two points.
+     */
     protected double distanceTo(int entity1X, int entity1Y, int entity2X, int entity2Y) {
         int dx = entity1X - entity2X;
         int dy = entity1Y - entity2Y;
         return Math.sqrt(dx * dx + dy * dy);
     }
 
-
+    /**
+     * Searches for the closest plant within visual range.
+     *
+     * @return The closest Plant object if found, null otherwise.
+     */
     protected Plant searchClosestPlant() {
-
         List<Plant> plants = Safari.Instance.getPlantsByInteger(plantsID);
 
         boolean temp = false;
@@ -142,6 +218,12 @@ public abstract class Animal extends MobileEntity {
         return null;
     }
 
+    /**
+     * Gets the closest plant from a list of plants.
+     *
+     * @param plants The list of Plant objects to search from.
+     * @return The closest Plant object, or null if the list is empty.
+     */
     protected Plant getClosestPlant(List<Plant> plants) {
         Plant closestPlant = null;
         double minDistance = 0;
@@ -154,8 +236,12 @@ public abstract class Animal extends MobileEntity {
         }
         return closestPlant;
     }
-    /// ///////
 
+    /**
+     * Moves the animal randomly by a specified number of steps.
+     *
+     * @param steps The number of steps to move.
+     */
     protected void justMove(int steps) {
         Random rnd = new Random();
         int directionX = rnd.nextBoolean() ? -1 : 1;
@@ -167,9 +253,11 @@ public abstract class Animal extends MobileEntity {
         if (!overlapsWaterArea(futureX, futureY)) {
             setCoordinate(futureX, futureY);
         }
-        // Ha vízre menne, nem lép
     }
 
+    /**
+     * Handles the animal's thirst by scheduling a path to the closest water source.
+     */
     protected void handleThirst() {
         if (scheduledFutureCoordinatesForDrink == null && !movingForDrink) {
             Water closestWater = searchClosestWater();
@@ -192,6 +280,11 @@ public abstract class Animal extends MobileEntity {
         scheduledFutureCoordinatesForEat = null;
     }
 
+    /**
+     * Moves the animal toward a water source along a precomputed path.
+     *
+     * @param steps The number of steps to move.
+     */
     protected void moveToDrink(int steps) {
         if (coordinatesForDrink.isEmpty()) {
             movingForDrink = false;
@@ -208,6 +301,12 @@ public abstract class Animal extends MobileEntity {
         }
     }
 
+    /**
+     * Updates the animal's thirst and hunger levels, potentially killing it if either reaches zero.
+     *
+     * @param thirst The thirst decrement.
+     * @param hunger The hunger decrement.
+     */
     protected void updateThirstAndHunger(double thirst, double hunger) {
         this.thirst -= thirst + (Safari.Instance.getDate() - bornDate);
         this.hunger -= hunger + (Safari.Instance.getDate() - bornDate);
@@ -219,6 +318,13 @@ public abstract class Animal extends MobileEntity {
         }
     }
 
+    /**
+     * Checks if the animal's future position overlaps with any water area.
+     *
+     * @param futureX The future x-coordinate.
+     * @param futureY The future y-coordinate.
+     * @return True if the position overlaps with water, false otherwise.
+     */
     protected boolean overlapsWaterArea(int futureX, int futureY) {
         for (Water water : Safari.Instance.getWaters()) {
             if (futureX + width > water.getX() &&
@@ -231,7 +337,11 @@ public abstract class Animal extends MobileEntity {
         return false;
     }
 
-
+    /**
+     * Gets the closest herbivorous animal.
+     *
+     * @return The closest herbivorous Animal, or null if none exist.
+     */
     protected Animal getClosestHerbivorous() {
         Animal closestHerbivorous = null;
         double minDistance = 0;
@@ -246,6 +356,9 @@ public abstract class Animal extends MobileEntity {
         return closestHerbivorous;
     }
 
+    /**
+     * Handles hunger for herbivorous animals by scheduling a path to the closest plant.
+     */
     protected void handleHungerHerbivorous() {
         if (scheduledFutureCoordinatesForEat == null && !movingForEat) {
             Plant closestPlant = searchClosestPlant();
@@ -268,6 +381,11 @@ public abstract class Animal extends MobileEntity {
         scheduledFutureCoordinatesForDrink = null;
     }
 
+    /**
+     * Moves the herbivorous animal toward a plant along a precomputed path.
+     *
+     * @param steps The number of steps to move.
+     */
     protected void moveToEatHerbivorous(int steps) {
         if (coordinatesForEat.isEmpty()) {
             movingForEat = false;
@@ -284,11 +402,26 @@ public abstract class Animal extends MobileEntity {
         }
     }
 
+    /**
+     * Checks if two ranges overlap with a specified margin.
+     *
+     * @param aStart The start of the first range.
+     * @param aEnd   The end of the first range.
+     * @param bStart The start of the second range.
+     * @param bEnd   The end of the second range.
+     * @return True if the ranges overlap, false otherwise.
+     */
     protected boolean overlaps(int aStart, int aEnd, int bStart, int bEnd) {
-        int margin = 5; // Ekkora távolságon belül már átfedésnek számít
+        int margin = 5;
         return aStart < bEnd + margin && bStart < aEnd + margin;
     }
 
+    /**
+     * Sets the animal's coordinates, ensuring they stay within map boundaries.
+     *
+     * @param x The new x-coordinate.
+     * @param y The new y-coordinate.
+     */
     protected void setCoordinate(int x, int y) {
         this.x = Math.max(0, x);
         this.y = Math.max(0, y);
@@ -296,11 +429,21 @@ public abstract class Animal extends MobileEntity {
         this.y = Math.min(Resources.Instance.map.getHeight() - height, this.y);
     }
 
+    /**
+     * Checks if the animal is within the average range limit of its species.
+     *
+     * @return True if within range, false otherwise.
+     */
     protected boolean lessAvgRangeLimit() {
         Coordinate avg = Safari.Instance.avgCoordinateOf(this.getClass());
         return distanceTo(x, y, avg.x, avg.y) <= avgRangeLimitByPixel;
     }
 
+    /**
+     * Moves the animal toward the average coordinate of its species.
+     *
+     * @param steps The number of steps to move.
+     */
     protected void moveToTheAvgRange(int steps) {
         Coordinate avg = Safari.Instance.avgCoordinateOf(this.getClass());
 
@@ -327,6 +470,9 @@ public abstract class Animal extends MobileEntity {
         }
     }
 
+    /**
+     * Handles hunger for carnivorous animals by selecting a target herbivore.
+     */
     protected void handleHungerCarnivorous() {
         if (target == null || !target.isAlive()) {
             target = getClosestHerbivorous();
@@ -336,6 +482,11 @@ public abstract class Animal extends MobileEntity {
         }
     }
 
+    /**
+     * Moves the carnivorous animal toward its target herbivore.
+     *
+     * @param steps The number of steps to move.
+     */
     protected void moveToEatCarnivorous(int steps) {
         if (target == null || !target.isAlive()) {
             return;
@@ -376,7 +527,6 @@ public abstract class Animal extends MobileEntity {
             x = futureX;
             y = futureY;
 
-            // Ellenőrizze újra az átfedést a mozgás után
             boolean nowOverlapX = overlaps(x, x + width, targetX, targetX + targetWidth);
             boolean nowOverlapY = overlaps(y, y + height, targetY, targetY + targetHeight);
 

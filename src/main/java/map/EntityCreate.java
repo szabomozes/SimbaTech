@@ -18,6 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Utility class for creating non-animal entities in the safari simulation based on difficulty levels and map constraints.
+ */
 public class EntityCreate {
     private static final Random rnd = new Random();
     public static final int entryX = 0 + Resources.Instance.entry.getWidth() / 2;
@@ -25,14 +28,30 @@ public class EntityCreate {
     public static final int exitX = Resources.Instance.map.getWidth() - 0 - Resources.Instance.exit.getWidth() / 2;
     public static final int exitY = Resources.Instance.map.getHeight() - 0 - Resources.Instance.exit.getHeight() / 2;
 
+    /**
+     * Creates an Entry entity positioned at the top-left corner of the map.
+     *
+     * @return A new Entry instance.
+     */
     public static Entry getEntry() {
         return new Entry(entryX, entryY);
     }
 
+    /**
+     * Creates an Exit entity positioned at the bottom-right corner of the map.
+     *
+     * @return A new Exit instance.
+     */
     public static Exit getExit() {
         return new Exit(exitX, exitY);
     }
 
+    /**
+     * Creates a random number of Ranger entities based on the specified difficulty level.
+     *
+     * @param difficulty The difficulty level determining the range of ranger counts (EASY: 1-2, MEDIUM: 0-1, HARD: 0).
+     * @return A list of Ranger instances.
+     */
     public static List<Ranger> getRangers(DifficultyEnum difficulty) {
         int maxWidth = Resources.Instance.map.getWidth() - Resources.Instance.ranger.getWidth() / 2;
         int maxHeight = Resources.Instance.map.getHeight() - Resources.Instance.ranger.getHeight() / 2;
@@ -61,6 +80,12 @@ public class EntityCreate {
         return rangers;
     }
 
+    /**
+     * Creates a random number of Water entities based on the specified difficulty level, positioned within padded map boundaries.
+     *
+     * @param difficulty The difficulty level determining the range of water counts (EASY: 3-5, MEDIUM: 2-4, HARD: 1-3).
+     * @return A list of Water instances.
+     */
     public static List<Water> getWaters(DifficultyEnum difficulty) {
         int waterPadding = 1000;
         int maxWidth = Resources.Instance.map.getWidth() - Resources.Instance.water.getWidth() / 2 - waterPadding;
