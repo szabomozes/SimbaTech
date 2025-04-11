@@ -7,13 +7,16 @@ import entity.mobile.animal.Lion;
 import entity.mobile.person.Poacher;
 import entity.mobile.person.Ranger;
 import entity.notmobile.Water;
+import map.Coordinate;
 import road.Path;
 import map.EntityCreate;
+import road.Road;
 import safari.Safari;
 import panels.feedback.BasicFeedBackPanel;
 import panels.game.coin.CoinPanel;
 import panels.game.minimap.Minimap;
 import panels.game.toolbar.ToolBarCardLayout;
+import timer.WinOrLoseTimer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,6 +34,7 @@ public class EventPanel extends JPanel {
     private final Minimap minimap = new Minimap();
     private final CoinPanel coinPanel = new CoinPanel();
     private BasicFeedBackPanel feedback;
+    private WinOrLoseTimer winOrLoseTimer;
 
 
     public EventPanel() {
@@ -47,12 +51,16 @@ public class EventPanel extends JPanel {
         add(minimap);
         add(new FeedBackTriggerButton());
         add(GameStateTriggerButton.Instance);
+        winOrLoseTimer = new WinOrLoseTimer(this);
+        winOrLoseTimer.start();
     }
+
 
     private void addEventListeners() {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
+                if (!Safari.Instance.getWinOrLose().equals("")) return;
                 lastX = e.getX();
                 lastY = e.getY();
                 handleMousePress(e);
@@ -60,6 +68,7 @@ public class EventPanel extends JPanel {
 
             @Override
             public void mouseReleased(MouseEvent e) {
+                if (!Safari.Instance.getWinOrLose().equals("")) return;
                 handleMouseRelease(e);
             }
         });
@@ -67,6 +76,7 @@ public class EventPanel extends JPanel {
         addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
+                if (!Safari.Instance.getWinOrLose().equals("")) return;
                 handleMouseDrag(e);
             }
         });
@@ -114,7 +124,7 @@ public class EventPanel extends JPanel {
 
     private void handleShopping(int lastX, int lastY) {
         boolean isPositionAvailable = isEnoughSpace(lastX, lastY);
-        boolean isThereAnyFreePlaceForWater = isEnoughSpaceForWater(lastX, lastY);
+        boolean isThereAnyFreePlaceForWater = isEnoughSpaceForWater(lastX, lastY) && !waterOnTheRoad(lastX, lastY);
 
         if (isPositionAvailable && isThereAnyFreePlaceForWater) {
             Safari.Instance.placeSomething(lastX - offsetX, lastY - offsetY);
@@ -162,7 +172,7 @@ public class EventPanel extends JPanel {
         }
     }
 
-    public void MoveOrHunt(int lastX, int lastY, Ranger ranger) {
+    private void MoveOrHunt(int lastX, int lastY, Ranger ranger) {
         // Ellenőrizzük, hogy egy Entity-re kattintottunk-e
         Safari.Instance.getAnimalsPoachers().stream()
                 .filter(entity -> entity.contains(lastX - offsetX, lastY - offsetY))
@@ -184,7 +194,7 @@ public class EventPanel extends JPanel {
         ranger.setNewPositionY(lastY - offsetY - Resources.Instance.ranger.getHeight() / 2);
     }
 
-    public void huntEntity(Ranger ranger, Entity entity) {
+    private void huntEntity(Ranger ranger, Entity entity) {
         ranger.setTargetEntity(entity);
         ranger.setTarget(true);
         ranger.setNewPosition(false);
@@ -233,7 +243,7 @@ public class EventPanel extends JPanel {
     public void setFeedback(BasicFeedBackPanel feedback) {
         if (this.feedback != null) remove(this.feedback);
         this.feedback = feedback;
-        if (this.feedback != null) add(feedback);
+        if (this.feedback != null) add(this.feedback);
         repaint();
     }
 
@@ -318,6 +328,35 @@ public class EventPanel extends JPanel {
             return !overlapsWaterArea(x, y, width, height, Safari.Instance.getAllEntities());
         }
         return true;
+    }
+
+    private boolean waterOnTheRoad(int clickX, int clickY) {
+        if (!Safari.Instance.shopping.equals("water")) return false;
+
+        int middleX = clickX - offsetX;
+        int middleY = clickY - offsetY;
+        int differenceX = Resources.Instance.water.getWidth() / 2;
+        int differenceY = Resources.Instance.water.getHeight() / 2;
+        int x = middleX - differenceX;
+        int y = middleY - differenceY;
+        int width = differenceX * 2;
+        int height = differenceY * 2;
+
+        for (Path path : Safari.Instance.getPaths()) {
+            for (Road road : path.getRoads()) {
+                for (Coordinate coord : road.getMid()) {
+                    int coordX = coord.x;
+                    int coordY = coord.y;
+
+                    if (coordX >= x && coordX <= x + width &&
+                            coordY >= y && coordY <= y + height) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 
     @Override

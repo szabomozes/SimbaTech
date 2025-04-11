@@ -166,14 +166,18 @@ public class Jeep extends MobileEntity {
      * and collects passenger payments when returning.
      */
     public void handleJeepMovement() {
-        if (isAvaliable) {
-            initializeJeep();
-        } else if (forward) {
-            moveJeepForward();
-        } else if (!forward && passenger > 0) {
-            collectPassengerPayment();
-        } else if (!forward && passenger == 0) {
-            moveJeepBackward();
+        try {
+            if (isAvaliable) {
+                initializeJeep();
+            } else if (forward) {
+                moveJeepForward();
+            } else if (!forward && passenger > 0) {
+                collectPassengerPayment();
+            } else if (!forward && passenger == 0) {
+                moveJeepBackward();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -182,6 +186,9 @@ public class Jeep extends MobileEntity {
      * selecting a random path, and preparing to move forward.
      */
     private void initializeJeep() {
+        if (Safari.Instance.getPaths().isEmpty()) {
+            return;
+        }
         image = Resources.Instance.jeep;
         isAvaliable = false;
         passenger = rnd.nextInt(4) + 1;

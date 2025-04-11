@@ -49,6 +49,7 @@ public class Safari {
     private Map<Ranger, Integer> rangerJoinDates = new HashMap<>();
     private GameStateChecker gameStateChecker;
     private int passengers;
+    private String winOrLose = "";
 
     /**
      * Private constructor initializing the safari with a date timer and zero passengers.
@@ -78,7 +79,7 @@ public class Safari {
         }
 
         entitiesExecutor.reset();
-
+        winOrLose = "";
         coin = 1000;
         date = 0;
         passengers = 0;
@@ -172,8 +173,10 @@ public class Safari {
         if (gameStateChecker != null) {
             if (gameStateChecker.instantLose(coin, animals)) {
                 shutDown();
+                winOrLose = "lose";
             } else if (gameStateChecker.checkWin(difficultyEnum, date, animals, coin, passengers)) {
                 shutDown();
+                winOrLose = "win";
             }
         }
     }
@@ -746,5 +749,13 @@ public class Safari {
      */
     public List<Entity> getAnimals() {
         return animals;
+    }
+
+    public String getWinOrLose() {
+        return winOrLose;
+    }
+
+    public void setWinOrLose(String winOrLose) {
+        this.winOrLose = winOrLose;
     }
 }
