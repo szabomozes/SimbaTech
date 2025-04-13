@@ -9,10 +9,12 @@ import java.util.concurrent.*;
  */
 public class EntitiesExecutor {
 
-    public static EntitiesExecutor Instance = new EntitiesExecutor();
+    public static final EntitiesExecutor Instance = new EntitiesExecutor();
 
     private ScheduledExecutorService executor;
     private ScheduledExecutorService pathSearchExecutor;
+
+
 
     /**
      * Stops both the main executor and the path search executor if they are running.
@@ -20,18 +22,21 @@ public class EntitiesExecutor {
     public void stop() {
         if (executor != null) {
             executor.shutdownNow();
+            executor = null;
         }
         if (pathSearchExecutor != null) {
             pathSearchExecutor.shutdownNow();
+            pathSearchExecutor = null;
         }
     }
 
     /**
      * Resets the executors by initializing them with new thread pools and scheduling tasks.
      */
-    public void reset() {
+    public synchronized void reset() {
+        stop();
+
         executor = new ScheduledThreadPoolExecutor(4);
-        addScheduleAtFixedRate(CardPanel.Instance::repaint);
         pathSearchExecutor = new ScheduledThreadPoolExecutor(2);
     }
 
@@ -41,23 +46,22 @@ public class EntitiesExecutor {
      * @return true if the executor is running, false otherwise.
      */
     public boolean isRunning() {
+        System.out.println("isNull: " + (executor == null));
+        System.out.println("isShutdown: " + executor.isShutdown());
+        System.out.println("isTerminated: " + executor.isTerminated());
+
         return executor != null && !executor.isShutdown() && !executor.isTerminated();
     }
 
     /**
-     * Schedules a task for one-time execution with a delay of 1 millisecond.
+     * Checks if the main executor is currently running and not shut down or terminated.
      *
-     * @param task the task to execute.
-     * @return a ScheduledFuture representing the pending result of the task.
-     * @throws IllegalStateException if the executor is not running.
+     * @return true if the executor is running, false otherwise.
      */
-    public ScheduledFuture<?> addSchedule(Runnable task) {
-        if (isRunning()) {
-            return executor.schedule(task, 1, TimeUnit.MILLISECONDS);
-        } else {
-            throw new IllegalStateException("Executor is not running.");
-        }
+    public boolean isRunning2() {
+        return pathSearchExecutor != null && !pathSearchExecutor.isShutdown() && !pathSearchExecutor.isTerminated();
     }
+
 
     /**
      * Schedules a callable task for one-time execution with a delay of 1 millisecond.
@@ -68,7 +72,7 @@ public class EntitiesExecutor {
      * @throws IllegalStateException if the executor is not running.
      */
     public <T> ScheduledFuture<T> addSchedule(Callable<T> task) {
-        if (isRunning()) {
+        if (isRunning2()) {
             return pathSearchExecutor.schedule(task, 1, TimeUnit.MILLISECONDS);
         } else {
             throw new IllegalStateException("Executor is not running.");

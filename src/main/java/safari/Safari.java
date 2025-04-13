@@ -7,6 +7,7 @@ import entity.mobile.person.Poacher;
 import map.AnimalCreate;
 import map.Coordinate;
 import map.PlantCreate;
+import panels.CardPanel;
 import timer.EntitiesExecutor;
 import road.Path;
 import entity.mobile.animal.*;
@@ -80,14 +81,17 @@ public class Safari {
         }
 
         entitiesExecutor.reset();
+        entitiesExecutor.addScheduleAtFixedRate(CardPanel.Instance::repaint);
+
+        System.out.println("Reseted executor: " + entitiesExecutor.isRunning());
+
+
         winOrLose = "";
         coin = 1000;
         date = 0;
         passengers = 0;
-        updateDate();
         difficultyEnum = diff;
         System.out.println("Difficulty: " + difficultyEnum);
-        gameStateChecker = new GameStateChecker(difficultyEnum);
         shopping = null;
         roadBuilding = false;
         selling = false;
@@ -99,9 +103,13 @@ public class Safari {
         exit = EntityCreate.getExit();
 
         AnimalCreate.getLions(difficultyEnum);
+        System.out.println("Lions okay");
         AnimalCreate.getLeopards(difficultyEnum);
+        System.out.println("Leopards okay");
         AnimalCreate.getGiraffes(difficultyEnum);
+        System.out.println("Giraffes okay");
         AnimalCreate.getZebras(difficultyEnum);
+        System.out.println("Zebras okay");
 
         rangers.addAll(EntityCreate.getRangers(difficultyEnum));
         for (Ranger ranger : rangers) {
@@ -117,6 +125,7 @@ public class Safari {
 
         dateTimer = new DateTimer();
         dateTimer.start();
+        gameStateChecker = new GameStateChecker(difficultyEnum);
     }
 
     /**
