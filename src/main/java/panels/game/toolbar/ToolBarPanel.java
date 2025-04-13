@@ -36,6 +36,10 @@ public class ToolBarPanel extends JPanel {
 
     }
 
+    public SpeedButton getSpeedButton() {
+        return speedButton;
+    }
+
     @Override
     public void doLayout() {
         super.doLayout();

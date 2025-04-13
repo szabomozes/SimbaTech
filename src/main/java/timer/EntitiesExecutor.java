@@ -46,9 +46,6 @@ public class EntitiesExecutor {
      * @return true if the executor is running, false otherwise.
      */
     public boolean isRunning() {
-        System.out.println("isNull: " + (executor == null));
-        System.out.println("isShutdown: " + executor.isShutdown());
-        System.out.println("isTerminated: " + executor.isTerminated());
 
         return executor != null && !executor.isShutdown() && !executor.isTerminated();
     }
@@ -74,9 +71,8 @@ public class EntitiesExecutor {
     public <T> ScheduledFuture<T> addSchedule(Callable<T> task) {
         if (isRunning2()) {
             return pathSearchExecutor.schedule(task, 1, TimeUnit.MILLISECONDS);
-        } else {
-            throw new IllegalStateException("Executor is not running.");
         }
+        return null;
     }
 
     /**
@@ -90,8 +86,7 @@ public class EntitiesExecutor {
     public ScheduledFuture<?> addScheduleAtFixedRate(Runnable task) {
         if (isRunning()) {
             return executor.scheduleAtFixedRate(task, 1, 20, TimeUnit.MILLISECONDS);
-        } else {
-            throw new IllegalStateException("Executor is not running.");
         }
+        return null;
     }
 }

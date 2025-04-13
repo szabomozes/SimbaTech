@@ -22,7 +22,7 @@ public enum SpeedEnum {
     /**
      * Gets the number of seconds between date updates for this speed setting.
      *
-     * @return The date update interval in seconds (SNAIL: 300, HIPPOPOTAMUS: 50, EAGLE: 5).
+     * @return The date update interval in seconds.
      */
     public int getDateSec() {
         switch (this) {
@@ -41,7 +41,7 @@ public enum SpeedEnum {
     /**
      * Gets the step size for jeep movement under this speed setting.
      *
-     * @return The jeep movement steps (SNAIL: 1, HIPPOPOTAMUS: 20, EAGLE: 50).
+     * @return The jeep movement steps.
      */
     public int getJeepSteps() {
         switch (this) {
@@ -60,7 +60,7 @@ public enum SpeedEnum {
     /**
      * Gets the step size for ranger movement under this speed setting.
      *
-     * @return The ranger movement steps (SNAIL: 1, HIPPOPOTAMUS: 20, EAGLE: 50).
+     * @return The ranger movement steps.
      */
     public int getRangerSteps() {
         switch (this) {
@@ -79,7 +79,7 @@ public enum SpeedEnum {
     /**
      * Gets the step size for giraffe movement under this speed setting.
      *
-     * @return The giraffe movement steps (SNAIL: 1, HIPPOPOTAMUS: 20, EAGLE: 50).
+     * @return The giraffe movement steps.
      */
     public int getGiraffeSteps() {
         switch (this) {
@@ -98,18 +98,18 @@ public enum SpeedEnum {
     /**
      * Gets the thirst increase rate for giraffes under this speed setting.
      *
-     * @return The giraffe thirst rate (SNAIL: 0.05, HIPPOPOTAMUS: 0.1, EAGLE: 0.5).
+     * @return The giraffe thirst rate.
      */
     public double getGiraffeThirst() {
         switch (this) {
             case HIPPOPOTAMUS -> {
-                return 0.1;
+                return 0.05;
             }
             case EAGLE -> {
-                return 0.5;
+                return 0.1;
             }
             default -> {
-                return 0.05;
+                return 0.01;
             }
         }
     }
@@ -117,18 +117,18 @@ public enum SpeedEnum {
     /**
      * Gets the hunger increase rate for giraffes under this speed setting.
      *
-     * @return The giraffe hunger rate (SNAIL: 0.05, HIPPOPOTAMUS: 0.1, EAGLE: 0.5).
+     * @return The giraffe hunger rate.
      */
     public double getGiraffeHunger() {
         switch (this) {
             case HIPPOPOTAMUS -> {
-                return 0.1;
+                return 0.05;
             }
             case EAGLE -> {
-                return 0.5;
+                return 0.1;
             }
             default -> {
-                return 0.05;
+                return 0.01;
             }
         }
     }
@@ -136,7 +136,7 @@ public enum SpeedEnum {
     /**
      * Gets the step size for zebra movement under this speed setting.
      *
-     * @return The zebra movement steps (SNAIL: 2, HIPPOPOTAMUS: 20, EAGLE: 50).
+     * @return The zebra movement steps.
      */
     public int getZebraSteps() {
         switch (this) {
@@ -155,18 +155,18 @@ public enum SpeedEnum {
     /**
      * Gets the thirst increase rate for zebras under this speed setting.
      *
-     * @return The zebra thirst rate (SNAIL: 0.05, HIPPOPOTAMUS: 0.1, EAGLE: 0.5).
+     * @return The zebra thirst rate.
      */
     public double getZebraThirst() {
         switch (this) {
             case HIPPOPOTAMUS -> {
-                return 0.1;
+                return 0.05;
             }
             case EAGLE -> {
-                return 0.5;
+                return 0.1;
             }
             default -> {
-                return 0.05;
+                return 0.01;
             }
         }
     }
@@ -174,18 +174,18 @@ public enum SpeedEnum {
     /**
      * Gets the hunger increase rate for zebras under this speed setting.
      *
-     * @return The zebra hunger rate (SNAIL: 0.05, HIPPOPOTAMUS: 0.1, EAGLE: 0.5).
+     * @return The zebra hunger rate.
      */
     public double getZebraHunger() {
         switch (this) {
             case HIPPOPOTAMUS -> {
-                return 0.1;
+                return 0.05;
             }
             case EAGLE -> {
-                return 0.5;
+                return 0.1;
             }
             default -> {
-                return 0.05;
+                return 0.01;
             }
         }
     }
@@ -193,7 +193,7 @@ public enum SpeedEnum {
     /**
      * Gets the step size for lion movement under this speed setting.
      *
-     * @return The lion movement steps (SNAIL: 1, HIPPOPOTAMUS: 20, EAGLE: 50).
+     * @return The lion movement steps.
      */
     public int getLionSteps() {
         switch (this) {
@@ -212,18 +212,18 @@ public enum SpeedEnum {
     /**
      * Gets the thirst increase rate for lions under this speed setting.
      *
-     * @return The lion thirst rate (SNAIL: 0.05, HIPPOPOTAMUS: 0.1, EAGLE: 0.5).
+     * @return The lion thirst rate.
      */
     public double getLionThirst() {
         switch (this) {
             case HIPPOPOTAMUS -> {
-                return 0.1;
+                return 0.05;
             }
             case EAGLE -> {
-                return 0.5;
+                return 0.1;
             }
             default -> {
-                return 0.05;
+                return 0.01;
             }
         }
     }
@@ -231,18 +231,18 @@ public enum SpeedEnum {
     /**
      * Gets the hunger increase rate for lions under this speed setting.
      *
-     * @return The lion hunger rate (SNAIL: 0.05, HIPPOPOTAMUS: 0.1, EAGLE: 0.5).
+     * @return The lion hunger rate.
      */
     public double getLionHunger() {
         switch (this) {
             case HIPPOPOTAMUS -> {
-                return 0.1;
+                return 0.05;
             }
             case EAGLE -> {
-                return 0.5;
+                return 0.1;
             }
             default -> {
-                return 0.05;
+                return 0.01;
             }
         }
     }
@@ -250,7 +250,7 @@ public enum SpeedEnum {
     /**
      * Gets the step size for leopard movement under this speed setting.
      *
-     * @return The leopard movement steps (SNAIL: 1, HIPPOPOTAMUS: 20, EAGLE: 50).
+     * @return The leopard movement steps.
      */
     public int getLeopardSteps() {
         switch (this) {
@@ -269,7 +269,7 @@ public enum SpeedEnum {
     /**
      * Gets the step size for poacher movement under this speed setting.
      *
-     * @return The poacher movement steps (SNAIL: 1.0, HIPPOPOTAMUS: 1.5, EAGLE: 2.0).
+     * @return The poacher movement steps.
      */
     public double getPoacherSteps() {
         switch (this) {
@@ -288,18 +288,18 @@ public enum SpeedEnum {
     /**
      * Gets the thirst increase rate for leopards under this speed setting.
      *
-     * @return The leopard thirst rate (SNAIL: 0.05, HIPPOPOTAMUS: 0.1, EAGLE: 0.5).
+     * @return The leopard thirst rate.
      */
     public double getLeopardThirst() {
         switch (this) {
             case HIPPOPOTAMUS -> {
-                return 0.1;
+                return 0.05;
             }
             case EAGLE -> {
-                return 0.5;
+                return 0.1;
             }
             default -> {
-                return 0.05;
+                return 0.01;
             }
         }
     }
@@ -307,18 +307,18 @@ public enum SpeedEnum {
     /**
      * Gets the hunger increase rate for leopards under this speed setting.
      *
-     * @return The leopard hunger rate (SNAIL: 0.05, HIPPOPOTAMUS: 0.1, EAGLE: 0.5).
+     * @return The leopard hunger rate.
      */
     public double getLeopardHunger() {
         switch (this) {
             case HIPPOPOTAMUS -> {
-                return 0.1;
+                return 0.05;
             }
             case EAGLE -> {
-                return 0.5;
+                return 0.1;
             }
             default -> {
-                return 0.05;
+                return 0.01;
             }
         }
     }

@@ -9,9 +9,12 @@ public class ToolBarCardLayout extends JPanel {
 
     public static final ToolBarCardLayout Instance = new ToolBarCardLayout();
     private String currentCardName = "toolbar";
+    private ToolBarPanel toolBarPanel;
+
     private ToolBarCardLayout() {
         super(new CardLayout());
-        add(new ToolBarPanel(), "toolbar");
+        toolBarPanel = new ToolBarPanel();
+        add(toolBarPanel, "toolbar");
         add(new RoadBuildingPanel(), "buildRoad");
         add(new BuyingToolBar(), "buying");
         add(new SellingToolBar(), "selling");
@@ -34,6 +37,7 @@ public class ToolBarCardLayout extends JPanel {
     }
 
     public void resetToToolbar() {
+        toolBarPanel.getSpeedButton().resetSpeed();
         showCard("toolbar");
     }
 }

@@ -307,13 +307,13 @@ public abstract class Animal extends MobileEntity {
      * @param hunger The hunger decrement.
      */
     protected void updateThirstAndHunger(double thirst, double hunger) {
-        this.thirst -= thirst + (Safari.Instance.getDate() - bornDate);
-        this.hunger -= hunger + (Safari.Instance.getDate() - bornDate);
+        double older = (Safari.Instance.getDate() - bornDate) * 0.01;
+        this.thirst -= (thirst + older);
+        this.hunger -= (hunger + older);
         if (this.thirst < 0) this.thirst = 0;
         if (this.hunger < 0) this.hunger = 0;
-        if (hunger == 0 || thirst == 0) {
+        if (this.thirst == 0 || this.hunger == 0) {
             alive = false;
-            return;
         }
     }
 

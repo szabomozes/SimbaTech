@@ -2,12 +2,10 @@ package panels.game;
 
 import core.Resources;
 import entity.Entity;
-import entity.mobile.animal.Leopard;
-import entity.mobile.animal.Lion;
 import entity.mobile.person.Poacher;
 import entity.mobile.person.Ranger;
-import entity.notmobile.Water;
 import map.Coordinate;
+import panels.feedback.GameStatePanel;
 import road.Path;
 import map.EntityCreate;
 import road.Road;
@@ -16,6 +14,8 @@ import panels.feedback.BasicFeedBackPanel;
 import panels.game.coin.CoinPanel;
 import panels.game.minimap.Minimap;
 import panels.game.toolbar.ToolBarCardLayout;
+import safari.Speed;
+import safari.SpeedEnum;
 import timer.WinOrLoseTimer;
 
 import javax.swing.*;
@@ -34,6 +34,7 @@ public class EventPanel extends JPanel {
     private final Minimap minimap = new Minimap();
     private final CoinPanel coinPanel = new CoinPanel();
     private BasicFeedBackPanel feedback;
+    private GameStatePanel statePanel;
 
 
     public EventPanel() {
@@ -43,6 +44,9 @@ public class EventPanel extends JPanel {
     }
 
     private void initializeComponents() {
+
+        Speed.Instance.speedEnum = SpeedEnum.SNAIL;
+        ToolBarCardLayout.Instance.resetToToolbar();
         add(new LogoutButton());
         add(coinPanel);
         add(Calendar.Instance);
@@ -144,6 +148,7 @@ public class EventPanel extends JPanel {
 
     private void handleRangerSelectionOrMovement(int lastX, int lastY) {
         List<Ranger> rangers = Safari.Instance.getRangers();
+        if (statePanel != null) return;
 
         if (Safari.Instance.isSelectedRanger()) {
             rangers.stream()
@@ -237,7 +242,20 @@ public class EventPanel extends JPanel {
     public void setFeedback(BasicFeedBackPanel feedback) {
         if (this.feedback != null) remove(this.feedback);
         this.feedback = feedback;
-        if (this.feedback != null) add(this.feedback);
+        if (this.feedback != null) {
+            if (statePanel != null) {
+                remove(statePanel);
+                statePanel = null;
+            }
+            add(this.feedback);
+        }
+        repaint();
+    }
+
+    public void setStatePanel(GameStatePanel statePanel) {
+        if (this.statePanel != null) remove(this.statePanel);
+        this.statePanel = statePanel;
+        if (this.statePanel != null) add(this.statePanel);
         repaint();
     }
 
@@ -406,6 +424,8 @@ public class EventPanel extends JPanel {
         minimap.updateMinimapPosition(getHeight());
         if (feedback != null) {
             feedback.updatePosition();
+        } else if (statePanel != null) {
+            statePanel.updatePosition();
         }
         Calendar.Instance.updatePosition();
         GameStateTriggerButton.Instance.updatePosition();
