@@ -26,6 +26,13 @@ import java.awt.event.MouseMotionAdapter;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
+/**
+ * The {@code EventPanel} class represents the main interactive game panel
+ * where user inputs such as dragging, clicking, shopping, road building,
+ * and ranger movement are handled.
+ * It also initializes and adds various UI components like the minimap,
+ * coin panel, calendar, and logout button.
+ */
 public class EventPanel extends JPanel {
     private final BufferedImage background = Resources.Instance.map;
     private int offsetX = 0, offsetY = 0;
@@ -36,15 +43,21 @@ public class EventPanel extends JPanel {
     private BasicFeedBackPanel feedback;
     private GameStatePanel statePanel;
 
-
+    /**
+     * Constructs the event panel, sets layout, initializes components,
+     * and adds the necessary mouse event listeners.
+     */
     public EventPanel() {
         setLayout(null);
         initializeComponents();
         addEventListeners();
     }
 
+    /**
+     * Initializes UI components, resets toolbar, sets game speed,
+     * and starts the win/lose timer.
+     */
     private void initializeComponents() {
-
         Speed.Instance.speedEnum = SpeedEnum.SNAIL;
         ToolBarCardLayout.Instance.resetToToolbar();
         add(new LogoutButton());
@@ -56,7 +69,10 @@ public class EventPanel extends JPanel {
         WinOrLoseTimer.getInstance().startTimer();
     }
 
-
+    /**
+     * Adds mouse listener and motion listener to handle user input
+     * such as dragging, clicking, and building.
+     */
     private void addEventListeners() {
         addMouseListener(new MouseAdapter() {
             @Override
@@ -80,6 +96,12 @@ public class EventPanel extends JPanel {
         });
     }
 
+    /**
+     * Handles the logic when mouse is pressed, such as initiating
+     * road building, shopping, selling, or selecting/moving rangers.
+     *
+     * @param e the mouse event
+     */
     private void handleMousePress(MouseEvent e) {
         if (Safari.Instance.getWinOrLose().equals("") && SwingUtilities.isRightMouseButton(e)) {
             if (Safari.Instance.getRoadBuilding()) {
@@ -97,6 +119,12 @@ public class EventPanel extends JPanel {
         repaint();
     }
 
+    /**
+     * Handles actions when the mouse button is released, such as
+     * finalizing dragging or triggering exit logic.
+     *
+     * @param e the mouse event
+     */
     private void handleMouseRelease(MouseEvent e) {
         if (!SwingUtilities.isRightMouseButton(e)) {
             dragging = false;
@@ -105,6 +133,11 @@ public class EventPanel extends JPanel {
         }
     }
 
+    /**
+     * Handles dragging of the map background or road building when dragging with the mouse.
+     *
+     * @param e the mouse event
+     */
     private void handleMouseDrag(MouseEvent e) {
         if (Safari.Instance.getWinOrLose().equals("") && SwingUtilities.isRightMouseButton(e) && Safari.Instance.getRoadBuilding()) {
             Safari.Instance.saveARoad(e.getX() - offsetX, e.getY() - offsetY);
@@ -120,6 +153,12 @@ public class EventPanel extends JPanel {
         repaint();
     }
 
+    /**
+     * Handles placing an item from the shop, if the selected area is suitable.
+     *
+     * @param lastX the x-coordinate of the mouse
+     * @param lastY the y-coordinate of the mouse
+     */
     private void handleShopping(int lastX, int lastY) {
         boolean isPositionAvailable = isEnoughSpace(lastX, lastY);
         boolean isThereAnyFreePlaceForWater = isEnoughSpaceForWater(lastX, lastY) && !waterOnTheRoad(lastX, lastY);
@@ -130,6 +169,12 @@ public class EventPanel extends JPanel {
         }
     }
 
+    /**
+     * Handles selling an entity if one exists under the cursor.
+     *
+     * @param lastX the x-coordinate of the mouse
+     * @param lastY the y-coordinate of the mouse
+     */
     private void handleSelling(int lastX, int lastY) {
         Safari.Instance.getAllEntities().stream()
                 .filter(entity -> entity.contains(lastX - offsetX, lastY - offsetY))
@@ -137,15 +182,25 @@ public class EventPanel extends JPanel {
                 .ifPresent(entity -> Safari.Instance.sellSomething(entity.id));
     }
 
+    /**
+     * Handles clicking the exit area to validate and save a road connection.
+     *
+     * @param e the mouse event
+     */
     private void handleExitClick(MouseEvent e) {
         if (Safari.Instance.getExit().contains(e.getX() - offsetX, e.getY() - offsetY)) {
-
-            if (Safari.Instance.saveARoad(EntityCreate.exitX, EntityCreate.exitY)){
+            if (Safari.Instance.saveARoad(EntityCreate.exitX, EntityCreate.exitY)) {
                 Safari.Instance.getTempPaths().add(new Path(EntityCreate.entryX, EntityCreate.entryY));
             }
         }
     }
 
+    /**
+     * Handles ranger selection or movement based on mouse position.
+     *
+     * @param lastX the x-coordinate of the mouse
+     * @param lastY the y-coordinate of the mouse
+     */
     private void handleRangerSelectionOrMovement(int lastX, int lastY) {
         List<Ranger> rangers = Safari.Instance.getRangers();
         if (statePanel != null) return;
@@ -171,8 +226,14 @@ public class EventPanel extends JPanel {
         }
     }
 
+    /**
+     * Determines whether the ranger should move or hunt an entity based on click location.
+     *
+     * @param lastX  the x-coordinate of the mouse
+     * @param lastY  the y-coordinate of the mouse
+     * @param ranger the selected ranger
+     */
     private void MoveOrHunt(int lastX, int lastY, Ranger ranger) {
-        // Ellenőrizzük, hogy egy Entity-re kattintottunk-e
         Safari.Instance.getAnimalsPoachers().stream()
                 .filter(entity -> entity.contains(lastX - offsetX, lastY - offsetY))
                 .findFirst()
@@ -185,6 +246,13 @@ public class EventPanel extends JPanel {
         }
     }
 
+    /**
+     * Moves the given ranger to a new position on the map.
+     *
+     * @param lastX  the x-coordinate of the mouse
+     * @param lastY  the y-coordinate of the mouse
+     * @param ranger the ranger to be moved
+     */
     private void moveRangerToNewPosition(int lastX, int lastY, Ranger ranger) {
         ranger.setNewPosition(true);
         ranger.setTarget(false);
@@ -193,13 +261,25 @@ public class EventPanel extends JPanel {
         ranger.setNewPositionY(lastY - offsetY - Resources.Instance.ranger.getHeight() / 2);
     }
 
+    /**
+     * Sets the ranger’s state to target a given entity (e.g., poacher or animal).
+     *
+     * @param ranger the ranger
+     * @param entity the target entity
+     */
     private void huntEntity(Ranger ranger, Entity entity) {
         ranger.setTargetEntity(entity);
         ranger.setTarget(true);
         ranger.setNewPosition(false);
         ranger.setMovingNewPosition(false);
     }
-
+    /**
+     * Selects a ranger if one exists at the given coordinates.
+     *
+     * @param rangers The list of rangers.
+     * @param lastX   The X coordinate of the mouse click.
+     * @param lastY   The Y coordinate of the mouse click.
+     */
     private void selectRangerIfNeeded(List<Ranger> rangers, int lastX, int lastY) {
         rangers.stream()
                 .filter(ranger -> ranger.contains(lastX - offsetX, lastY - offsetY))
@@ -212,19 +292,39 @@ public class EventPanel extends JPanel {
                 });
     }
 
+    /**
+     * Limits the offset values to ensure the background doesn't move outside the visible area.
+     */
     private void limitOffsets() {
         offsetX = Math.max(Math.min(0, offsetX), getWidth() - background.getWidth());
         offsetY = Math.max(Math.min(0, offsetY), getHeight() - background.getHeight());
     }
 
+    /**
+     * Returns the current X offset.
+     *
+     * @return The X offset.
+     */
     public int getOffsetX() {
         return offsetX;
     }
 
+    /**
+     * Returns the current Y offset.
+     *
+     * @return The Y offset.
+     */
     public int getOffsetY() {
         return offsetY;
     }
 
+    /**
+     * Sets the offsets based on scaling values and recenters the view.
+     * Then repaints the panel.
+     *
+     * @param scaleX The horizontal scale.
+     * @param scaleY The vertical scale.
+     */
     public void setOffsets(double scaleX, double scaleY) {
         int backgroundWidth = background.getWidth();
         int backgroundHeight = background.getHeight();
@@ -239,6 +339,11 @@ public class EventPanel extends JPanel {
         repaint();
     }
 
+    /**
+     * Sets the feedback panel. Removes the existing one if present.
+     *
+     * @param feedback The new feedback panel to display.
+     */
     public void setFeedback(BasicFeedBackPanel feedback) {
         if (this.feedback != null) remove(this.feedback);
         this.feedback = feedback;
@@ -252,6 +357,11 @@ public class EventPanel extends JPanel {
         repaint();
     }
 
+    /**
+     * Sets the game state panel. Removes the existing one if present.
+     *
+     * @param statePanel The new game state panel to display.
+     */
     public void setStatePanel(GameStatePanel statePanel) {
         if (this.statePanel != null) remove(this.statePanel);
         this.statePanel = statePanel;
@@ -259,6 +369,14 @@ public class EventPanel extends JPanel {
         repaint();
     }
 
+    /**
+     * Determines whether there's enough space to place an entity
+     * at the clicked location, checking for overlap with water areas.
+     *
+     * @param clickX The X coordinate of the click.
+     * @param clickY The Y coordinate of the click.
+     * @return true if there's enough space and no overlap with water.
+     */
     private boolean isEnoughSpace(int clickX, int clickY) {
         int middleX = clickX - offsetX;
         int middleY = clickY - offsetY;
@@ -311,7 +429,16 @@ public class EventPanel extends JPanel {
 
         return !overlapsWaterArea(x, y, width, height, Safari.Instance.getWaters());
     }
-
+    /**
+     * Checks if the given rectangular area overlaps with any water entities.
+     *
+     * @param x        The X coordinate of the area.
+     * @param y        The Y coordinate of the area.
+     * @param width    The width of the area.
+     * @param height   The height of the area.
+     * @param entities The list of entities to check for overlap.
+     * @return true if the area overlaps with any entity, false otherwise.
+     */
     private boolean overlapsWaterArea(int x, int y, int width, int height, List<? extends Entity> entities) {
         for (Entity entity : entities) {
             int entityX = entity.getX();
@@ -327,6 +454,14 @@ public class EventPanel extends JPanel {
         return false;
     }
 
+    /**
+     * Determines whether there is enough space to place a water object at the clicked location.
+     * Only applies if the current shopping item is "water".
+     *
+     * @param clickX The X coordinate of the mouse click.
+     * @param clickY The Y coordinate of the mouse click.
+     * @return true if there is no overlap with existing entities, false otherwise.
+     */
     private boolean isEnoughSpaceForWater(int clickX, int clickY) {
         if (Safari.Instance.shopping.equals("water")) {
             int middleX = clickX - offsetX;
@@ -342,6 +477,14 @@ public class EventPanel extends JPanel {
         return true;
     }
 
+    /**
+     * Checks whether a water object placed at the clicked location would overlap with any road.
+     * Only applies if the current shopping item is "water".
+     *
+     * @param clickX The X coordinate of the mouse click.
+     * @param clickY The Y coordinate of the mouse click.
+     * @return true if the water would overlap with a road, false otherwise.
+     */
     private boolean waterOnTheRoad(int clickX, int clickY) {
         if (!Safari.Instance.shopping.equals("water")) return false;
 
@@ -371,6 +514,12 @@ public class EventPanel extends JPanel {
         return false;
     }
 
+    /**
+     * Custom painting logic for the panel.
+     * Draws the background image, paths, and all entities.
+     *
+     * @param g The graphics context used for painting.
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -378,7 +527,12 @@ public class EventPanel extends JPanel {
         drawPaths(g);
         drawEntities(g);
     }
-
+    /**
+     * Draws all paths on the panel including permanent and temporary paths,
+     * as well as the entry and exit points.
+     *
+     * @param g The graphics context used for drawing.
+     */
     private void drawPaths(Graphics g) {
         List<Path> paths = Safari.Instance.getPaths();
         for (Path path : paths) {
@@ -394,6 +548,13 @@ public class EventPanel extends JPanel {
         Safari.Instance.getExit().draw(g, offsetX, offsetY);
     }
 
+    /**
+     * Draws all entities on the map, sorted in proper order.
+     * If a poacher is invisible, it is not drawn.
+     * If a ranger is selected, a red border is drawn around it.
+     *
+     * @param g The graphics context used for drawing.
+     */
     private void drawEntities(Graphics g) {
         List<Entity> allEntities = Safari.Instance.getAllEntitiesWithSorted();
         for (Entity entity : allEntities) {
@@ -408,6 +569,12 @@ public class EventPanel extends JPanel {
         }
     }
 
+    /**
+     * Draws a red rectangle around a selected ranger to highlight it.
+     *
+     * @param g      The graphics context used for drawing.
+     * @param entity The ranger entity to be highlighted.
+     */
     private void drawSelectedRanger(Graphics g, Entity entity) {
         int x = entity.getX() + offsetX;
         int y = entity.getY() + offsetY;
@@ -418,6 +585,11 @@ public class EventPanel extends JPanel {
         g.drawRect(x, y, width, height);
     }
 
+    /**
+     * Custom layout method. Updates positions of UI components such as the minimap,
+     * feedback panel, state panel, calendar, and game state trigger button.
+     * Also enforces offset limits based on current window size.
+     */
     @Override
     public void doLayout() {
         super.doLayout();

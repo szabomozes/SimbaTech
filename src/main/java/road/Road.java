@@ -1,6 +1,5 @@
 package road;
 
-
 import core.Resources;
 import map.Coordinate;
 
@@ -8,6 +7,10 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The {@code Road} class represents a single straight road segment between two coordinates.
+ * It provides logic for pixel-level coordinate calculation and visual rendering.
+ */
 public class Road {
     public final int startX;
     public final int startY;
@@ -16,6 +19,15 @@ public class Road {
 
     private List<Coordinate> mid;
 
+    /**
+     * Constructs a new {@code Road} from the given start to end coordinates.
+     * The coordinates are clamped to the boundaries of the map.
+     *
+     * @param startX the starting X coordinate
+     * @param startY the starting Y coordinate
+     * @param endX   the ending X coordinate
+     * @param endY   the ending Y coordinate
+     */
     public Road(int startX, int startY, int endX, int endY) {
         int minX = 0;
         int maxX = Resources.Instance.map.getWidth();
@@ -36,6 +48,11 @@ public class Road {
         this.mid = calculateMidPoints();
     }
 
+    /**
+     * Calculates intermediate coordinates (pixels) along the road segment using linear interpolation.
+     *
+     * @return a list of {@code Coordinate} points from start to end
+     */
     private List<Coordinate> calculateMidPoints() {
         List<Coordinate> points = new ArrayList<>();
         int dx = endX - startX;
@@ -55,16 +72,33 @@ public class Road {
         return points;
     }
 
+    /**
+     * Returns the number of pixels that make up the road (its length in coordinate units).
+     *
+     * @return the number of coordinates in the road
+     */
     public int getPixel() {
         int sum = 0;
         sum += mid.size();
         return sum;
     }
 
+    /**
+     * Retrieves the list of all intermediate coordinates along the road.
+     *
+     * @return a list of {@code Coordinate} objects
+     */
     public List<Coordinate> getMid() {
         return mid;
     }
 
+    /**
+     * Draws the road segment using a thick rounded line on the given graphics context.
+     *
+     * @param g       the graphics context
+     * @param offsetX horizontal offset to apply when drawing
+     * @param offsetY vertical offset to apply when drawing
+     */
     public void draw(Graphics g, int offsetX, int offsetY) {
         Graphics2D g2d = (Graphics2D) g;
         Stroke originalStroke = g2d.getStroke();

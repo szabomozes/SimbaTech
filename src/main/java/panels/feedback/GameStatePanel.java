@@ -18,11 +18,27 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 
+/**
+ * A panel, amely a játék aktuális állapotát jeleníti meg a felhasználó számára.
+ * A panel tartalmazza az állatok, látogatók és pénzügyi adatok mutatóit, valamint egy gombot a továbblépéshez.
+ */
 public class GameStatePanel extends JPanel {
 
+    /**
+     * Az információs kép, amely a játék állapotát ábrázolja.
+     */
     private final BufferedImage image = Resources.Instance.info;
+
+    /**
+     * A GridBagLayout beállításokhoz szükséges GridBagConstraints objektum.
+     */
     protected GridBagConstraints gbc = new GridBagConstraints();
 
+    /**
+     * Konstruktor, amely létrehozza a panelt és hozzáadja az összes szükséges komponenst.
+     *
+     * @param toolBarCardLayout A paraméter, amely meghatározza, hogy melyik eszköztár kártya jelenjen meg a gomb megnyomása után.
+     */
     public GameStatePanel(String toolBarCardLayout) {
         ToolBarCardLayout.Instance.showCard("void");
 
@@ -36,6 +52,7 @@ public class GameStatePanel extends JPanel {
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.anchor = GridBagConstraints.CENTER;
         add(imageLabel, gbc);
+
         gbc.gridy = 1;
         JPanel textPanel = getTextPanel();
         add(textPanel, gbc);
@@ -44,21 +61,27 @@ public class GameStatePanel extends JPanel {
         JButton button = new JButton("Rendben");
         button.setFocusPainted(false);
         button.setFont(Resources.Instance.menu_font.deriveFont(20f));
-        button.addActionListener(e-> {
+        button.addActionListener(e -> {
             ToolBarCardLayout.Instance.showCard(toolBarCardLayout);
             ((EventPanel) getParent()).setStatePanel(null);
             GameStateTriggerButton.Instance.setClicked(true);
         });
 
         add(button, gbc);
-
     }
 
+    /**
+     * Frissíti a panel pozícióját, hogy középre kerüljön a szülő konténerben.
+     */
     public void updatePosition() {
-        setBounds(getParent().getWidth()/2 - getWidth() / 2, getParent().getHeight()/2 - getHeight() / 2, getWidth(), getHeight());
+        setBounds(getParent().getWidth() / 2 - getWidth() / 2, getParent().getHeight() / 2 - getHeight() / 2, getWidth(), getHeight());
     }
 
-
+    /**
+     * Létrehozza a panelt, amely a játék állapotának szöveges információit tartalmazza.
+     *
+     * @return A szöveges adatokat tartalmazó panel.
+     */
     private JPanel getTextPanel() {
         HashMap<String, Integer[]> text = getText();
         JPanel panel = new JPanel(new GridBagLayout());
@@ -106,10 +129,13 @@ public class GameStatePanel extends JPanel {
         return panel;
     }
 
-
+    /**
+     * Visszaadja a játék állapotát reprezentáló szöveges adatokat, mint például az állatok számát és a pénzügyi adatokat.
+     *
+     * @return A szöveges adatokat tartalmazó LinkedHashMap, ahol a kulcsok az adat típusait jelentik, az értékek pedig a megfelelő értékeket.
+     */
     private LinkedHashMap<String, Integer[]> getText() {
         LinkedHashMap<String, Integer[]> hasmap = new LinkedHashMap<>();
-
 
         GameStateChecker checker = Safari.Instance.getGameStateChecker();
         int herbivoreThreshold = checker.getHerbivoreThreshold();
@@ -129,12 +155,10 @@ public class GameStatePanel extends JPanel {
 
         int balance = Safari.Instance.coin;
 
-
         hasmap.put("növényevő", new Integer[]{herbivoreCount, herbivoreThreshold});
         hasmap.put("húsevő", new Integer[]{carnivoreCount, predatorThreshold});
         hasmap.put("látogató", new Integer[]{visitorCount, visitorThreshold});
         hasmap.put("egyenleg", new Integer[]{balance, coinThreshold});
         return hasmap;
     }
-
 }

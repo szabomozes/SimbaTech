@@ -11,11 +11,19 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Represents a toolbar button that enables road-building mode in the game.
+ * When clicked, it switches the UI to the road-building panel and initializes a new temporary path.
+ */
 public class RoadTableButton extends JButton {
 
     private final int x = 120;
     private final int y = 45;
 
+    /**
+     * Constructs the RoadTableButton with an icon, styling, and action logic.
+     * Positions the button dynamically based on the width of the CardPanel.
+     */
     public RoadTableButton() {
         setBorderPainted(false);
         setContentAreaFilled(false);
@@ -31,13 +39,18 @@ public class RoadTableButton extends JButton {
         addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("raod-table");
+                System.out.println("road-table");
                 ToolBarCardLayout.Instance.showCard("buildRoad");
                 Safari.Instance.setRoadBuilding(true);
                 Safari.Instance.getTempPaths().add(new Path(EntityCreate.entryX, EntityCreate.entryY));
             }
         });
     }
+
+    /**
+     * Updates the position of the button based on the current width of the CardPanel.
+     * Should be called when the layout changes.
+     */
     public void updatePosition() {
         setBounds(CardPanel.Instance.getWidth() - getWidth() - x, y, getWidth(), getHeight());
     }

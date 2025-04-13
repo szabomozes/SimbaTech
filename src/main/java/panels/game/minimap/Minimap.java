@@ -18,19 +18,36 @@ import java.awt.event.MouseMotionAdapter;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
+/**
+ * The Minimap class represents a minimap that displays a scaled-down version of the game map.
+ * The minimap includes paths, entry and exit points, entities, and a view of the currently visible area.
+ */
 public class Minimap extends JPanel {
+
+    /**
+     * The background image for the minimap.
+     */
     private BufferedImage backgroundImage = Resources.Instance.minimap;
 
+    /**
+     * Constructor for the Minimap class. It initializes the minimap size and sets up mouse interaction handlers.
+     */
     public Minimap() {
         setMinimapSize();
         setupMouseClickHandler();
         setupMouseDragHandler();
     }
 
+    /**
+     * Sets the size of the minimap based on the background image dimensions.
+     */
     private void setMinimapSize() {
         setSize(new Dimension(backgroundImage.getWidth(), backgroundImage.getHeight()));
     }
 
+    /**
+     * Sets up the mouse click handler that updates the offsets when the user clicks on the minimap.
+     */
     private void setupMouseClickHandler() {
         addMouseListener(new MouseAdapter() {
             @Override
@@ -40,6 +57,9 @@ public class Minimap extends JPanel {
         });
     }
 
+    /**
+     * Sets up the mouse drag handler that updates the offsets as the user drags the mouse over the minimap.
+     */
     private void setupMouseDragHandler() {
         addMouseMotionListener(new MouseMotionAdapter() {
             @Override
@@ -49,6 +69,12 @@ public class Minimap extends JPanel {
         });
     }
 
+    /**
+     * Updates the offsets based on the mouse event.
+     * This is used to adjust the visible portion of the map in the main game window.
+     *
+     * @param e The MouseEvent containing the mouse position.
+     */
     private void updateOffsetsFromMouseEvent(MouseEvent e) {
         int mouseX = e.getX();
         int mouseY = e.getY();
@@ -59,30 +85,37 @@ public class Minimap extends JPanel {
         ((EventPanel) getParent()).setOffsets(scaleX, scaleY);
     }
 
-
+    /**
+     * Updates the minimap's position on the screen based on the provided height.
+     * This ensures the minimap is correctly placed relative to the game window.
+     *
+     * @param height The height used to calculate the y-position of the minimap.
+     */
     public void updateMinimapPosition(int height) {
         int yPosition = height - getHeight() - 10;
         setBounds(10, yPosition, getWidth(), getHeight());
     }
 
+    /**
+     * Paints the minimap on the screen, including paths, entities, entry/exit points, and the current visible area.
+     *
+     * @param g The Graphics object used for rendering the minimap.
+     */
     @Override
     protected void paintComponent(Graphics g) {
-
         super.paintComponent(g);
 
-        Graphics2D g2d = (Graphics2D) g; // Graphics2D, hogy tudjunk Stroke-ot állítani
-
+        Graphics2D g2d = (Graphics2D) g; // Graphics2D for advanced drawing features
 
         int parentWidth = Resources.Instance.map.getWidth();
         int parentHeight = Resources.Instance.map.getHeight();
         int width = getWidth();
         int height = getHeight();
 
-        // Háttér
+        // Draw background
         g.drawImage(backgroundImage, 0, 0, this);
 
-
-        // Path
+        // Draw paths
         g2d.setColor(Color.BLACK);
         float roadStrokeWidth = 1.0f;
         g2d.setStroke(new BasicStroke(roadStrokeWidth, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
@@ -99,7 +132,8 @@ public class Minimap extends JPanel {
                 g2d.drawLine(startX, startY, endX, endY);
             }
         }
-        // TempPath
+
+        // Draw temporary paths
         g2d.setColor(Color.GRAY);
         g2d.setStroke(new BasicStroke(roadStrokeWidth, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 
@@ -116,15 +150,16 @@ public class Minimap extends JPanel {
             }
         }
 
-        //Entry and Exit
+        // Draw entry and exit points
         g2d.setColor(new Color(101, 67, 33));
         Entry entry = Safari.Instance.getEntry();
         Exit exit = Safari.Instance.getExit();
-        g2d.fillRect((int) (width * ((double) entry.getX() / parentWidth)), (int) (height * ((double) entry.getY() / parentHeight)),10, 10);
-        g2d.fillRect((int) (width * ((double) exit.getX() / parentWidth)),(int) (height * ((double) exit.getY() / parentHeight)),10, 10);
+        g2d.fillRect((int) (width * ((double) entry.getX() / parentWidth)),
+                (int) (height * ((double) entry.getY() / parentHeight)), 10, 10);
+        g2d.fillRect((int) (width * ((double) exit.getX() / parentWidth)),
+                (int) (height * ((double) exit.getY() / parentHeight)), 10, 10);
 
-
-        // Entity
+        // Draw entities
         List<Entity> entities = Safari.Instance.getAllEntities();
         for (Entity entity : entities) {
             String className = entity.getClass().getSimpleName();
@@ -143,11 +178,11 @@ public class Minimap extends JPanel {
             g2d.fillRect(x, y, tempWidth, tempHeight);
         }
 
-        // Keret
+        // Draw border
         g2d.setColor(Color.BLACK);
         g2d.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
 
-        // Nézet keret
+        // Draw view frame
         int offsetX = ((EventPanel) getParent()).getOffsetX();
         int offsetY = ((EventPanel) getParent()).getOffsetY();
         g2d.setColor(Color.RED);
@@ -161,7 +196,7 @@ public class Minimap extends JPanel {
 
         g2d.drawRect(startX, startY, rectWidth, rectHeight);
 
-        // Stroke visszaállítása az alapértelmezettre
+        // Reset stroke to default
         g2d.setStroke(new BasicStroke());
     }
 }
