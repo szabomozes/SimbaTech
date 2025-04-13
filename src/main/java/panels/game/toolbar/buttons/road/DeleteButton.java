@@ -31,8 +31,7 @@ public class DeleteButton extends JButton {
         addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                CardLayout cardLayout = (CardLayout) ToolBarCardLayout.Instance.getLayout();
-                cardLayout.show(ToolBarCardLayout.Instance, "toolbar");
+                ToolBarCardLayout.Instance.showCard("toolbar");
                 Safari.Instance.clearTempPaths();
                 Safari.Instance.setRoadBuilding(false);
                 ToolBarCardLayout.Instance.resetToToolbar();

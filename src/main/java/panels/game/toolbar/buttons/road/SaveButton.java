@@ -33,8 +33,7 @@ public class SaveButton extends JButton {
         addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                CardLayout cardLayout = (CardLayout) ToolBarCardLayout.Instance.getLayout();
-                cardLayout.show(ToolBarCardLayout.Instance, "toolbar");
+                ToolBarCardLayout.Instance.showCard("toolbar");
 
                 if (!Safari.Instance.getTempPaths().getLast().getRoads().isEmpty()) {
                     ((EventPanel) getParent().getParent().getParent().getComponent(0)).setFeedback(new MessageFeedBackPanel("Zárd le az összes utat vásárlás előtt!", "buildRoad"));
