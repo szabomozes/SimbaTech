@@ -7,6 +7,7 @@ import entity.notmobile.plant.Plant;
 import map.Coordinate;
 import pathFinder.PathFinder;
 import safari.Safari;
+import safari.Speed;
 import timer.EntitiesExecutor;
 
 import java.awt.image.BufferedImage;
@@ -31,6 +32,7 @@ public abstract class Animal extends MobileEntity {
     protected static final int avgRangeLimitByPixel = 1000;
     protected Random rnd = new Random();
     protected Animal target;
+    protected Plant targetPlant;
     protected ScheduledFuture<List<Coordinate>> scheduledFutureCoordinatesForDrink = null;
     protected List<Coordinate> coordinatesForDrink = new ArrayList<>();
     protected ScheduledFuture<List<Coordinate>> scheduledFutureCoordinatesForEat = null;
@@ -373,6 +375,7 @@ public abstract class Animal extends MobileEntity {
                 int plantY = closestPlant.getY();
                 int plantWidth = closestPlant.getWidth();
                 int plantHeight = closestPlant.getHeight();
+                targetPlant = closestPlant;
                 scheduledFutureCoordinatesForEat = EntitiesExecutor.Instance.addSchedule(() -> PathFinder.ASearch(x, y, width, height, plantX, plantY, plantWidth, plantHeight));
             }
         }
@@ -389,6 +392,11 @@ public abstract class Animal extends MobileEntity {
         if (coordinatesForEat.isEmpty()) {
             movingForEat = false;
             hunger = 200;
+            if (targetPlant != null) {
+                synchronized (targetPlant) {
+                    targetPlant.foodDecrement();
+                }
+            }
         } else {
             int limit = Math.min(coordinatesForEat.size(), steps) - 1;
             for (int i = 0; i < limit; i++) {

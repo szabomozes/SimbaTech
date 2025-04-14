@@ -322,4 +322,33 @@ public enum SpeedEnum {
             }
         }
     }
+
+    public double getPlantRegeneration() {
+        switch (this) {
+            case HIPPOPOTAMUS -> {
+                return 0.1;
+            }
+            case EAGLE -> {
+                return 1;
+            }
+            default -> {
+                return 0.01;
+            }
+        }
+    }
+
+    public double getPlantDeeterioration() {
+        switch (this) {
+            case HIPPOPOTAMUS -> {
+                return 20;
+            }
+            case EAGLE -> {
+                return 30;
+            }
+            default -> {
+                return 10;
+            }
+        }
+    }
+
 }

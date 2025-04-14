@@ -2,6 +2,8 @@ package entity.notmobile.plant;
 
 import core.Resources;
 
+import java.awt.image.BufferedImage;
+
 /**
  * Represents a Pancium, a type of plant in the safari simulation.
  */
@@ -15,5 +17,23 @@ public class Pancium extends Plant {
      */
     public Pancium(int x, int y) {
         super(x, y, Resources.Instance.pancium);
+    }
+
+    @Override
+    public BufferedImage getFood30() {
+        return Resources.Instance.pancium;
+        // TODO: pancium30
+    }
+
+    @Override
+    public BufferedImage getFood60() {
+        return Resources.Instance.pancium;
+        // TODO: pancium60
+    }
+
+    @Override
+    public BufferedImage getFood100() {
+        return Resources.Instance.pancium;
+        // TODO: pancium100
     }
 }

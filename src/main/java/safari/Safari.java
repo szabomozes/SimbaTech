@@ -47,7 +47,6 @@ public class Safari {
     private List<Jeep> jeeps = new ArrayList<>();
     private List<Poacher> poachers = new ArrayList<>();
     private boolean selectedRanger = false;
-    private EntitiesExecutor entitiesExecutor = EntitiesExecutor.Instance;
     private Map<Ranger, Integer> rangerJoinDates = new HashMap<>();
     private GameStateChecker gameStateChecker;
     private int passengers;
@@ -68,7 +67,7 @@ public class Safari {
      */
     public void shutDown() {
         dateTimer.stopTimer();
-        entitiesExecutor.stop();
+        EntitiesExecutor.Instance.stop();
     }
 
     /**
@@ -81,8 +80,8 @@ public class Safari {
             dateTimer.stop();
         }
 
-        entitiesExecutor.reset();
-        entitiesExecutor.addScheduleAtFixedRate(CardPanel.Instance::repaint);
+        EntitiesExecutor.Instance.reset();
+        EntitiesExecutor.Instance.addScheduleAtFixedRate(CardPanel.Instance::repaint);
 
 
         winOrLose = "";
@@ -110,12 +109,12 @@ public class Safari {
         rangers.addAll(EntityCreate.getRangers(difficultyEnum));
         for (Ranger ranger : rangers) {
             rangerJoinDates.put(ranger, date);
-            entitiesExecutor.addScheduleAtFixedRate(ranger::handleRangerMovement);
+            EntitiesExecutor.Instance.addScheduleAtFixedRate(ranger::handleRangerMovement);
         }
+        PlantCreate.getBaobabs(difficultyEnum);
+        PlantCreate.getPalmTrees(difficultyEnum);
+        PlantCreate.getPanciums(difficultyEnum);
 
-        plants.addAll(PlantCreate.getBaobabs(difficultyEnum));
-        plants.addAll(PlantCreate.getPalmTrees(difficultyEnum));
-        plants.addAll(PlantCreate.getPanciums(difficultyEnum));
 
         waters.addAll(EntityCreate.getWaters(difficultyEnum));
         updateDate();
@@ -220,35 +219,45 @@ public class Safari {
             case "lion":
                 Lion lion = new Lion(x, y);
                 animals.add(lion);
-                ScheduledFuture<?> lionTask = entitiesExecutor.addScheduleAtFixedRate(lion::handleLionMovement);
+                ScheduledFuture<?> lionTask = EntitiesExecutor.Instance.addScheduleAtFixedRate(lion::handleLionMovement);
                 lion.setTask(lionTask);
                 break;
             case "leopard":
                 Leopard leopard = new Leopard(x, y);
                 animals.add(leopard);
-                ScheduledFuture<?> leopardTask = entitiesExecutor.addScheduleAtFixedRate(leopard::handleLeopardMovement);
+                ScheduledFuture<?> leopardTask = EntitiesExecutor.Instance.addScheduleAtFixedRate(leopard::handleLeopardMovement);
                 leopard.setTask(leopardTask);
                 break;
             case "zebra":
                 Zebra zebra = new Zebra(x, y);
                 animals.add(zebra);
-                ScheduledFuture<?> zebraTask = entitiesExecutor.addScheduleAtFixedRate(zebra::handleZebraMovement);
+                ScheduledFuture<?> zebraTask = EntitiesExecutor.Instance.addScheduleAtFixedRate(zebra::handleZebraMovement);
                 zebra.setTask(zebraTask);
                 break;
             case "giraffe":
                 Giraffe giraffe = new Giraffe(x, y);
                 animals.add(giraffe);
-                ScheduledFuture<?> giraffeTask = entitiesExecutor.addScheduleAtFixedRate(giraffe::handleGiraffeMovement);
+                ScheduledFuture<?> giraffeTask = EntitiesExecutor.Instance.addScheduleAtFixedRate(giraffe::handleGiraffeMovement);
                 giraffe.setTask(giraffeTask);
                 break;
             case "baobab":
-                plants.add(new Baobab(x, y));
+                Baobab baobab = new Baobab(x, y);
+                plants.add(baobab);
+                ScheduledFuture<?> baobabTask = EntitiesExecutor.Instance.addScheduleAtFixedRate(baobab::handlePlantMovement);
+                baobab.setTask(baobabTask);
                 break;
             case "palmtree":
-                plants.add(new PalmTree(x, y));
+                PalmTree palmTree = new PalmTree(x, y);
+                plants.add(palmTree);
+                ScheduledFuture<?> palmTreeTask = EntitiesExecutor.Instance.addScheduleAtFixedRate(palmTree::handlePlantMovement);
+                palmTree.setTask(palmTreeTask);
+                // TODO: task
                 break;
             case "pancium":
-                plants.add(new Pancium(x, y));
+                Pancium pancium = new Pancium(x, y);
+                plants.add(pancium);
+                ScheduledFuture<?> panciumTask = EntitiesExecutor.Instance.addScheduleAtFixedRate(pancium::handlePlantMovement);
+                pancium.setTask(panciumTask);
                 break;
             case "water":
                 waters.add(new Water(x, y));
@@ -257,13 +266,13 @@ public class Safari {
                 Ranger ranger = new Ranger(x, y);
                 rangers.add(ranger);
                 rangerJoinDates.put(ranger, date);
-                ScheduledFuture<?> rangerTask = entitiesExecutor.addScheduleAtFixedRate(ranger::handleRangerMovement);
+                ScheduledFuture<?> rangerTask = EntitiesExecutor.Instance.addScheduleAtFixedRate(ranger::handleRangerMovement);
                 ranger.setTask(rangerTask);
                 break;
             case "jeep":
                 Jeep jeep = new Jeep(EntityCreate.entryX, EntityCreate.entryY);
                 jeeps.add(jeep);
-                ScheduledFuture<?> jeepTask = entitiesExecutor.addScheduleAtFixedRate(jeep::handleJeepMovement);
+                ScheduledFuture<?> jeepTask = EntitiesExecutor.Instance.addScheduleAtFixedRate(jeep::handleJeepMovement);
                 jeep.setTask(jeepTask);
                 break;
         }
@@ -285,8 +294,8 @@ public class Safari {
             y = rand.nextInt(Resources.Instance.map.getHeight());
             Poacher poacher = new Poacher(x, y);
             poachers.add(poacher);
-            ScheduledFuture<?> poacherTaskVisibility = entitiesExecutor.addScheduleAtFixedRate(poacher::poacherVisibility);
-            ScheduledFuture<?> poacherTaskMove = entitiesExecutor.addScheduleAtFixedRate(poacher::move);
+            ScheduledFuture<?> poacherTaskVisibility = EntitiesExecutor.Instance.addScheduleAtFixedRate(poacher::poacherVisibility);
+            ScheduledFuture<?> poacherTaskMove = EntitiesExecutor.Instance.addScheduleAtFixedRate(poacher::move);
             poacher.setTask(poacherTaskVisibility);
             poacher.setTask2(poacherTaskMove);
         }
@@ -722,23 +731,38 @@ public class Safari {
         if (entityClass == Lion.class) {
             Lion lion = new Lion(x, y);
             animals.add(lion);
-            ScheduledFuture<?> lionTask = entitiesExecutor.addScheduleAtFixedRate(lion::handleLionMovement);
+            ScheduledFuture<?> lionTask = EntitiesExecutor.Instance.addScheduleAtFixedRate(lion::handleLionMovement);
             lion.setTask(lionTask);
         } else if (entityClass == Leopard.class) {
             Leopard leopard = new Leopard(x, y);
             animals.add(leopard);
-            ScheduledFuture<?> leopardTask = entitiesExecutor.addScheduleAtFixedRate(leopard::handleLeopardMovement);
+            ScheduledFuture<?> leopardTask = EntitiesExecutor.Instance.addScheduleAtFixedRate(leopard::handleLeopardMovement);
             leopard.setTask(leopardTask);
         } else if (entityClass == Zebra.class) {
             Zebra zebra = new Zebra(x, y);
             animals.add(zebra);
-            ScheduledFuture<?> zebraTask = entitiesExecutor.addScheduleAtFixedRate(zebra::handleZebraMovement);
+            ScheduledFuture<?> zebraTask = EntitiesExecutor.Instance.addScheduleAtFixedRate(zebra::handleZebraMovement);
             zebra.setTask(zebraTask);
         } else if (entityClass == Giraffe.class) {
             Giraffe giraffe = new Giraffe(x, y);
             animals.add(giraffe);
-            ScheduledFuture<?> giraffeTask = entitiesExecutor.addScheduleAtFixedRate(giraffe::handleGiraffeMovement);
+            ScheduledFuture<?> giraffeTask = EntitiesExecutor.Instance.addScheduleAtFixedRate(giraffe::handleGiraffeMovement);
             giraffe.setTask(giraffeTask);
+        } else if (entityClass == PalmTree.class) {
+            PalmTree palmTree = new PalmTree(x, y);
+            plants.add(palmTree);
+            ScheduledFuture<?> palmTreeTask = EntitiesExecutor.Instance.addScheduleAtFixedRate(palmTree::handlePlantMovement);
+            palmTree.setTask(palmTreeTask);
+        } else if (entityClass == Baobab.class) {
+            Baobab baobab = new Baobab(x, y);
+            plants.add(baobab);
+            ScheduledFuture<?> baobabTask = EntitiesExecutor.Instance.addScheduleAtFixedRate(baobab::handlePlantMovement);
+            baobab.setTask(baobabTask);
+        } else if (entityClass == Pancium.class) {
+            Pancium pancium = new Pancium(x, y);
+            plants.add(pancium);
+            ScheduledFuture<?> panciumTask = EntitiesExecutor.Instance.addScheduleAtFixedRate(pancium::handlePlantMovement);
+            pancium.setTask(panciumTask);
         }
     }
 
