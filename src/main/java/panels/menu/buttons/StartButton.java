@@ -26,7 +26,7 @@ public class StartButton extends JButton {
         CardPanel.Instance.showCard("loading");
 
         new Thread(() -> {
-            generateGameBackground();
+            generateGameBackgroundTest();
             Resources.Instance.map();
 
             SwingUtilities.invokeLater(() -> {

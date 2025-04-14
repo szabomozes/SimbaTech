@@ -154,10 +154,20 @@ public class Minimap extends JPanel {
         g2d.setColor(new Color(101, 67, 33));
         Entry entry = Safari.Instance.getEntry();
         Exit exit = Safari.Instance.getExit();
+
+
+        int tempEntryExitWidth = (int) (width * ((double) (entry.getWidth()) / parentWidth));
+        int tempEntryExitHeight = (int) (height * ((double) (entry.getHeight()) / parentHeight));
+
         g2d.fillRect((int) (width * ((double) entry.getX() / parentWidth)),
-                (int) (height * ((double) entry.getY() / parentHeight)), 10, 10);
+                (int) (height * ((double) entry.getY() / parentHeight)), tempEntryExitWidth, tempEntryExitHeight);
+
+        tempEntryExitWidth = (int) (width * ((double) (exit.getWidth()) / parentWidth));
+        tempEntryExitHeight = (int) (height * ((double) (exit.getHeight()) / parentHeight));
+
         g2d.fillRect((int) (width * ((double) exit.getX() / parentWidth)),
-                (int) (height * ((double) exit.getY() / parentHeight)), 10, 10);
+                (int) (height * ((double) exit.getY() / parentHeight)), tempEntryExitWidth, tempEntryExitHeight);
+
 
         // Draw entities
         List<Entity> entities = Safari.Instance.getAllEntities();
