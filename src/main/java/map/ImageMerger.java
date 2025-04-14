@@ -39,7 +39,7 @@ public class ImageMerger {
 
             g.dispose();
 
-            ImageIO.write(bigImage, "PNG", new File("res/main/res/icons/game-panel/map.png"));
+            ImageIO.write(bigImage, "PNG", new File("src/main/res/icons/game-panel/map.png"));
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -19,13 +19,14 @@ public class Window extends JFrame {
     public Window() {
         super("Simbatech");
         SwingUtilities.invokeLater(() -> {
-            setSize(800, 500); // Initial size (can be adjusted)
-            setMinimumSize(new Dimension(800, 600));
+            setMinimumSize(new Dimension(1000, 600));
+            setSize(1000, 700); // Initial size (can be adjusted)
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             setLocationRelativeTo(null); // Center on screen
             setIconImage(Resources.Instance.mainlogo);
             add(CardPanel.Instance);
             //pack(); // Optional: calculate size based on contents
+            System.out.println(this.getWidth());
             setVisible(true);
         });
     }

@@ -490,7 +490,6 @@ public abstract class Animal extends MobileEntity {
             return;
         }
 
-        System.out.println(hunger);
         int targetX = target.getX();
         int targetY = target.getY();
         int targetWidth = target.getWidth();
