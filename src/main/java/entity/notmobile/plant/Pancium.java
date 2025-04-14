@@ -21,19 +21,16 @@ public class Pancium extends Plant {
 
     @Override
     public BufferedImage getFood30() {
-        return Resources.Instance.pancium;
-        // TODO: pancium30
+        return Resources.Instance.pancium30;
     }
 
     @Override
     public BufferedImage getFood60() {
-        return Resources.Instance.pancium;
-        // TODO: pancium60
+        return Resources.Instance.pancium60;
     }
 
     @Override
     public BufferedImage getFood100() {
         return Resources.Instance.pancium;
-        // TODO: pancium100
     }
 }

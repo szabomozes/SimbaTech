@@ -21,19 +21,16 @@ public class Baobab extends Plant {
 
     @Override
     protected BufferedImage getFood30() {
-        return Resources.Instance.baobab;
-        // TODO: baobab30
+        return Resources.Instance.baobab30;
     }
 
     @Override
     protected BufferedImage getFood60() {
-        return Resources.Instance.baobab;
-        // TODO: baobab60
+        return Resources.Instance.baobab60;
     }
 
     @Override
     protected BufferedImage getFood100() {
         return Resources.Instance.baobab;
-        // TODO: baobab100
     }
 }

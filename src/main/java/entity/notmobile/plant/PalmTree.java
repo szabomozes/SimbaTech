@@ -21,19 +21,16 @@ public class PalmTree extends Plant {
 
     @Override
     protected BufferedImage getFood30() {
-        return Resources.Instance.palmTree;
-        // TODO: palmTree30
+        return Resources.Instance.palmTree30;
     }
 
     @Override
     protected BufferedImage getFood60() {
-        return Resources.Instance.palmTree;
-        // TODO: palmTree60
+        return Resources.Instance.palmTree60;
     }
 
     @Override
     protected BufferedImage getFood100() {
         return Resources.Instance.palmTree;
-        // TODO: palmTree100
     }
 }

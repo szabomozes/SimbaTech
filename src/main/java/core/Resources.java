@@ -54,8 +54,14 @@ public class Resources {
     public BufferedImage deleteButton;
     public BufferedImage hourglass;
     public BufferedImage palmTree;
+    public BufferedImage palmTree30;
+    public BufferedImage palmTree60;
     public BufferedImage baobab;
+    public BufferedImage baobab30;
+    public BufferedImage baobab60;
     public BufferedImage pancium;
+    public BufferedImage pancium30;
+    public BufferedImage pancium60;
     public BufferedImage water;
     public BufferedImage ranger;
     public BufferedImage poacher;
@@ -184,14 +190,50 @@ public class Resources {
             throw new RuntimeException(e);
         }
         try {
+            palmTree30 = ImageIO.read(new File("src/main/res/icons/game-panel/plants/palm-tree30.png"));
+            palmTree30 = resizeImage(palmTree30, 140);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            palmTree60 = ImageIO.read(new File("src/main/res/icons/game-panel/plants/palm-tree60.png"));
+            palmTree60 = resizeImage(palmTree60, 140);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
             baobab = ImageIO.read(new File("src/main/res/icons/game-panel/plants/baobab.png"));
             baobab = resizeImage(baobab, 180);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         try {
+            baobab30 = ImageIO.read(new File("src/main/res/icons/game-panel/plants/baobab30.png"));
+            baobab30 = resizeImage(baobab30, 180);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            baobab60 = ImageIO.read(new File("src/main/res/icons/game-panel/plants/baobab60.png"));
+            baobab60 = resizeImage(baobab60, 180);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
             pancium = ImageIO.read(new File("src/main/res/icons/game-panel/plants/grass.png"));
             pancium = resizeImage(pancium, 50);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            pancium30 = ImageIO.read(new File("src/main/res/icons/game-panel/plants/pancium30.png"));
+            pancium30 = resizeImage(pancium30, 50);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            pancium60 = ImageIO.read(new File("src/main/res/icons/game-panel/plants/pancium60.png"));
+            pancium60 = resizeImage(pancium60, 50);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
