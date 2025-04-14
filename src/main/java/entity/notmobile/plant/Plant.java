@@ -32,7 +32,6 @@ public abstract class Plant extends NotMobileEntity {
 
     public void handlePlantMovement() {
         if (isAlive()) {
-            System.out.println(food);
             if (food <= 0) {
                 alive = false;
                 return;
