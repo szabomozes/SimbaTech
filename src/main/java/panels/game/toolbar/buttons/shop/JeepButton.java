@@ -48,7 +48,7 @@ public class JeepButton extends JButton {
                 if (Safari.Instance.coin >= limit) {
                     Safari.Instance.coin -= limit;
                     Safari.Instance.shopping = "jeep";
-                    Safari.Instance.placeSomething(EntityCreate.entryX, EntityCreate.entryY);
+                    Safari.Instance.placeSomething(EntityCreate.getEntryX(), EntityCreate.getEntryY());
                 } else {
                     ToolBarCardLayout.Instance.showCard("void");
                     ((EventPanel) getParent().getParent().getParent().getComponent(0))

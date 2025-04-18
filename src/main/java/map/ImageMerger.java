@@ -20,7 +20,7 @@ public class ImageMerger {
      * @param cols The number of columns in the map.
      * @param rows The number of rows in the map.
      */
-    public static void Create(Integer[][] map, int cols, int rows) {
+    public static void Create(Integer[][] map, int cols, int rows, String outputPath) {
         int tileSize = 5;
         int width = cols * tileSize;
         int height = rows * tileSize;
@@ -39,7 +39,7 @@ public class ImageMerger {
 
             g.dispose();
 
-            ImageIO.write(bigImage, "PNG", new File("src/main/res/icons/game-panel/map.png"));
+            ImageIO.write(bigImage, "PNG", new File(outputPath));
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -51,7 +51,7 @@ public class ImageMerger {
      *
      * @param size The width and height of the square map.
      */
-    public static void newMap(int size) {
-        Create(Create1.getAMap(size, size), size, size);
+    public static void newMap(int size, String outputPath) {
+        Create(Create1.getAMap(size, size), size, size, outputPath);
     }
 }

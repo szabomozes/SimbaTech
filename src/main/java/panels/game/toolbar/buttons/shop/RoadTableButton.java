@@ -42,7 +42,7 @@ public class RoadTableButton extends JButton {
                 System.out.println("road-table");
                 ToolBarCardLayout.Instance.showCard("buildRoad");
                 Safari.Instance.setRoadBuilding(true);
-                Safari.Instance.getTempPaths().add(new Path(EntityCreate.entryX, EntityCreate.entryY));
+                Safari.Instance.getTempPaths().add(new Path(EntityCreate.getEntryX(), EntityCreate.getEntryY()));
             }
         });
     }

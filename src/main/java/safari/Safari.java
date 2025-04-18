@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
  * Singleton class managing the safari simulation, including entities, game state, and interactions.
  */
 public class Safari {
-    public static final Safari Instance = new Safari();
+    public static Safari Instance = new Safari();
 
     private DifficultyEnum difficultyEnum;
     private int date;
@@ -56,7 +56,7 @@ public class Safari {
     /**
      * Private constructor initializing the safari with a date timer and zero passengers.
      */
-    private Safari() {
+    protected Safari() {
         dateTimer = new DateTimer();
         dateTimer.start();
         passengers = 0;
@@ -126,7 +126,7 @@ public class Safari {
     /**
      * Clears all entity lists and related data structures.
      */
-    private void clearAllEntities() {
+    public void clearAllEntities() {
         animals.clear();
         plants.clear();
         waters.clear();
@@ -273,7 +273,7 @@ public class Safari {
                 ranger.setTask(rangerTask);
                 break;
             case "jeep":
-                Jeep jeep = new Jeep(EntityCreate.entryX, EntityCreate.entryY);
+                Jeep jeep = new Jeep(EntityCreate.getEntryX(), EntityCreate.getEntryY());
                 jeeps.add(jeep);
                 ScheduledFuture<?> jeepTask = EntitiesExecutor.Instance.addScheduleAtFixedRate(jeep::handleJeepMovement);
                 jeep.setTask(jeepTask);

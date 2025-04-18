@@ -48,6 +48,6 @@ public class StartButton extends JButton {
         }
     }
     private void generateGameBackground() {
-        ImageMerger.newMap(1000);
+        ImageMerger.newMap(1000, "src/main/res/icons/game-panel/map.png");
     }
 }

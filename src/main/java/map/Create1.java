@@ -6,7 +6,7 @@ import java.util.*;
  * Utility class for generating a map with grass growth patterns in the safari simulation.
  */
 public class Create1 {
-    static private final int clearArea = 0;
+    static final int clearArea = 0;
     static private final Random rnd = new Random();
 
     /**
@@ -38,7 +38,7 @@ public class Create1 {
      * @param maxHeight The maximum y-coordinate value.
      * @return A list of unique Coordinate objects.
      */
-    static private List<Coordinate> randomCoordinates(int piece, int minWidth, int maxWidth, int minHeight, int maxHeight) {
+    static List<Coordinate> randomCoordinates(int piece, int minWidth, int maxWidth, int minHeight, int maxHeight) {
         List<Coordinate> coordinates = new ArrayList<>();
         while (coordinates.size() < piece) {
             Coordinate c = new Coordinate(rnd.nextInt(minWidth, maxWidth), rnd.nextInt(minHeight, maxHeight));
@@ -61,7 +61,7 @@ public class Create1 {
      * @param width  The width of the map.
      * @param height The height of the map.
      */
-    static private void grassGrownings(Integer[][] map, List<Coordinate> grass, int width, int height) {
+    static void grassGrownings(Integer[][] map, List<Coordinate> grass, int width, int height) {
         Set<Coordinate> visited = new HashSet<>();
 
         for (Coordinate c : grass) {

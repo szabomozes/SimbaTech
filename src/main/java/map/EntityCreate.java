@@ -23,10 +23,6 @@ import java.util.Random;
  */
 public class EntityCreate {
     private static final Random rnd = new Random();
-    public static final int entryX = 0 + Resources.Instance.entry.getWidth() / 2;
-    public static final int entryY = 0 + Resources.Instance.entry.getHeight() / 2;
-    public static final int exitX = Resources.Instance.map.getWidth() - 0 - Resources.Instance.exit.getWidth() / 2;
-    public static final int exitY = Resources.Instance.map.getHeight() - 0 - Resources.Instance.exit.getHeight() / 2;
 
     /**
      * Creates an Entry entity positioned at the top-left corner of the map.
@@ -34,7 +30,17 @@ public class EntityCreate {
      * @return A new Entry instance.
      */
     public static Entry getEntry() {
+        int entryX = Resources.Instance.entry.getWidth() / 2;
+        int entryY = Resources.Instance.entry.getHeight() / 2;
         return new Entry(entryX, entryY);
+    }
+
+    public static int getEntryX() {
+        return Resources.Instance.entry.getWidth() / 2;
+    }
+
+    public static int getEntryY() {
+        return Resources.Instance.entry.getHeight() / 2;
     }
 
     /**
@@ -43,7 +49,16 @@ public class EntityCreate {
      * @return A new Exit instance.
      */
     public static Exit getExit() {
+        int exitX = Resources.Instance.map.getWidth() - Resources.Instance.exit.getWidth() / 2;
+        int exitY = Resources.Instance.map.getHeight() - Resources.Instance.exit.getHeight() / 2;
         return new Exit(exitX, exitY);
+    }
+
+    public static int getExitX() {
+        return Resources.Instance.map.getWidth() - Resources.Instance.exit.getWidth() / 2;
+    }
+    public static int getExitY() {
+        return Resources.Instance.map.getHeight() - Resources.Instance.exit.getHeight() / 2;
     }
 
     /**
