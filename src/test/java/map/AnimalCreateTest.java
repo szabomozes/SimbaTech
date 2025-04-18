@@ -30,6 +30,7 @@ class AnimalCreateTest {
     void testGetLionsEasy() {
         AnimalCreate.getLions(DifficultyEnum.EASY);
         long lionCount = Safari.Instance.getAnimals().stream().filter(animal -> animal instanceof Lion).count();
+        System.out.println("Lion Easy: "+lionCount);
         assertTrue(lionCount <= 1, "Az EASY szinten az oroszlánok száma nem haladhatja meg az 1-et.");
     }
 
@@ -37,6 +38,7 @@ class AnimalCreateTest {
     void testGetLionsMedium() {
         AnimalCreate.getLions(DifficultyEnum.MEDIUM);
         long lionCount = Safari.Instance.getAnimals().stream().filter(animal -> animal instanceof Lion).count();
+        System.out.println("Lion Medium: "+lionCount);
         assertTrue(lionCount >= 2 && lionCount <= 3, "A MEDIUM szinten az oroszlánok száma 2 és 3 között kell legyen.");
     }
 
@@ -44,6 +46,7 @@ class AnimalCreateTest {
     void testGetLionsHard() {
         AnimalCreate.getLions(DifficultyEnum.HARD);
         long lionCount = Safari.Instance.getAnimals().stream().filter(animal -> animal instanceof Lion).count();
+        System.out.println("Lion Hard: "+lionCount);
         assertTrue(lionCount >= 2 && lionCount <= 3, "A HARD szinten az oroszlánok száma 2 és 3 között kell legyen.");
     }
 
