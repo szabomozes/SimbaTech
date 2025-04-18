@@ -166,7 +166,7 @@ public class Jeep extends MobileEntity {
      * and collects passenger payments when returning.
      */
     public void handleJeepMovement() {
-        try {
+        if (alive) {
             if (isAvaliable) {
                 initializeJeep();
             } else if (forward) {
@@ -176,9 +176,15 @@ public class Jeep extends MobileEntity {
             } else if (!forward && passenger == 0) {
                 moveJeepBackward();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } else {
+            Safari.Instance.removeEntityById(id);
+            if (task != null && !task.isCancelled()) {
+                task.cancel(false);
+            }
         }
+    }
+
+    public void handleJeepMovement2() {
     }
 
     /**
