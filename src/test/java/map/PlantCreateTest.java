@@ -19,7 +19,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class PlantCreateTest {
 
     private List<TestEntity> createdEntities;
-    private TestSafari testSafari;
 
     // Teszt-implementáció Safari.Instance-hez
     private static class TestSafari extends Safari {
