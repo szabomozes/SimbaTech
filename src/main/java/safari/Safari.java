@@ -200,7 +200,7 @@ public class Safari {
      */
     public void buySomething(String message) {
         int price = (int) Prices.getPriceByEnum(Prices.getPricesByString(message));
-        if (coin >= price) {
+        if (coin-price > 0) {
             ToolBarCardLayout.Instance.showCard("buying");
             shopping = message;
         }
@@ -214,6 +214,10 @@ public class Safari {
      */
     public void placeSomething(int x, int y) {
         int price = (int) Prices.getPriceByEnum(Prices.getPricesByString(shopping));
+
+        if (coin-price <= 0) {
+            return;
+        }
 
         switch (shopping) {
             case "lion":
@@ -251,7 +255,6 @@ public class Safari {
                 plants.add(palmTree);
                 ScheduledFuture<?> palmTreeTask = EntitiesExecutor.Instance.addScheduleAtFixedRate(palmTree::handlePlantMovement);
                 palmTree.setTask(palmTreeTask);
-                // TODO: task
                 break;
             case "pancium":
                 Pancium pancium = new Pancium(x, y);
@@ -274,11 +277,11 @@ public class Safari {
                 jeeps.add(jeep);
                 ScheduledFuture<?> jeepTask = EntitiesExecutor.Instance.addScheduleAtFixedRate(jeep::handleJeepMovement);
                 jeep.setTask(jeepTask);
+                shopping = null;
                 break;
         }
 
         coin -= price;
-        shopping = null;
     }
 
     /**

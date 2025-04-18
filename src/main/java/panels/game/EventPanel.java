@@ -165,7 +165,7 @@ public class EventPanel extends JPanel {
 
         if (isPositionAvailable && isThereAnyFreePlaceForWater) {
             Safari.Instance.placeSomething(lastX - offsetX, lastY - offsetY);
-            ToolBarCardLayout.Instance.showCard("toolbar");
+            //ToolBarCardLayout.Instance.showCard("toolbar");
         }
     }
 
