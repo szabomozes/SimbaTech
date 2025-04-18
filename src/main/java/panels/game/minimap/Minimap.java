@@ -2,9 +2,9 @@ package panels.game.minimap;
 
 import core.Resources;
 import entity.Entity;
+import entity.mobile.person.Ranger;
 import entity.notmobile.Entry;
 import entity.notmobile.Exit;
-import map.EntityCreate;
 import road.Path;
 import road.Road;
 import safari.Safari;
@@ -177,9 +177,12 @@ public class Minimap extends JPanel {
                 case "Lion", "Leopard", "Zebra", "Giraffe" -> g2d.setColor(Color.RED);
                 case "PalmTree", "Pancium", "Baobab" -> g2d.setColor(new Color(34, 139, 34));
                 case "Water" -> g2d.setColor(new Color(30, 60, 160));
-                case "Ranger" -> g2d.setColor(Color.YELLOW);
+                case "Ranger" -> {
+                    if (((Ranger) entity).isSelected()) g2d.setColor(new Color(57, 255, 20));
+                    else g2d.setColor(Color.YELLOW);
+                }
                 case "Jeep" -> g2d.setColor(Color.WHITE);
-                case "Poacher" -> g2d.setColor(new Color(57, 255, 20));
+                //case "Poacher" -> g2d.setColor(new Color(57, 255, 20));
             }
             int x = (int) (width * ((double) (entity.getX()) / parentWidth));
             int y = (int) (height * ((double) (entity.getY()) / parentHeight));
