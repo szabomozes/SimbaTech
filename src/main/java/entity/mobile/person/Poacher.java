@@ -198,4 +198,77 @@ public class Poacher extends Person {
     public void shoot(Entity animal) {
         animal.setAlive(false);
     }
+
+    /**
+     * Returns the X coordinate of the target.
+     *
+     * @return The X coordinate of the target.
+     */
+    public double getTargetX() {
+        return targetX;
+    }
+
+    /**
+     * Returns the Y coordinate of the target.
+     *
+     * @return The Y coordinate of the target.
+     */
+    public double getTargetY() {
+        return targetY;
+    }
+
+    /**
+     * Returns the current X coordinate of the entity.
+     *
+     * @return The current X coordinate.
+     */
+    public double getCurrentX() {
+        return currentX;
+    }
+
+    /**
+     * Returns the current Y coordinate of the entity.
+     *
+     * @return The current Y coordinate.
+     */
+    public double getCurrentY() {
+        return currentY;
+    }
+
+    /**
+     * Sets the current X coordinate of the entity.
+     *
+     * @param currentX The new X coordinate to set.
+     */
+    public void setCurrentX(double currentX) {
+        this.currentX = currentX;
+    }
+
+    /**
+     * Sets the current Y coordinate of the entity.
+     *
+     * @param currentY The new Y coordinate to set.
+     */
+    public void setCurrentY(double currentY) {
+        this.currentY = currentY;
+    }
+
+    /**
+     * Sets the target X coordinate of the entity.
+     *
+     * @param targetX The new X coordinate for the target.
+     */
+    public void setTargetX(double targetX) {
+        this.targetX = targetX;
+    }
+
+    /**
+     * Sets the target Y coordinate of the entity.
+     *
+     * @param targetY The new Y coordinate for the target.
+     */
+    public void setTargetY(double targetY) {
+        this.targetY = targetY;
+    }
+
 }

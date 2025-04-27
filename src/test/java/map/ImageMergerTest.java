@@ -1,6 +1,7 @@
 package map;
 
 import core.Resources;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,10 +16,14 @@ class ImageMergerTest {
 
     private final String outputPath = "src/main/res/test/map.png";
 
+
+    @BeforeAll
+    static void loadResources() {
+        Resources.Instance.load();
+    }
+
     @BeforeEach
     void setup() {
-        Resources.Instance.load();
-
         File file = new File(outputPath);
         if (file.exists()) {
             boolean deleted = file.delete();

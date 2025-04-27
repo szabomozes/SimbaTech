@@ -168,7 +168,6 @@ public class Safari {
             placePoachers(rnd.nextInt(2));
         }
     }
-
     /**
      * Handles payments to rangers and checks game state for win/loss conditions.
      */
@@ -793,5 +792,9 @@ public class Safari {
 
     public void setWinOrLose(String winOrLose) {
         this.winOrLose = winOrLose;
+    }
+    public List<Poacher> getPoachers()
+    {
+        return poachers;
     }
 }
