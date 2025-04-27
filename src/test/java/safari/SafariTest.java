@@ -104,7 +104,7 @@ class SafariTest {
     }
 
     @Test
-    void testAvgCoordinateOfDumb() {
+    void testAvgCoordinate() {
         safari.createAnEntityForFree(Lion.class, 0, 0);
 
         Coordinate avgCoord = safari.avgCoordinateOf(Lion.class);
