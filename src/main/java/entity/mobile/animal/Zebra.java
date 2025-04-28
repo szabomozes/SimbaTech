@@ -94,6 +94,9 @@ public class Zebra extends Animal {
             if (task != null && !task.isCancelled()) {
                 task.cancel(false);
             }
+            if (task2 != null && !task2.isCancelled()) {
+                task2.cancel(true);
+            }
         }
     }
 }

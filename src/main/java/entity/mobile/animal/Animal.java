@@ -275,7 +275,17 @@ public abstract class Animal extends MobileEntity {
                 int waterY = closestWater.getY();
                 int waterWidth = closestWater.getWidth();
                 int waterHeight = closestWater.getHeight();
-                scheduledFutureCoordinatesForDrink = EntitiesExecutor.Instance.addSchedule(() -> PathFinder.ASearch(x, y, width, height, waterX, waterY, waterWidth, waterHeight));
+                scheduledFutureCoordinatesForDrink = EntitiesExecutor.Instance.addSchedule(() -> {
+                    if (alive) {
+                        try {
+                            return PathFinder.ASearch(x, y, width, height, waterX, waterY, waterWidth, waterHeight);
+                        } catch (InterruptedException e) {
+                            Thread.currentThread().interrupt();
+                            return null;
+                        }
+                    }
+                    return null;
+                });
             }
         }
         movingForEat = false;
@@ -376,7 +386,17 @@ public abstract class Animal extends MobileEntity {
                 int plantWidth = closestPlant.getWidth();
                 int plantHeight = closestPlant.getHeight();
                 targetPlant = closestPlant;
-                scheduledFutureCoordinatesForEat = EntitiesExecutor.Instance.addSchedule(() -> PathFinder.ASearch(x, y, width, height, plantX, plantY, plantWidth, plantHeight));
+                scheduledFutureCoordinatesForEat = EntitiesExecutor.Instance.addSchedule(() -> {
+                    if (alive) {
+                        try{
+                            return PathFinder.ASearch(x, y, width, height, plantX, plantY, plantWidth, plantHeight);
+                        } catch (InterruptedException e) {
+                            Thread.currentThread().interrupt();
+                            return null;
+                        }
+                    }
+                    return null;
+                });
             }
         }
         movingForDrink = false;

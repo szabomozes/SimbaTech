@@ -787,15 +787,30 @@ public class Safari {
         return animals;
     }
 
+    /**
+     * Returns the game result status ("win" or "lose").
+     *
+     * @return the win or lose status
+     */
     public String getWinOrLose() {
         return winOrLose;
     }
 
+    /**
+     * Sets the game result status ("win" or "lose").
+     *
+     * @param winOrLose the win or lose status to set
+     */
     public void setWinOrLose(String winOrLose) {
         this.winOrLose = winOrLose;
     }
-    public List<Poacher> getPoachers()
-    {
+
+    /**
+     * Returns the list of poachers currently active.
+     *
+     * @return the list of poachers
+     */
+    public List<Poacher> getPoachers() {
         return poachers;
     }
 }
