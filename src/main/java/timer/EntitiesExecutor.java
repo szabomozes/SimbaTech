@@ -1,6 +1,5 @@
 package timer;
 
-import panels.CardPanel;
 
 import java.util.concurrent.*;
 

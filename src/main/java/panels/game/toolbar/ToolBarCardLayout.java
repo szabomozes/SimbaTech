@@ -38,9 +38,9 @@ public class ToolBarCardLayout extends JPanel {
      */
     public void showCard(String name) {
         if (!name.equals(currentCardName)) {
+            ((CardLayout) getLayout()).show(this, name);
+            currentCardName = name;
         }
-        ((CardLayout) getLayout()).show(this, name);
-        currentCardName = name;
     }
 
     /**

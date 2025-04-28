@@ -38,8 +38,7 @@ public class Coordinate {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Coordinate)) return false;
-        Coordinate that = (Coordinate) o;
+        if (!(o instanceof Coordinate that)) return false;
         return x == that.x && y == that.y;
     }
 

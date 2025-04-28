@@ -17,7 +17,7 @@ public class Poacher extends Person {
     private double currentX, currentY;
     public final static int rifleRange = 200;
     private boolean isVisible;
-    private int movingRange = 400;
+    private final int movingRange = 400;
 
     /**
      * Constructs a Poacher at the specified coordinates with the default poacher image.

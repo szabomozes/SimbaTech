@@ -17,7 +17,7 @@ public class Road {
     public final int endX;
     public final int endY;
 
-    private List<Coordinate> mid;
+    private final List<Coordinate> mid;
 
     /**
      * Constructs a new {@code Road} from the given start to end coordinates.

@@ -47,7 +47,7 @@ public class GameStateTriggerButton extends JButton {
         addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (Safari.Instance.isSelectedRanger() || !Safari.Instance.getWinOrLose().equals("")) {
+                if (Safari.Instance.isSelectedRanger() || !Safari.Instance.getWinOrLose().isEmpty()) {
                     return;
                 }
                 try {

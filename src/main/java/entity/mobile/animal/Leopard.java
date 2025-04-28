@@ -1,12 +1,8 @@
 package entity.mobile.animal;
 
 import core.Resources;
-import entity.notmobile.Water;
-import map.Coordinate;
-import pathFinder.PathFinder;
 import safari.Safari;
 import safari.Speed;
-import timer.EntitiesExecutor;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -54,9 +50,7 @@ public class Leopard extends Animal {
                         movingForDrink = true;
                         coordinatesForDrink = scheduledFutureCoordinatesForDrink.get();
                         scheduledFutureCoordinatesForDrink = null;
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    } catch (ExecutionException e) {
+                    } catch (InterruptedException | ExecutionException e) {
                         throw new RuntimeException(e);
                     }
                 }

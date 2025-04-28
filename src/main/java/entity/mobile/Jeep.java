@@ -14,7 +14,7 @@ import java.util.*;
  * collects payments, and returns to its starting point.
  */
 public class Jeep extends MobileEntity {
-    private Random rnd = new Random();
+    private final Random rnd = new Random();
     private boolean isAvaliable = true;
     private boolean forward = true;
     private int passenger = 0;
@@ -22,7 +22,7 @@ public class Jeep extends MobileEntity {
     private int pathIndex = 0;
     private int MaxPathIndex = 0;
     private List<Coordinate> path = new ArrayList<>();
-    private Set<Integer> visitedIDs = new HashSet<>();
+    private final Set<Integer> visitedIDs = new HashSet<>();
     private int maxVisitedIDs = 0;
     protected static final int visualRangeByPixel = 700;
 
@@ -173,9 +173,9 @@ public class Jeep extends MobileEntity {
                 initializeJeep();
             } else if (forward) {
                 moveJeepForward();
-            } else if (!forward && passenger > 0) {
+            } else if (passenger > 0) {
                 collectPassengerPayment();
-            } else if (!forward && passenger == 0) {
+            } else if (passenger == 0) {
                 moveJeepBackward();
             }
         } else {

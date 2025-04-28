@@ -29,7 +29,7 @@ public class LogoutButton extends JButton {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Prevent logout if the game has already ended
-                if (!Safari.Instance.getWinOrLose().equals("")) return;
+                if (!Safari.Instance.getWinOrLose().isEmpty()) return;
 
                 // Stop the game timer
                 WinOrLoseTimer.getInstance().stopTimer();

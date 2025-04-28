@@ -1,13 +1,10 @@
 package entity.notmobile.plant;
 
-import core.Resources;
 import entity.notmobile.NotMobileEntity;
 import safari.Safari;
 import safari.Speed;
 
 import java.awt.image.BufferedImage;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 
 /**
  * Abstract base class for plant entities in the safari simulation, extending NotMobileEntity.

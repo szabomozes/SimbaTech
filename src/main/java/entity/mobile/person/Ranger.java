@@ -5,12 +5,10 @@ import entity.Entity;
 import entity.mobile.animal.Leopard;
 import entity.mobile.animal.Lion;
 import entity.notmobile.Water;
-import map.Coordinate;
 import safari.RangerPayment;
 import safari.Safari;
 import safari.Speed;
 
-import java.util.Arrays;
 
 /**
  * Represents a Ranger, a type of person in the safari simulation responsible for tracking and neutralizing threats
@@ -25,7 +23,6 @@ public class Ranger extends Person {
     private int newPositionX = 0;
     private int newPositionY = 0;
     private boolean selected = false;
-    public final static int visualRangeByPixel = 600;
     public final static int rifleRangeByPixel = 300;
 
     /**

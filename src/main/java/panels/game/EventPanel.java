@@ -103,7 +103,7 @@ public class EventPanel extends JPanel {
      * @param e the mouse event
      */
     private void handleMousePress(MouseEvent e) {
-        if (Safari.Instance.getWinOrLose().equals("") && SwingUtilities.isRightMouseButton(e)) {
+        if (Safari.Instance.getWinOrLose().isEmpty() && SwingUtilities.isRightMouseButton(e)) {
             if (Safari.Instance.getRoadBuilding()) {
                 Safari.Instance.saveARoad(lastX - offsetX, lastY - offsetY);
             } else if (Safari.Instance.shopping != null) {
@@ -128,7 +128,7 @@ public class EventPanel extends JPanel {
     private void handleMouseRelease(MouseEvent e) {
         if (!SwingUtilities.isRightMouseButton(e)) {
             dragging = false;
-        } else if (Safari.Instance.getWinOrLose().equals("")) {
+        } else if (Safari.Instance.getWinOrLose().isEmpty()) {
             handleExitClick(e);
         }
     }
@@ -139,7 +139,7 @@ public class EventPanel extends JPanel {
      * @param e the mouse event
      */
     private void handleMouseDrag(MouseEvent e) {
-        if (Safari.Instance.getWinOrLose().equals("") && SwingUtilities.isRightMouseButton(e) && Safari.Instance.getRoadBuilding()) {
+        if (Safari.Instance.getWinOrLose().isEmpty() && SwingUtilities.isRightMouseButton(e) && Safari.Instance.getRoadBuilding()) {
             Safari.Instance.saveARoad(e.getX() - offsetX, e.getY() - offsetY);
         } else if (dragging) {
             int dx = e.getX() - lastX;

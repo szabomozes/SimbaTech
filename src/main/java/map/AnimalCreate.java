@@ -8,8 +8,6 @@ import entity.mobile.animal.Zebra;
 import safari.DifficultyEnum;
 import safari.Safari;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 /**
@@ -26,7 +24,7 @@ public class AnimalCreate {
     public static void getLions(DifficultyEnum difficulty) {
         int maxWidth = Resources.Instance.map.getWidth() - Resources.Instance.lionBody.getWidth() / 2;
         int maxHeight = Resources.Instance.map.getHeight() - Resources.Instance.lionBody.getHeight() / 2;
-        List<Lion> lions = new ArrayList<>();
+        //List<Lion> lions = new ArrayList<>();
 
         int lionCount = rnd.nextInt(
                 switch (difficulty) {
@@ -54,7 +52,7 @@ public class AnimalCreate {
     public static void getLeopards(DifficultyEnum difficulty) {
         int maxWidth = Resources.Instance.map.getWidth() - Resources.Instance.leopardBody.getWidth() / 2;
         int maxHeight = Resources.Instance.map.getHeight() - Resources.Instance.leopardBody.getHeight() / 2;
-        List<Leopard> leopards = new ArrayList<>();
+        //List<Leopard> leopards = new ArrayList<>();
 
         int leopardCount = rnd.nextInt(
                 switch (difficulty) {
@@ -82,7 +80,7 @@ public class AnimalCreate {
     public static void getZebras(DifficultyEnum difficulty) {
         int maxWidth = Resources.Instance.map.getWidth() - Resources.Instance.zebraBody.getWidth() / 2;
         int maxHeight = Resources.Instance.map.getHeight() - Resources.Instance.zebraBody.getHeight() / 2;
-        List<Zebra> zebras = new ArrayList<>();
+        //List<Zebra> zebras = new ArrayList<>();
 
         int zebraCount = rnd.nextInt(
                 switch (difficulty) {
@@ -110,7 +108,7 @@ public class AnimalCreate {
     public static void getGiraffes(DifficultyEnum difficulty) {
         int maxWidth = Resources.Instance.map.getWidth() - Resources.Instance.giraffeBody.getWidth() / 2;
         int maxHeight = Resources.Instance.map.getHeight() - Resources.Instance.giraffeBody.getHeight() / 2;
-        List<Giraffe> giraffes = new ArrayList<>();
+        //List<Giraffe> giraffes = new ArrayList<>();
 
         int giraffeCount = rnd.nextInt(
                 switch (difficulty) {

@@ -13,7 +13,7 @@ import java.util.List;
  * and retrieving various path-related data such as coordinates and pixel count.
  */
 public class Path {
-    private List<Road> roads = new ArrayList<>();
+    private final List<Road> roads = new ArrayList<>();
     private int startX;
     private int startY;
     private int endX;

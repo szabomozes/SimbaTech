@@ -7,7 +7,6 @@ import entity.notmobile.plant.Plant;
 import map.Coordinate;
 import pathFinder.PathFinder;
 import safari.Safari;
-import safari.Speed;
 import timer.EntitiesExecutor;
 
 import java.awt.image.BufferedImage;
@@ -30,14 +29,13 @@ public abstract class Animal extends MobileEntity {
     protected List<Integer> plantsID = new ArrayList<>();
     protected static final int visualRangeByPixel = 600;
     protected static final int avgRangeLimitByPixel = 1000;
-    protected Random rnd = new Random();
     protected Animal target;
     protected Plant targetPlant;
     protected ScheduledFuture<List<Coordinate>> scheduledFutureCoordinatesForDrink = null;
     protected List<Coordinate> coordinatesForDrink = new ArrayList<>();
     protected ScheduledFuture<List<Coordinate>> scheduledFutureCoordinatesForEat = null;
     protected List<Coordinate> coordinatesForEat = new ArrayList<>();
-    private int bornDate = Safari.Instance.getDate();
+    private final int bornDate = Safari.Instance.getDate();
 
     /**
      * Constructs an Animal with specified coordinates and image.
