@@ -422,6 +422,7 @@ public class Safari {
      */
     public List<Entity> getAllEntitiesWithSorted() {
         List<Entity> allEntities = new ArrayList<>(getAllEntities());
+        allEntities.removeIf(Objects::isNull);
         allEntities.sort(Comparator.comparingInt(e -> e.getY() + e.getHeight()));
         return allEntities;
     }

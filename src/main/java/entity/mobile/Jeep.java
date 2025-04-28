@@ -1,14 +1,13 @@
 package entity.mobile;
 
 import core.Resources;
+import entity.Entity;
 import map.Coordinate;
 import safari.Prices;
 import safari.Safari;
 import safari.Speed;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Represents a Jeep, a mobile entity in the safari simulation that transports passengers along predefined paths,
@@ -23,6 +22,9 @@ public class Jeep extends MobileEntity {
     private int pathIndex = 0;
     private int MaxPathIndex = 0;
     private List<Coordinate> path = new ArrayList<>();
+    private Set<Integer> visitedIDs = new HashSet<>();
+    private int maxVisitedIDs = 0;
+    protected static final int visualRangeByPixel = 700;
 
     /**
      * Constructs a Jeep at the specified coordinates with the default jeep image.
@@ -184,9 +186,6 @@ public class Jeep extends MobileEntity {
         }
     }
 
-    public void handleJeepMovement2() {
-    }
-
     /**
      * Initializes the jeep for a new trip by setting a random number of passengers,
      * selecting a random path, and preparing to move forward.
@@ -195,6 +194,8 @@ public class Jeep extends MobileEntity {
         if (Safari.Instance.getPaths().isEmpty()) {
             return;
         }
+        visitedIDs.clear();
+        maxVisitedIDs = Safari.Instance.getAnimals().size();
         image = Resources.Instance.jeep;
         isAvaliable = false;
         passenger = rnd.nextInt(4) + 1;
@@ -215,6 +216,7 @@ public class Jeep extends MobileEntity {
             forward = false;
         }
         updateJeepPosition();
+        checkAnimals();
     }
 
     /**
@@ -222,7 +224,10 @@ public class Jeep extends MobileEntity {
      */
     private void collectPassengerPayment() {
         image = Resources.Instance.jeep_back;
-        Safari.Instance.coin += (int) (Prices.getPriceByEnum(Prices.PASSENGER) * passenger);
+        double visitRatio = maxVisitedIDs > 0 ? (double) visitedIDs.size() / maxVisitedIDs : 0.0;
+        int basePayment = (int) (Prices.getPriceByEnum(Prices.PASSENGER) * passenger);
+        int bonusPayment = (int) (Prices.getPriceByEnum(Prices.PASSENGER) * passenger * visitRatio);
+        Safari.Instance.coin += basePayment + bonusPayment;
         Safari.Instance.addPassengers(passenger);
         System.out.println("visitors: " + Safari.Instance.getPassengers());
         passenger = 0;
@@ -247,4 +252,29 @@ public class Jeep extends MobileEntity {
         setX(path.get(pathIndex).x - getWidth() / 2);
         setY(path.get(pathIndex).y - getHeight() / 2);
     }
+
+    /**
+     * Adds animals to {@code visitedIDs} if they are outside the visual range.
+     */
+    private void checkAnimals() {
+        List<Entity> animals = new ArrayList<>(Safari.Instance.getAnimals());
+        for (Entity animal : animals) {
+            if (visualRangeByPixel < distanceTo(animal)) {
+                visitedIDs.add(animal.id);
+            }
+        }
+    }
+
+    /**
+     * Calculates the Euclidean distance from this entity to another specified entity.
+     *
+     * @param entity the target entity to which the distance is measured
+     * @return the distance between this entity and the specified entity
+     */
+    protected double distanceTo(Entity entity) {
+        int dx = x - entity.getX();
+        int dy = y - entity.getY();
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+
 }
