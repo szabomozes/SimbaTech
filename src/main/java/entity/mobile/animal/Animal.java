@@ -277,12 +277,9 @@ public abstract class Animal extends MobileEntity {
                 int waterHeight = closestWater.getHeight();
                 scheduledFutureCoordinatesForDrink = EntitiesExecutor.Instance.addSchedule(() -> {
                     if (alive) {
-                        try {
-                            return PathFinder.ASearch(x, y, width, height, waterX, waterY, waterWidth, waterHeight);
-                        } catch (InterruptedException e) {
-                            Thread.currentThread().interrupt();
-                            return null;
-                        }
+                        List<Coordinate> temp = PathFinder.ASearch(x, y, width, height, waterX, waterY, waterWidth, waterHeight);
+                        System.out.println("Searching was successful");
+                        return temp;
                     }
                     return null;
                 });
@@ -388,12 +385,7 @@ public abstract class Animal extends MobileEntity {
                 targetPlant = closestPlant;
                 scheduledFutureCoordinatesForEat = EntitiesExecutor.Instance.addSchedule(() -> {
                     if (alive) {
-                        try{
-                            return PathFinder.ASearch(x, y, width, height, plantX, plantY, plantWidth, plantHeight);
-                        } catch (InterruptedException e) {
-                            Thread.currentThread().interrupt();
-                            return null;
-                        }
+                        return PathFinder.ASearch(x, y, width, height, plantX, plantY, plantWidth, plantHeight);
                     }
                     return null;
                 });

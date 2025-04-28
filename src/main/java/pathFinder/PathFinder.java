@@ -42,7 +42,7 @@ public class PathFinder {
      * @return a list of coordinates representing the shortest path from start to goal
      */
     public static List<Coordinate> ASearch(int startX, int startY, int startWidth, int startHeight,
-                                           int goalX, int goalY, int goalWidth, int goalHeight) throws InterruptedException {
+                                           int goalX, int goalY, int goalWidth, int goalHeight) {
         int maxWidth = Resources.Instance.map.getWidth();
         int maxHeight = Resources.Instance.map.getHeight();
         List<Coordinate> path = new ArrayList<>();
@@ -80,6 +80,9 @@ public class PathFinder {
         };
 
         while (!openSet.isEmpty()) {
+            if (Thread.currentThread().isInterrupted()) {
+                return null;
+            }
             Node currentNode = openSet.stream().min(Comparator.comparingInt(n -> n.fScore)).orElse(null);
             Coordinate current = currentNode.coord;
             openSet.remove(currentNode);

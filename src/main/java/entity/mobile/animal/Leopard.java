@@ -81,6 +81,9 @@ public class Leopard extends Animal {
             if (task != null && !task.isCancelled()) {
                 task.cancel(false);
             }
+            if (scheduledFutureCoordinatesForDrink != null && !scheduledFutureCoordinatesForDrink.isCancelled()) {
+                scheduledFutureCoordinatesForDrink.cancel(true);
+            }
         }
     }
 }

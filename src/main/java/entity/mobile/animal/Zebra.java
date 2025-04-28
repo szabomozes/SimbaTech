@@ -67,9 +67,7 @@ public class Zebra extends Animal {
                         movingForEat = true;
                         coordinatesForEat = scheduledFutureCoordinatesForEat.get();
                         scheduledFutureCoordinatesForEat = null;
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    } catch (ExecutionException e) {
+                    } catch (InterruptedException | ExecutionException e) {
                         throw new RuntimeException(e);
                     }
                 }
@@ -94,8 +92,11 @@ public class Zebra extends Animal {
             if (task != null && !task.isCancelled()) {
                 task.cancel(false);
             }
-            if (task2 != null && !task2.isCancelled()) {
-                task2.cancel(true);
+            if (scheduledFutureCoordinatesForDrink != null && !scheduledFutureCoordinatesForDrink.isCancelled()) {
+                scheduledFutureCoordinatesForDrink.cancel(true);
+            }
+            if (scheduledFutureCoordinatesForEat != null && !scheduledFutureCoordinatesForEat.isCancelled()) {
+                scheduledFutureCoordinatesForEat.cancel(true);
             }
         }
     }

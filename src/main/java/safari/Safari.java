@@ -538,7 +538,7 @@ public class Safari {
      * @return True if the road was saved successfully, false if it overlaps water.
      */
     public boolean saveARoad(int x, int y) {
-        Path path = tempPaths.get(tempPaths.size() - 1);
+        Path path = tempPaths.getLast();
 
         if (path.overlapsWaterArea(x, y)) return false;
 
