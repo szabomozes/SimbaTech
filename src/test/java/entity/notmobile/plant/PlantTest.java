@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PlantsTest {
+class PlantTest {
 
     @BeforeEach
     void setUp() {
