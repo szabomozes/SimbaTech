@@ -57,7 +57,7 @@ public class SaveButton extends JButton {
                 // Check if the last path has any unfinished roads
                 if (!Safari.Instance.getTempPaths().getLast().getRoads().isEmpty()) {
                     ((EventPanel) getParent().getParent().getParent().getComponent(0))
-                            .setFeedback(new MessageFeedBackPanel("Finish all roads before purchasing!", "buildRoad"));
+                            .setFeedback(new MessageFeedBackPanel("Fejezd be az összes utat!", "buildRoad"));
                 } else {
                     int price = Safari.Instance.getTempPathsPrice();
                     if (price <= Safari.Instance.coin) {
@@ -70,7 +70,7 @@ public class SaveButton extends JButton {
                         Safari.Instance.clearTempPaths();
                     } else {
                         ((EventPanel) getParent().getParent().getParent().getComponent(0))
-                                .setFeedback(new MessageFeedBackPanel(price + "$ is required for the construction!", "buildRoad"));
+                                .setFeedback(new MessageFeedBackPanel(price + "$ szükséges a megépítéshez!", "buildRoad"));
                     }
                 }
 
