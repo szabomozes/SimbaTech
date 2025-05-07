@@ -26,6 +26,7 @@ class AnimalCreateTest {
 
         public TestSafari(List<TestEntity> createdEntities) {
             super();
+            coin = 1000000;
             this.createdEntities = createdEntities;
         }
 
