@@ -47,6 +47,10 @@ igyekeznek a már általuk felfedezett élelem vagy vízforráshoz eljutni.
 
 ![Animals image](src/main/res/animals.png)
 
+## Orvadászok
+Időnként megjelennek orvvadászok, akik próbálják az állatállományt vagy kedvtelésből kilőni. Az orvvadászok csak akkor látszanak, ha turisták vagy vadőrök
+vannak a közelükben.
+
 ## A játék vége
 A játékot akkor nyerjük meg, hogy ha elérjük, hogy a nehézségi szinttől függően 3, 6 vagy 12 egymást
 követő hónapban a látogatók, a növényevő, a ragadozó állatok száma, és a tőkénk is egy küszöbérték
@@ -56,6 +60,4 @@ vagy kipusztul az összes állat.
 
 ![You lost the game image](src/main/res/loose.png)
 
-## Orvadászok
-Időnként megjelennek orvvadászok, akik próbálják az állatállományt vagy kedvtelésből kilőni. Az orvvadászok csak akkor látszanak, ha turisták vagy vadőrök
-vannak a közelükben.
+
