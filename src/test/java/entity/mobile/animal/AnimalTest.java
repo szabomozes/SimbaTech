@@ -231,7 +231,6 @@ class AnimalTest {
         Safari.Instance.clearAllEntities();
         Safari.Instance.shopping = "giraffe";
         Safari.Instance.placeSomething(200, 200);
-        Entity giraffe2 = Safari.Instance.getAnimals().getFirst();
         boolean result = giraffe.lessAvgRangeLimit();
 
         assertTrue(result);
