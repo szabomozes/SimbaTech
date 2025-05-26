@@ -23,10 +23,10 @@ A felhasználó pénzért vásárolhat:
 
 ### 3. És egyéb dolgokat/embereket:
 
-+ Vadőrt
-+ Tavat
-+ Dzsipet
-+ Utakat (építéssel)
++ Vadőrt,
++ Tavat,
++ Dzsipet,
++ Utakat (építéssel).
 
 ![Shop image](src/main/res/shop.png)
 
