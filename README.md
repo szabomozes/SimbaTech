@@ -1,6 +1,6 @@
 # SimbaTech
 
-A SimbaTech egy szimulációs szafaris játék, amelynek a cél, hogy a pálya 
+A SimbaTech egy szimulációs szafaris játék, amelynek a célja, hogy a pálya 
 nehézségétől függően 3, 6 vagy 12 hónapig kell életben tartani a Szafariban 
 élő állatokat.
 
@@ -10,23 +10,23 @@ nehézségétől függően 3, 6 vagy 12 hónapig kell életben tartani a Szafari
 
 A felhasználó pénzért vásárolhat:
 ### 1. Különböző állatokat:
-+ Oroszlánt *(ragadozó)*
-+ Leopárdot *(ragadozó)*
-+ Zebra *(növényevő)*
-+ Zsiráf *(növényevő)*
++ Oroszlánt *(ragadozó)*,
++ Leopárdot *(ragadozó)*,
++ Zebra *(növényevő)*,
++ Zsiráf *(növényevő)*.
 
 ### 2. Különböző növényeket:
 
-+ Majomkenyérfát
-+ Pálmafát
-+ Füvet
++ Majomkenyérfát,
++ Pálmafát,
++ Füvet.
 
 ### 3. És egyéb dolgokat/embereket:
 
 + Vadőrt
 + Tavat
 + Dzsipet
-+ Utakat (építeni)
++ Utakat (építéssel)
 
 ![Shop image](src/main/res/shop.png)
 
