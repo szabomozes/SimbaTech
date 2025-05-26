@@ -4,7 +4,7 @@ A SimbaTech egy szimulációs szafaris játék, amelynek a célja, hogy a pálya
 nehézségétől függően 3, 6 vagy 12 hónapig kell életben tartani a Szafariban 
 élő állatokat.
 
-![img.png](img.png)
+![Menu image](src/main/res/img.png)
 
 ## Miket lehet vásárolni?
 
@@ -58,6 +58,6 @@ felett marad. A küszöbérték különböző a különböző kategóriáknál, 
 20 növényevő állat, stb. A játékot azonnal elveszítjük (az igazgatót kirúgják), ha csődbe megyünk,
 vagy kipusztul az összes állat.
 
-![You lost the game image](src/main/res/loose.png)
+![You lost the game image](src/main/res/lose.png)
 
 
