@@ -1,3 +1,23 @@
+# 4. félév | Szoftvertechnológia - SimbaTech  
+
+**Tantárgy:** Szoftvertechnológia  
+**Félév:** 2024/25/2 (tavaszi félév)  
+**Előadó és Gyakorlatvezető:** Szendrei Rudolf Dr.  
+📅 **Készült:** 2025. június
+
+
+---
+
+## 👥 Csapattagok 
+
+- Baráth Réka  
+- Isztl Dominik  
+- Szabó Mózes
+
+csapatnév: Critical Memory Yield Klub (CMYK)
+
+---
+
 # SimbaTech
 
 A SimbaTech egy szimulációs szafaris játék, amelynek a célja, hogy a pálya 
