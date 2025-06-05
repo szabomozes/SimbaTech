@@ -3,7 +3,7 @@
 **Tantárgy:** Szoftvertechnológia  
 **Félév:** 2024/25/2 (tavaszi félév)  
 **Előadó és Gyakorlatvezető:** Szendrei Rudolf Dr.  
-📅 **Készült:** 2025. június
+📅 **Befejezés dátuma:** 2025. június
 
 
 ---
