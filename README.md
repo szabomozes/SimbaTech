@@ -5,6 +5,7 @@
 **Előadó és Gyakorlatvezető:** Szendrei Rudolf Dr.  
 📅 **Befejezés dátuma:** 2025. június
 
+ℹ️ A projekt fejlesztése és verziókezelése GitLabon történt
 
 ---
 
