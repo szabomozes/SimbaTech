@@ -6,6 +6,9 @@
 📅 **Befejezés dátuma:** 2025. június
 
 ℹ️ A projekt fejlesztése és verziókezelése GitLabon történt
+📂 Ez a GitHub repository a GitLabon készült projekt publikus bemutatására szolgál.
+
+
 
 ---
 
