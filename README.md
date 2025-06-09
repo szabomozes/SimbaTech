@@ -5,10 +5,11 @@
 **Előadó és Gyakorlatvezető:** Szendrei Rudolf Dr.  
 📅 **Befejezés dátuma:** 2025. június
 
+---
+
 ℹ️ A projekt fejlesztése és verziókezelése GitLabon történt <br>
-📂 Ez a GitHub repository a GitLabon készült projekt bemutatására szolgál.
-
-
+📂 Ez a GitHub repository a GitLabon készült projekt bemutatására szolgál.<br>
+⚠️ **Megjegyzés**: Ez a repository nem tükrözi teljes mértékben a projektet, mivel például az issue-k, mérföldkövek és egyéb kapcsolódó elemek nem kerültek exportálásra.
 
 ---
 
